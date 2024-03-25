@@ -1,0 +1,32 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+namespace ScamBet.Entitties
+{
+    public class Bet
+    {
+        [Key]
+        [Required] 
+        public int betID {  get; set; }
+
+        [ForeignKey("Account")]
+        [Required]
+        public int user_ID { get; set; }
+
+        [Required]
+        [Range(1, 2)]
+        public int choosen_team {  get; set; }
+
+        [ForeignKey("Match")]
+        [Required]
+        public int matchID { get; set; }
+
+        [Required]
+        public double ratio { get; set; }
+
+        [Required]
+        public double value { get; set; }
+
+        [Required]
+        public bool active { get; set; } = true;
+    }
+}

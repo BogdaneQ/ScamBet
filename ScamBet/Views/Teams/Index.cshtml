@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ScamBet.Entitties.Team>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.attack)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.middle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.defence)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.aggresion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.attack)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.middle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.defence)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.aggresion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.teamID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.teamID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.teamID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
