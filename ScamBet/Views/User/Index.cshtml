@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ScamBet.Entitties.User>
+
+<h1>User List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Balance</th>
+            <th>Is Banned</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.user_ID</td>
+                <td>@user.Username</td>
+                <td>@user.name</td>
+                <td>@user.Surname</td>
+                <td>@user.email</td>
+                <td>@user.phone_number</td>
+                <td>@user.acc_balace</td>
+                <td>@(user.isBanned ? "Yes" : "No")</td>
+                <td>
+                        <a asp-action="Edit" asp-route-id="@user.user_ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@user.user_ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@user.user_ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

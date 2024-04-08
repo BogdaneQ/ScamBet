@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BookmacherDBContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<AdminController>();
+builder.Services.AddScoped<TeamResultsController>();
+builder.Services.AddScoped<UserController>();
 
 var app = builder.Build();
 
@@ -29,6 +31,14 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "admin",
     pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "teams_results",
+    pattern: "{area:exists}/{controller=TeamResults}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "user",
+    pattern: "{area:exists}/{controller=User}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

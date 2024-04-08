@@ -1,0 +1,14 @@
+﻿@model ScamBet.Entitties.Team_results
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="trID" />
+    <div class="form-group">
+        <label asp-for="TeamID" class="control-label"></label>
+        <input asp-for="TeamID" class="form-control" />
+        <span asp-validation-for="TeamID" class="text-danger"></span>
+    </div>
+    <!-- Add other fields here -->
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
