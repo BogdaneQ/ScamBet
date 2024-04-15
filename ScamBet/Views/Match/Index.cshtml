@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ScamBet.Entitties.Match>
+
+@{
+    ViewData["Title"] = "Match List";
+}
+
+<h1>Match List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.matchID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.trID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.time)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var match in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => match.matchID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.trID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => match.time)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@match.matchID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@match.matchID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@match.matchID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

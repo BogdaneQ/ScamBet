@@ -1,0 +1,97 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using ScamBet.Entitties;
+using System;
+using System.Linq;
+
+namespace ScamBet.Controllers
+{
+    public class MatchController : Controller
+    {
+        private readonly BookmacherDBContext _context;
+
+        public MatchController(BookmacherDBContext context)
+        {
+            _context = context;
+        }
+
+        // GET: Match/Index
+        public IActionResult Index()
+        {
+            var matches = _context.matches.ToList();
+            return View(matches);
+        }
+
+        // GET: Match/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Match/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Match match)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.matches.Add(match);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(match);
+        }
+
+        // GET: Match/Edit/5
+        public IActionResult Edit(int id)
+        {
+            var match = _context.matches.Find(id);
+            if (match == null)
+            {
+                return NotFound();
+            }
+            return View(match);
+        }
+
+        // POST: Match/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Match match)
+        {
+            if (id != match.matchID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.matches.Update(match);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(match);
+        }
+
+        // GET: Match/Delete/5
+        public IActionResult Delete(int id)
+        {
+            var match = _context.matches.Find(id);
+            if (match == null)
+            {
+                return NotFound();
+            }
+
+            return View(match);
+        }
+
+        // POST: Match/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var match = _context.matches.Find(id);
+            _context.matches.Remove(match);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+    }
+}

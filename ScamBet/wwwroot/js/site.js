@@ -1,4 +1,28 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿import React from 'react';
+import './App.css';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import LoginForm from './Components/LoginForm';
+import RegistrationForm from './Components/RegistrationForm';
+import Dashboard from './Components/Dashboard';
+import ForgotPassword from './Components/Forgot-password';
 
-// Write your JavaScript code.
+function App() {
+    return (
+        <Router>
+            <div className="App">
+                <header className="App-header">
+                    <h1 className="App-header">
+                        <Routes>
+                            <Route path="/" element={<LoginForm />} />
+                            <Route path="/registration" element={<RegistrationForm />} />
+                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/Forgot-password" element={<ForgotPassword />} />
+                        </Routes>
+                    </h1>
+                </header>
+            </div>
+        </Router>
+    );
+}
+
+export default App;

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ScamBet.Entitties.Roulette>
+
+@{
+    ViewData["Title"] = "Roulette List";
+}
+
+<h1>Roulette List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.rouletteID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.balance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.time)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var roulette in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => roulette.rouletteID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => roulette.balance)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => roulette.time)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@roulette.rouletteID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@roulette.rouletteID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@roulette.rouletteID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

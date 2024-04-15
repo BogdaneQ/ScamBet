@@ -10,6 +10,9 @@ builder.Services.AddDbContext<BookmacherDBContext>(x => x.UseSqlServer(builder.C
 builder.Services.AddScoped<AdminController>();
 builder.Services.AddScoped<TeamResultsController>();
 builder.Services.AddScoped<UserController>();
+builder.Services.AddScoped<MatchController>();
+builder.Services.AddScoped<RouletteController>();
+
 
 var app = builder.Build();
 
@@ -41,14 +44,22 @@ app.MapControllerRoute(
     pattern: "{area:exists}/{controller=User}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
-    name: "default",
+    name: "match",
+    pattern: "{area:exists}/{controller=Match}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "rulette",
+    pattern: "{area:exists}/{controller=Rulette}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "Home",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
     endpoints.MapControllerRoute(
-        name: "default",
+        name: "Home",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
