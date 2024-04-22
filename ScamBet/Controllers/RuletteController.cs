@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,7 +16,7 @@ namespace ScamBet.Controllers
         }
 
         // GET: Roulette/Index
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var roulettes = _context.roulettes.ToList();
             return View(roulettes);
@@ -49,7 +48,7 @@ namespace ScamBet.Controllers
         // POST: Roulette/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("roulette_ID,user_ID,balance,time")] Roulette roulette)
+        public async Task<IActionResult> Create([Bind("roulette_ID,name,difficulty")] Roulette roulette)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +78,7 @@ namespace ScamBet.Controllers
         // POST: Roulette/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("roulette_ID,user_ID,balance,time")] Roulette roulette)
+        public async Task<IActionResult> Edit(int id, [Bind("roulette_ID,name,difficulty")] Roulette roulette)
         {
             if (id != roulette.roulette_ID)
             {

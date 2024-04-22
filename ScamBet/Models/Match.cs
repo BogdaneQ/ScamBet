@@ -21,8 +21,8 @@ namespace ScamBet.Entities
         public string team2_ID { get; set; }
         public virtual Team team2 { get; set; }
 
-        [Required]
-        public string winner { get; set; }
+
+        public Team? winner { get; set; }
 
         [Required]
         public int team1_goals { get; set; }

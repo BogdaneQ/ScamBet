@@ -11,20 +11,25 @@ namespace ScamBet.Entities
         [ForeignKey("Account")]
         [Required]
         public int user_ID { get; set; }
+        public virtual Account bet_placer { get; set; }
 
         [Required]
-        [Range(1, 2)]
-        public int choosen_team {  get; set; }
+        [StringLength(50)]
+        public string winnner {  get; set; }
 
         [ForeignKey("Match")]
         [Required]
         public int match_ID { get; set; }
+        public virtual Match match { get; set; }
 
         [Required]
         public double ratio { get; set; }
 
         [Required]
         public double value { get; set; }
+
+        [Required]
+        public double price { get; set; }
 
         [Required]
         public bool active { get; set; } = true;

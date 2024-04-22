@@ -6,6 +6,6 @@ namespace ScamBet.Entities
     {
         [Required]
         [Range(1, 3)]
-        public int admin_rank {  get; set; }
+        public int? admin_rank {  get; set; }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
 
@@ -21,7 +20,7 @@ namespace ScamBet.Controllers
         // GET: Teams
         public async Task<IActionResult> Index()
         {
-            return View(_context.teams.ToList());
+            return View(await _context.teams.ToListAsync());
         }
 
         // GET: Team/Details/5
@@ -51,7 +50,7 @@ namespace ScamBet.Controllers
         // POST: Team/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("team_ID,name,attack,middle,defence,aggresion")] Team team)
+        public async Task<IActionResult> Create([Bind("team_ID,name,wins,draws,loses,points")] Team team)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +80,7 @@ namespace ScamBet.Controllers
         // POST: Team/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("team_ID,name,attack,middle,defence,aggresion")] Team team)
+        public async Task<IActionResult> Edit(int id, [Bind("team_ID,name,wins,draws,loses,points")] Team team)
         {
             if (id != team.team_ID)
             {
@@ -134,13 +133,9 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team = await _context.teams.FindAsync(id);
-            if (team != null)
-            {
-                _context.teams.Remove(team);
-            }
-
-            await _context.SaveChangesAsync();
+            var team = _context.teams.Find(id);
+            _context.teams.Remove(team);
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 

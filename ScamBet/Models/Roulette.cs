@@ -11,5 +11,9 @@ namespace ScamBet.Entities
         [Required]
         public string name { get; set; }
 
+        [Required]
+        [Range(1,10)]
+        public int difficulty { get; set; }
+
     }
 }
