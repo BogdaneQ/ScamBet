@@ -57,7 +57,7 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Match match)
         {
-            if (id != match.matchID)
+            if (id != match.match_ID)
             {
                 return NotFound();
             }

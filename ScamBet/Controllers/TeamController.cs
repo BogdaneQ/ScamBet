@@ -9,11 +9,11 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
-    public class TeamsController : Controller
+    public class TeamController : Controller
     {
         private readonly BookmacherDBContext _context;
 
-        public TeamsController(BookmacherDBContext context)
+        public TeamController(BookmacherDBContext context)
         {
             _context = context;
         }
@@ -21,10 +21,10 @@ namespace ScamBet.Controllers
         // GET: Teams
         public async Task<IActionResult> Index()
         {
-            return View(await _context.teams.ToListAsync());
+            return View(_context.teams.ToList());
         }
 
-        // GET: Teams/Details/5
+        // GET: Team/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,7 +33,7 @@ namespace ScamBet.Controllers
             }
 
             var team = await _context.teams
-                .FirstOrDefaultAsync(m => m.teamID == id);
+                .FirstOrDefaultAsync(m => m.team_ID == id);
             if (team == null)
             {
                 return NotFound();
@@ -42,18 +42,16 @@ namespace ScamBet.Controllers
             return View(team);
         }
 
-        // GET: Teams/Create
+        // GET: Team/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Teams/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Team/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("teamID,name,attack,middle,defence,aggresion")] Team team)
+        public async Task<IActionResult> Create([Bind("team_ID,name,attack,middle,defence,aggresion")] Team team)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +62,7 @@ namespace ScamBet.Controllers
             return View(team);
         }
 
-        // GET: Teams/Edit/5
+        // GET: Team/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,14 +78,12 @@ namespace ScamBet.Controllers
             return View(team);
         }
 
-        // POST: Teams/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Team/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("teamID,name,attack,middle,defence,aggresion")] Team team)
+        public async Task<IActionResult> Edit(int id, [Bind("team_ID,name,attack,middle,defence,aggresion")] Team team)
         {
-            if (id != team.teamID)
+            if (id != team.team_ID)
             {
                 return NotFound();
             }
@@ -101,7 +97,7 @@ namespace ScamBet.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TeamExists(team.teamID))
+                    if (!TeamExists(team.team_ID))
                     {
                         return NotFound();
                     }
@@ -115,7 +111,7 @@ namespace ScamBet.Controllers
             return View(team);
         }
 
-        // GET: Teams/Delete/5
+        // GET: Team/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,7 +120,7 @@ namespace ScamBet.Controllers
             }
 
             var team = await _context.teams
-                .FirstOrDefaultAsync(m => m.teamID == id);
+                .FirstOrDefaultAsync(m => m.team_ID == id);
             if (team == null)
             {
                 return NotFound();
@@ -133,7 +129,7 @@ namespace ScamBet.Controllers
             return View(team);
         }
 
-        // POST: Teams/Delete/5
+        // POST: Team/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -150,7 +146,7 @@ namespace ScamBet.Controllers
 
         private bool TeamExists(int id)
         {
-            return _context.teams.Any(e => e.teamID == id);
+            return _context.teams.Any(e => e.team_ID == id);
         }
     }
 }

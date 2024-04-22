@@ -13,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.matchID)
+                @Html.DisplayNameFor(model => model.match_ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.trID)
+                @Html.DisplayNameFor(model => model.tr_ID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.time)
@@ -29,18 +29,18 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => match.matchID)
+                    @Html.DisplayFor(modelItem => match.match_ID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => match.trID)
+                    @Html.DisplayFor(modelItem => match.tr_ID)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => match.time)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@match.matchID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@match.matchID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@match.matchID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@match.match_ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@match.match_ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@match.match_ID">Delete</a>
                 </td>
             </tr>
         }

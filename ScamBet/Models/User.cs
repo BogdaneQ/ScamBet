@@ -7,6 +7,6 @@ namespace ScamBet.Entities
 
         [Required]
         [Range(0, double.MaxValue)] 
-        public double acc_balace { get; set; } = 0;
+        public double acc_balance { get; set; } = 0;
     }
 }

@@ -6,9 +6,10 @@ namespace ScamBet.Entities
     {
         [Key]
         [Required]
-        public int rouletteID { get; set; }
-        public double balance { get; set; }
-        [Required] 
-        public DateTime time { get; set; }
+        public int roulette_ID { get; set; }
+
+        [Required]
+        public string name { get; set; }
+
     }
 }

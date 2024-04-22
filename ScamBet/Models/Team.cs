@@ -5,26 +5,27 @@ namespace ScamBet.Entities
     {
         [Key]
         [Required] 
-        public int teamID { get; set; }
+        public int team_ID { get; set; }
 
         [Required]
         [StringLength(50)] 
         public string name { get; set; }
 
         [Required]
-        [Range(0, 100)]
-        public int attack { get; set; }
+        [StringLength(100)]
+        public int wins { get; set; }
 
         [Required]
-        [Range(0, 100)] 
-        public int middle { get; set; }
+        [StringLength(100)]
+        public int draws { get; set; }
 
         [Required]
-        [Range(0, 100)] 
-        public int defence { get; set; }
+        [StringLength(100)]
+        public int loses { get; set; }
 
         [Required]
-        [Range(0, 100)] 
-        public int aggresion { get; set; }
+        [StringLength(100)]
+        public int points { get; set; }
+
     }
 }

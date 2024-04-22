@@ -31,7 +31,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var roulette = await _context.roulettes.FirstOrDefaultAsync(m => m.rouletteID == id);
+            var roulette = await _context.roulettes.FirstOrDefaultAsync(m => m.roulette_ID == id);
             if (roulette == null)
             {
                 return NotFound();
@@ -49,7 +49,7 @@ namespace ScamBet.Controllers
         // POST: Roulette/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("rouletteID,user_ID,balance,time")] Roulette roulette)
+        public async Task<IActionResult> Create([Bind("roulette_ID,user_ID,balance,time")] Roulette roulette)
         {
             if (ModelState.IsValid)
             {
@@ -79,9 +79,9 @@ namespace ScamBet.Controllers
         // POST: Roulette/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("rouletteID,user_ID,balance,time")] Roulette roulette)
+        public async Task<IActionResult> Edit(int id, [Bind("roulette_ID,user_ID,balance,time")] Roulette roulette)
         {
-            if (id != roulette.rouletteID)
+            if (id != roulette.roulette_ID)
             {
                 return NotFound();
             }
@@ -95,7 +95,7 @@ namespace ScamBet.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RouletteExists(roulette.rouletteID))
+                    if (!RouletteExists(roulette.roulette_ID))
                     {
                         return NotFound();
                     }
@@ -117,7 +117,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var roulette = await _context.roulettes.FirstOrDefaultAsync(m => m.rouletteID == id);
+            var roulette = await _context.roulettes.FirstOrDefaultAsync(m => m.roulette_ID == id);
             if (roulette == null)
             {
                 return NotFound();
@@ -139,7 +139,7 @@ namespace ScamBet.Controllers
 
         private bool RouletteExists(int id)
         {
-            return _context.roulettes.Any(e => e.rouletteID == id);
+            return _context.roulettes.Any(e => e.roulette_ID == id);
         }
     }
 }

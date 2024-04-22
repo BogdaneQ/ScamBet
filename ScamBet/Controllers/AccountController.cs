@@ -9,46 +9,61 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
-    public class TeamResultsController : Controller
+    public class AccountController : Controller
     {
         private readonly BookmacherDBContext _context;
 
-        public TeamResultsController(BookmacherDBContext context)
+        public AccountController(BookmacherDBContext context)
         {
             _context = context;
         }
 
-        // GET: TeamResults
+        // GET: Account
         public async Task<IActionResult> Index()
         {
-            return View(await _context.teams_results.ToListAsync());
+            return View(await _context.accounts.ToListAsync());
         }
 
-        // GET: TeamResults/Create
+        // GET: Account/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var account = await _context.accounts
+                .FirstOrDefaultAsync(m => m.user_ID == id);
+            if (account == null)
+            {
+                return NotFound();
+            }
+
+            return View(account);
+        }
+
+        // GET: Account/Create
         public IActionResult Create()
         {
-            var AllTeams = _context.teams.ToList();
-            ViewData["TeamList"] = new SelectList(AllTeams, "name", "name");
             return View();
         }
 
-        // POST: TeamResults/Create
+        // POST: Account/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("trID,TeamID,winner,goals,fouls,red_cards,yellow_cards,shots,shots_ontarget,corners")] Team_results team_results)
+        public async Task<IActionResult> Create([Bind("user_ID,Username,name,Surname,password,email,phone_number,isBanned")] Account account)
         {
-            var Team = _context.teams.FirstOrDefault(a => a.name == team_results.Team.name);
-
-            Team.name = team_results.Team.name;
-
-                _context.Add(team_results);
+            if (ModelState.IsValid)
+            {
+                _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            
-            return View(team_results);
+            }
+            return View(account);
         }
 
-        // GET: TeamResults/Edit/5
+        // GET: Account/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -56,20 +71,20 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var team_results = await _context.teams_results.FindAsync(id);
-            if (team_results == null)
+            var account = await _context.accounts.FindAsync(id);
+            if (account == null)
             {
                 return NotFound();
             }
-            return View(team_results);
+            return View(account);
         }
 
-        // POST: TeamResults/Edit/5
+        // POST: Account/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("trID,TeamID,winner,goals,fouls,red_cards,yellow_cards,shots,shots_ontarget,corners")] Team_results team_results)
+        public async Task<IActionResult> Edit(int id, [Bind("user_ID,username,name,surname,password,email,phone_number,isBanned")] Account account)
         {
-            if (id != team_results.trID)
+            if (id != account.user_ID)
             {
                 return NotFound();
             }
@@ -78,12 +93,12 @@ namespace ScamBet.Controllers
             {
                 try
                 {
-                    _context.Update(team_results);
+                    _context.Update(account);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!Team_resultsExists(team_results.trID))
+                    if (!AccountExists(account.user_ID))
                     {
                         return NotFound();
                     }
@@ -94,10 +109,10 @@ namespace ScamBet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(team_results);
+            return View(account);
         }
 
-        // GET: TeamResults/Delete/5
+        // GET: Account/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -105,30 +120,34 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var team_results = await _context.teams_results
-                .FirstOrDefaultAsync(m => m.trID == id);
-            if (team_results == null)
+            var account = await _context.accounts
+                .FirstOrDefaultAsync(m => m.user_ID == id);
+            if (account == null)
             {
                 return NotFound();
             }
 
-            return View(team_results);
+            return View(account);
         }
 
-        // POST: TeamResults/Delete/5
+        // POST: Accounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team_results = await _context.teams_results.FindAsync(id);
-            _context.teams_results.Remove(team_results);
+            var account = await _context.accounts.FindAsync(id);
+            if (account != null)
+            {
+                _context.accounts.Remove(account);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool Team_resultsExists(int id)
+        private bool AccountExists(int id)
         {
-            return _context.teams_results.Any(e => e.trID == id);
+            return _context.accounts.Any(e => e.user_ID == id);
         }
     }
 }

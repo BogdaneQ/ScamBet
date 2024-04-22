@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.rouletteID)
+                @Html.DisplayNameFor(model => model.roulette_ID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.balance)
@@ -29,7 +29,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => roulette.rouletteID)
+                    @Html.DisplayFor(modelItem => roulette.roulette_ID)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => roulette.balance)
@@ -38,9 +38,9 @@
                     @Html.DisplayFor(modelItem => roulette.time)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@roulette.rouletteID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@roulette.rouletteID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@roulette.rouletteID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@roulette.roulette_ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@roulette.roulette_ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@roulette.roulette_ID">Delete</a>
                 </td>
             </tr>
         }

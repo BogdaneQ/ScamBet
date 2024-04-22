@@ -6,7 +6,7 @@ namespace ScamBet.Entities
     {
         [Key]
         [Required] 
-        public int betID {  get; set; }
+        public int bet_ID {  get; set; }
 
         [ForeignKey("Account")]
         [Required]
@@ -18,7 +18,7 @@ namespace ScamBet.Entities
 
         [ForeignKey("Match")]
         [Required]
-        public int matchID { get; set; }
+        public int match_ID { get; set; }
 
         [Required]
         public double ratio { get; set; }

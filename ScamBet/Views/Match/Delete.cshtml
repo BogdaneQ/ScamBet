@@ -12,16 +12,16 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.matchID)
+            @Html.DisplayNameFor(model => model.match_ID)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.matchID)
+            @Html.DisplayFor(model => model.match_ID)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.trID)
+            @Html.DisplayNameFor(model => model.tr_ID)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.trID)
+            @Html.DisplayFor(model => model.tr_ID)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.time)
@@ -32,7 +32,7 @@
     </dl>
 
     <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="matchID" />
+        <input type="hidden" asp-for="match_ID" />
         <div class="form-group">
             <input type="submit" value="Delete" class="btn btn-danger" />
             <a asp-action="Index" class="btn btn-secondary">Back to List</a>

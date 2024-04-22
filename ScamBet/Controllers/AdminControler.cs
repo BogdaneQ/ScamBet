@@ -29,7 +29,7 @@ namespace ScamBet.Controllers
         public IActionResult Create()
         {
             var AllAccounts = _context.accounts.ToList();
-            ViewData["AccountList"] = new SelectList (AllAccounts, "Username", "Username");
+            ViewData["AccountList"] = new SelectList (AllAccounts, "username", "username");
             return View();
         }
 
@@ -38,9 +38,9 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Admin admin)
         {
-            var Account = _context.accounts.FirstOrDefault(a => a.Username == admin.Username);
+            var Account = _context.accounts.FirstOrDefault(a => a.username == admin.username);
             admin.name = Account.name;
-            admin.Surname = Account.Surname;
+            admin.surname = Account.surname;
             admin.phone_number = Account.phone_number;
             admin.email = Account.email;
             admin.password = Account.password;

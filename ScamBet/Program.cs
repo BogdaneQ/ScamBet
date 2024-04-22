@@ -8,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BookmacherDBContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<AdminController>();
-builder.Services.AddScoped<TeamResultsController>();
 builder.Services.AddScoped<UserController>();
 builder.Services.AddScoped<MatchController>();
 builder.Services.AddScoped<RouletteController>();
@@ -25,6 +24,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -36,16 +36,16 @@ app.MapControllerRoute(
     pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
-    name: "teams_results",
-    pattern: "{area:exists}/{controller=TeamResults}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
     name: "user",
     pattern: "{area:exists}/{controller=User}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "match",
     pattern: "{area:exists}/{controller=Match}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "team",
+    pattern: "{area:exists}/{controller=Team}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "rulette",

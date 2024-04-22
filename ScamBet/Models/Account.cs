@@ -11,15 +11,15 @@ namespace ScamBet.Entities
 
         [Required(ErrorMessage = "Enter your Usermane")]
         [StringLength(25)]
-        public string Username { get; set; }
+        public string username { get; set; }
         
-        [Required(ErrorMessage ="Enter your name")]
+        [Required(ErrorMessage ="Enter your Name")]
         [StringLength(25)]
         public string name { get; set; }
         
         [Required(ErrorMessage ="Enter your Surname")]
         [StringLength(50)]
-        public string Surname { get; set; }
+        public string surname { get; set; }
 
         [Required(ErrorMessage ="Please enter your password")]
         [PasswordPropertyText]
