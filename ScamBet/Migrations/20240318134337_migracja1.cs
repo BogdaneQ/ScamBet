@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ScamBet.Migrations
 {
+
     /// <inheritdoc />
     public partial class migracja1 : Migration
     {

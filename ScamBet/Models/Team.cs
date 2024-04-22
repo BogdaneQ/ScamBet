@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace ScamBet.Entitties
+namespace ScamBet.Entities
 {
     public class Team
     {

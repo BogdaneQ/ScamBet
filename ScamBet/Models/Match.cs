@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace ScamBet.Entitties
+namespace ScamBet.Entities
 {
     public class Match
     {

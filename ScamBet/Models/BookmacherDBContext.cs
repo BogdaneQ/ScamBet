@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-namespace ScamBet.Entitties
+namespace ScamBet.Entities
 
 {
     public class BookmacherDBContext : DbContext

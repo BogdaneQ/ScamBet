@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ScamBet.Entitties;
+using ScamBet.Entities;
 using System;
 using System.Linq;
 

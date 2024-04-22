@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Controllers;
-using ScamBet.Entitties;
+using ScamBet.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
