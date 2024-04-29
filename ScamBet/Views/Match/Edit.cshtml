@@ -1,25 +1,24 @@
 ﻿@model ScamBet.Entities.Match
 
-@{
-    ViewData["Title"] = "Edit Match";
-}
+<h2>Edit Match</h2>
 
-<h1>Edit Match</h1>
-
-<form asp-action="Edit">
+<form asp-action="Edit" method="post">
     <input type="hidden" asp-for="match_ID" />
     <div class="form-group">
-        <label asp-for="tr_ID" class="control-label"></label>
-        <input asp-for="tr_ID" class="form-control" />
-        <span asp-validation-for="tr_ID" class="text-danger"></span>
+        <label asp-for="team1">Team A</label>
+        <input asp-for="team1" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="time" class="control-label"></label>
+        <label asp-for="team2">Team B</label>
+        <input asp-for="team2" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="time">Date</label>
         <input asp-for="time" class="form-control" />
-        <span asp-validation-for="time" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <label asp-for="winner">Result</label>
+        <input asp-for="winner" class="form-control" />
     </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>

@@ -1,48 +1,44 @@
 ﻿@model ScamBet.Entities.Team
 
-@{
-    ViewData["Title"] = "Details";
-}
-
-<h1>Details</h1>
+<h2>Team Details</h2>
 
 <div>
-    <h4>Team</h4>
+    <h4>Team ID: @Model.team_ID</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.name)
+        <dt class="col-sm-2">
+            Name
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.name)
+        <dd class="col-sm-10">
+            @Model.name
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.attack)
+        <dt class="col-sm-2">
+            Wins
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.attack)
+        <dd class="col-sm-10">
+            @Model.wins
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.middle)
+        <dt class="col-sm-2">
+            Draws
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.middle)
+        <dd class="col-sm-10">
+            @Model.draws
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.defence)
+        <dt class="col-sm-2">
+            Loses
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.defence)
+        <dd class="col-sm-10">
+            @Model.loses
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.aggresion)
+        <dt class="col-sm-2">
+            Points
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.aggresion)
+        <dd class="col-sm-10">
+            @Model.points
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.team_ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <p>
+        <a asp-action="Edit" asp-route-id="@Model.team_ID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </p>
 </div>

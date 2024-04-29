@@ -1,26 +1,15 @@
 ﻿@model IEnumerable<ScamBet.Entities.Match>
 
-@{
-    ViewData["Title"] = "Match List";
-}
+<h2>Matches</h2>
 
-<h1>Match List</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.match_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.tr_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.time)
-            </th>
+            <th>ID</th>
+            <th>Team A</th>
+            <th>Team B</th>
+            <th>Date</th>
+            <th>Result</th>
             <th></th>
         </tr>
     </thead>
@@ -28,18 +17,13 @@
         @foreach (var match in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => match.match_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => match.tr_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => match.time)
-                </td>
+                <td>@match.match_ID</td>
+                <td>@match.team1</td>
+                <td>@match.team2</td>
+                <td>@match.time</td>
+                <td>@match.winner</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@match.match_ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@match.match_ID">Details</a> |
                     <a asp-action="Delete" asp-route-id="@match.match_ID">Delete</a>
                 </td>
             </tr>

@@ -11,6 +11,8 @@ builder.Services.AddScoped<AdminController>();
 builder.Services.AddScoped<UserController>();
 builder.Services.AddScoped<MatchController>();
 builder.Services.AddScoped<RouletteController>();
+builder.Services.AddScoped<TeamController>();
+builder.Services.AddScoped<AccountController>();
 
 
 var app = builder.Build();
@@ -36,6 +38,10 @@ app.MapControllerRoute(
     pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
+    name: "account",
+    pattern: "{area:exists}/{controller=Account}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
     name: "user",
     pattern: "{area:exists}/{controller=User}/{action=Index}/{id?}");
 
@@ -44,12 +50,12 @@ app.MapControllerRoute(
     pattern: "{area:exists}/{controller=Match}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
-    name: "team",
-    pattern: "{area:exists}/{controller=Team}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
     name: "rulette",
     pattern: "{area:exists}/{controller=Rulette}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "team",
+    pattern: "{area:exists}/{controller=Team}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "Home",

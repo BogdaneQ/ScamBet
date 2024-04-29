@@ -1,21 +1,23 @@
 ﻿@model ScamBet.Entities.Match
 
-@{
-    ViewData["Title"] = "Create Match";
-}
-
-<h1>Create Match</h1>
+<h2>Create New Match</h2>
 
 <form asp-action="Create">
     <div class="form-group">
-        <label asp-for="tr_ID">Team Results ID</label>
-        <input asp-for="tr_ID" class="form-control" />
-        <span asp-validation-for="tr_ID" class="text-danger"></span>
+        <label asp-for="team1">Team A</label>
+        <input asp-for="team1" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="time">Match Time</label>
+        <label asp-for="team2">Team B</label>
+        <input asp-for="team2" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="time">Date</label>
         <input asp-for="time" class="form-control" />
-        <span asp-validation-for="time" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="winner">Result</label>
+        <input asp-for="winner" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

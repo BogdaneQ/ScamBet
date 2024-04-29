@@ -52,7 +52,7 @@ namespace ScamBet.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("user_ID,Username,name,Surname,password,email,phone_number,isBanned")] Account account)
+        public async Task<IActionResult> Create([Bind("user_ID,username,name,surname,password,email,phone_number,isBanned")] Account account)
         {
             if (ModelState.IsValid)
             {
