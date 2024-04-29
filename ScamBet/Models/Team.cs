@@ -12,19 +12,15 @@ namespace ScamBet.Entities
         public string name { get; set; }
 
         [Required]
-        [StringLength(100)]
         public int wins { get; set; }
 
         [Required]
-        [StringLength(100)]
         public int draws { get; set; }
 
         [Required]
-        [StringLength(100)]
         public int loses { get; set; }
 
         [Required]
-        [StringLength(100)]
         public int points { get; set; }
 
     }

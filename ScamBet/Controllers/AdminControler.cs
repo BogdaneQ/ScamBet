@@ -71,19 +71,22 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Admin admin)
         {
-            if (id != admin.user_ID)
-            {
-                return NotFound();
-            }
+            var Account = _context.accounts.FirstOrDefault(a => a.username == admin.username);
+            admin.name = Account.name;
+            admin.surname = Account.surname;
+            admin.phone_number = Account.phone_number;
+            admin.email = Account.email;
+            admin.password = Account.password;
+            admin.isBanned = Account.isBanned;
 
-            if (ModelState.IsValid)
-            {
-                _context.admins.Update(admin);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
+            _context.accounts.Remove(Account);
+            _context.admins.Add(admin);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+
             return View(admin);
         }
+
 
         // GET: Admin/Delete/5
         public IActionResult Delete(int id)
@@ -106,6 +109,10 @@ namespace ScamBet.Controllers
             _context.admins.Remove(admin);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
+        }
+        private bool AdminExists(int id)
+        {
+            return _context.admins.Any(e => e.user_ID == id);
         }
     }
 }

@@ -229,11 +229,9 @@ namespace ScamBet.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("team_ID"));
 
                     b.Property<int>("draws")
-                        .HasMaxLength(100)
                         .HasColumnType("int");
 
                     b.Property<int>("loses")
-                        .HasMaxLength(100)
                         .HasColumnType("int");
 
                     b.Property<string>("name")
@@ -242,11 +240,9 @@ namespace ScamBet.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("points")
-                        .HasMaxLength(100)
                         .HasColumnType("int");
 
                     b.Property<int>("wins")
-                        .HasMaxLength(100)
                         .HasColumnType("int");
 
                     b.HasKey("team_ID");

@@ -54,10 +54,10 @@ namespace ScamBet.Migrations
                     team_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    wins = table.Column<int>(type: "int", maxLength: 100, nullable: false),
-                    draws = table.Column<int>(type: "int", maxLength: 100, nullable: false),
-                    loses = table.Column<int>(type: "int", maxLength: 100, nullable: false),
-                    points = table.Column<int>(type: "int", maxLength: 100, nullable: false)
+                    wins = table.Column<int>(type: "int", nullable: false),
+                    draws = table.Column<int>(type: "int", nullable: false),
+                    loses = table.Column<int>(type: "int", nullable: false),
+                    points = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

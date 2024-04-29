@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
-using System;
 using System.Linq;
 
 namespace ScamBet.Controllers
@@ -24,6 +25,9 @@ namespace ScamBet.Controllers
         // GET: Match/Create
         public IActionResult Create()
         {
+            var teams = _context.teams.ToList();
+            ViewData["HomeTeamId"] = new SelectList(teams, "Id", "Name");
+            ViewData["AwayTeamId"] = new SelectList(teams, "Id", "Name");
             return View();
         }
 
@@ -36,7 +40,7 @@ namespace ScamBet.Controllers
             {
                 _context.matches.Add(match);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(match);
         }
@@ -64,9 +68,9 @@ namespace ScamBet.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.matches.Update(match);
+                _context.Entry(match).State = EntityState.Modified;
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             return View(match);
         }
@@ -91,7 +95,7 @@ namespace ScamBet.Controllers
             var match = _context.matches.Find(id);
             _context.matches.Remove(match);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
