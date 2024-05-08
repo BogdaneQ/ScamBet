@@ -18,16 +18,16 @@ namespace ScamBet.Controllers
         // GET: Match/Index
         public IActionResult Index()
         {
-            var matches = _context.matches.ToList();
+            var matches = _context.matches.ToList(); // Assuming "Matches" is the correct property name in your BookmacherDBContext
             return View(matches);
         }
 
         // GET: Match/Create
         public IActionResult Create()
         {
-            var teams = _context.teams.ToList();
-            ViewData["HomeTeamId"] = new SelectList(teams, "Id", "Name");
-            ViewData["AwayTeamId"] = new SelectList(teams, "Id", "Name");
+            var AllTeams = _context.teams.ToList(); // Assuming "Teams" is the correct property name in your BookmacherDBContext
+            ViewData["HomeTeamId"] = new SelectList(AllTeams, "team1_ID", "team1_ID");
+            ViewData["AwayTeamId"] = new SelectList(AllTeams, "team2_ID", "team2_ID");
             return View();
         }
 
@@ -38,7 +38,7 @@ namespace ScamBet.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.matches.Add(match);
+                _context.matches.Add(match); // Assuming "Matches" is the correct property name in your BookmacherDBContext
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -48,7 +48,7 @@ namespace ScamBet.Controllers
         // GET: Match/Edit/5
         public IActionResult Edit(int id)
         {
-            var match = _context.matches.Find(id);
+            var match = _context.matches.Find(id); // Assuming "Matches" is the correct property name in your BookmacherDBContext
             if (match == null)
             {
                 return NotFound();
@@ -78,7 +78,7 @@ namespace ScamBet.Controllers
         // GET: Match/Delete/5
         public IActionResult Delete(int id)
         {
-            var match = _context.matches.Find(id);
+            var match = _context.matches.Find(id); // Assuming "Matches" is the correct property name in your BookmacherDBContext
             if (match == null)
             {
                 return NotFound();
@@ -92,7 +92,7 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var match = _context.matches.Find(id);
+            var match = _context.matches.Find(id); // Assuming "Matches" is the correct property name in your BookmacherDBContext
             _context.matches.Remove(match);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
