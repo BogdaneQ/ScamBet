@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScamBet.Controllers
 {
+    [Authorize(Policy = "AdminPolicy")]
     public class RouletteController : Controller
     {
         private readonly BookmacherDBContext _context;

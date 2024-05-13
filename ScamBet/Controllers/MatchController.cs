@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
@@ -6,6 +7,7 @@ using System.Linq;
 
 namespace ScamBet.Controllers
 {
+    [Authorize(Policy = "AdminPolicy")]
     public class MatchController : Controller
     {
         private readonly BookmacherDBContext _context;

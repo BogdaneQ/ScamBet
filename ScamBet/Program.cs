@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Controllers;
 using ScamBet.Entities;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,23 +16,31 @@ builder.Services.AddScoped<MatchController>();
 builder.Services.AddScoped<RouletteController>();
 builder.Services.AddScoped<TeamController>();
 builder.Services.AddScoped<AccountController>();
+builder.Services.AddSingleton<IAuthorizationHandler, AdminAuthorizationHandler>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>();
 
 
 var app = builder.Build();
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
@@ -61,6 +72,16 @@ app.MapControllerRoute(
     name: "Home",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "login",
+    pattern: "Home/Login",
+    defaults: new { controller = "Home", action = "Login" });
+
+app.MapControllerRoute(
+    name: "logout",
+    pattern: "Home/Logout",
+    defaults: new { controller = "Home", action = "Logout" });
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
@@ -70,3 +91,21 @@ app.UseEndpoints(endpoints =>
 });
 
 app.Run();
+
+
+public class AdminRequirement : IAuthorizationRequirement
+{
+}
+
+public class AdminAuthorizationHandler : AuthorizationHandler<AdminRequirement>
+{
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AdminRequirement requirement)
+    {
+        if (context.User.IsInRole("Admin"))
+        {
+            context.Succeed(requirement);
+        }
+
+        return Task.CompletedTask;
+    }
+}

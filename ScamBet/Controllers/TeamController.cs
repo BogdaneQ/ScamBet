@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
+    [Authorize(Policy = "AdminPolicy")]
     public class TeamController : Controller
     {
         private readonly BookmacherDBContext _context;
