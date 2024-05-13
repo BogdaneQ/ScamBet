@@ -18,16 +18,16 @@ namespace ScamBet.Controllers
         // GET: Match/Index
         public IActionResult Index()
         {
-            var matches = _context.matches.ToList(); // Assuming "Matches" is the correct property name in your BookmacherDBContext
+            var matches = _context.matches.ToList();
             return View(matches);
         }
 
         // GET: Match/Create
         public IActionResult Create()
         {
-            var AllTeams = _context.teams.ToList(); // Assuming "Teams" is the correct property name in your BookmacherDBContext
-            ViewData["HomeTeamId"] = new SelectList(AllTeams, "team1_ID", "team1_ID");
-            ViewData["AwayTeamId"] = new SelectList(AllTeams, "team2_ID", "team2_ID");
+            var allTeams = _context.teams.ToList();
+            ViewBag.Teams1 = new SelectList(allTeams, "team1_ID", "Name");
+            ViewBag.Teams2 = new SelectList(allTeams, "team2_ID", "Name");
             return View();
         }
 
@@ -36,23 +36,23 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Match match)
         {
-            if (ModelState.IsValid)
-            {
-                _context.matches.Add(match); // Assuming "Matches" is the correct property name in your BookmacherDBContext
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
+            var allTeams = _context.teams.ToList();
+            ViewBag.Teams1 = new SelectList(allTeams, "team1_ID", "Name");
+            ViewBag.Teams2 = new SelectList(allTeams, "team2_ID", "Name");
             return View(match);
         }
 
         // GET: Match/Edit/5
         public IActionResult Edit(int id)
         {
-            var match = _context.matches.Find(id); // Assuming "Matches" is the correct property name in your BookmacherDBContext
+            var match = _context.matches.Find(id);
             if (match == null)
             {
                 return NotFound();
             }
+            var allTeams = _context.teams.ToList();
+            ViewBag.Teams1 = new SelectList(allTeams, "team_ID", "Name", match.team1_ID);
+            ViewBag.Teams2 = new SelectList(allTeams, "team_ID", "Name", match.team2_ID);
             return View(match);
         }
 
@@ -66,19 +66,15 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Entry(match).State = EntityState.Modified;
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
+            var allTeams = _context.teams.ToList();
+            ViewBag.Teams1 = new SelectList(allTeams, "team_ID", "Name", match.team1_ID);
+            ViewBag.Teams2 = new SelectList(allTeams, "team_ID", "Name", match.team2_ID);
             return View(match);
         }
-
         // GET: Match/Delete/5
         public IActionResult Delete(int id)
         {
-            var match = _context.matches.Find(id); // Assuming "Matches" is the correct property name in your BookmacherDBContext
+            var match = _context.matches.Find(id);
             if (match == null)
             {
                 return NotFound();
@@ -92,7 +88,7 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var match = _context.matches.Find(id); // Assuming "Matches" is the correct property name in your BookmacherDBContext
+            var match = _context.matches.Find(id);
             _context.matches.Remove(match);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

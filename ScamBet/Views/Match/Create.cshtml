@@ -4,12 +4,82 @@
 
 <form asp-action="Create">
     <div class="form-group">
-        <label asp-for="team1">Home Team</label>
-        <select asp-for="team1_ID" class="form-control" asp-items="ViewBag.AllTeams"></select>
+        <label asp-for="team1_ID">Home Team</label>
+        <select asp-for="team1_ID" class="form-control" asp-items="ViewBag.Teams1"></select>
     </div>
     <div class="form-group">
-        <label asp-for="team2">Away Team</label>
-        <select asp-for="team2_ID" class="form-control" asp-items="ViewBag.AllTeams"></select>
+        <label asp-for="team2_ID">Away Team</label>
+        <select asp-for="team2_ID" class="form-control" asp-items="ViewBag.Teams2"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="team1_goals" class="control-label"></label>
+        <input asp-for="team1_goals" class="form-control" />
+        <span asp-validation-for="team1_goals" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team2_goals" class="control-label"></label>
+        <input asp-for="team2_goals" class="form-control" />
+        <span asp-validation-for="team2_goals" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team1_fouls" class="control-label"></label>
+        <input asp-for="team1_fouls" class="form-control" />
+        <span asp-validation-for="team1_fouls" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team2_fouls" class="control-label"></label>
+        <input asp-for="team2_fouls" class="form-control" />
+        <span asp-validation-for="team2_fouls" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team1_red_cards" class="control-label"></label>
+        <input asp-for="team1_red_cards" class="form-control" />
+        <span asp-validation-for="team1_red_cards" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team2_red_cards" class="control-label"></label>
+        <input asp-for="team2_red_cards" class="form-control" />
+        <span asp-validation-for="team2_red_cards" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team1_yellow_cards" class="control-label"></label>
+        <input asp-for="team1_yellow_cards" class="form-control" />
+        <span asp-validation-for="team1_yellow_cards" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team2_yellow_cards" class="control-label"></label>
+        <input asp-for="team2_yellow_cards" class="form-control" />
+        <span asp-validation-for="team2_yellow_cards" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team1_shots" class="control-label"></label>
+        <input asp-for="team1_shots" class="form-control" />
+        <span asp-validation-for="team1_shots" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team2_shots" class="control-label"></label>
+        <input asp-for="team2_shots" class="form-control" />
+        <span asp-validation-for="team2_shots" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team1_shots_ontarget" class="control-label"></label>
+        <input asp-for="team1_shots_ontarget" class="form-control" />
+        <span asp-validation-for="team1_shots_ontarget" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team2_shots_ontarget" class="control-label"></label>
+        <input asp-for="team2_shots_ontarget" class="form-control" />
+        <span asp-validation-for="team2_shots_ontarget" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team1_corners" class="control-label"></label>
+        <input asp-for="team1_corners" class="form-control" />
+        <span asp-validation-for="team1_corners" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="team2_corners" class="control-label"></label>
+        <input asp-for="team2_corners" class="form-control" />
+        <span asp-validation-for="team2_corners" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="time">Date</label>
