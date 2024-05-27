@@ -17,7 +17,7 @@ builder.Services.AddScoped<RouletteController>();
 builder.Services.AddScoped<TeamController>();
 builder.Services.AddScoped<AccountController>();
 builder.Services.AddSingleton<IAuthorizationHandler, AdminAuthorizationHandler>();
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>();
+builder.Services.AddIdentity<ScamBet.Models.ApplicationUser, IdentityRole>();
 
 
 var app = builder.Build();
