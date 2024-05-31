@@ -13,10 +13,12 @@ namespace ScamBet.Entities
         [ForeignKey("team1")]
         [Required]
         public int team1_ID { get; set; }
+        public virtual Team Team1 { get; set; }
 
         [ForeignKey("team2")]
         [Required]
         public int team2_ID { get; set; }
+        public virtual Team Team2 { get; set; }
 
         [Required]
         public int team1_goals { get; set; }

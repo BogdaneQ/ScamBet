@@ -33,24 +33,6 @@ namespace ScamBet.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "matches",
-                columns: table => new
-                {
-                    match_ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    team1_ID = table.Column<int>(type: "int", nullable: false),
-                    team2_ID = table.Column<int>(type: "int", nullable: false),
-                    team1_goals = table.Column<int>(type: "int", nullable: false),
-                    team2_goals = table.Column<int>(type: "int", nullable: false),
-                    time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    winner_ID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_matches", x => x.match_ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "roulettes",
                 columns: table => new
                 {
@@ -78,6 +60,36 @@ namespace ScamBet.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_teams", x => x.team_ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "matches",
+                columns: table => new
+                {
+                    match_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    team1_ID = table.Column<int>(type: "int", nullable: false),
+                    Team1team_ID = table.Column<int>(type: "int", nullable: true),
+                    team2_ID = table.Column<int>(type: "int", nullable: false),
+                    Team2team_ID = table.Column<int>(type: "int", nullable: true),
+                    team1_goals = table.Column<int>(type: "int", nullable: false),
+                    team2_goals = table.Column<int>(type: "int", nullable: false),
+                    time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    winner_ID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_matches", x => x.match_ID);
+                    table.ForeignKey(
+                        name: "FK_matches_teams_Team1team_ID",
+                        column: x => x.Team1team_ID,
+                        principalTable: "teams",
+                        principalColumn: "team_ID");
+                    table.ForeignKey(
+                        name: "FK_matches_teams_Team2team_ID",
+                        column: x => x.Team2team_ID,
+                        principalTable: "teams",
+                        principalColumn: "team_ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -120,6 +132,16 @@ namespace ScamBet.Migrations
                 name: "IX_bets_match_ID1",
                 table: "bets",
                 column: "match_ID1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_matches_Team1team_ID",
+                table: "matches",
+                column: "Team1team_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_matches_Team2team_ID",
+                table: "matches",
+                column: "Team2team_ID");
         }
 
         /// <inheritdoc />
@@ -132,13 +154,13 @@ namespace ScamBet.Migrations
                 name: "roulettes");
 
             migrationBuilder.DropTable(
-                name: "teams");
-
-            migrationBuilder.DropTable(
                 name: "accounts");
 
             migrationBuilder.DropTable(
                 name: "matches");
+
+            migrationBuilder.DropTable(
+                name: "teams");
         }
     }
 }

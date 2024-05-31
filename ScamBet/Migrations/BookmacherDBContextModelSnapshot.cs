@@ -124,6 +124,12 @@ namespace ScamBet.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("match_ID"));
 
+                    b.Property<int?>("Team1team_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Team2team_ID")
+                        .HasColumnType("int");
+
                     b.Property<int>("team1_ID")
                         .HasColumnType("int");
 
@@ -143,6 +149,10 @@ namespace ScamBet.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("match_ID");
+
+                    b.HasIndex("Team1team_ID");
+
+                    b.HasIndex("Team2team_ID");
 
                     b.ToTable("matches");
                 });
@@ -207,6 +217,21 @@ namespace ScamBet.Migrations
                     b.Navigation("bet_placer");
 
                     b.Navigation("match");
+                });
+
+            modelBuilder.Entity("ScamBet.Entities.Match", b =>
+                {
+                    b.HasOne("ScamBet.Entities.Team", "Team1")
+                        .WithMany()
+                        .HasForeignKey("Team1team_ID");
+
+                    b.HasOne("ScamBet.Entities.Team", "Team2")
+                        .WithMany()
+                        .HasForeignKey("Team2team_ID");
+
+                    b.Navigation("Team1");
+
+                    b.Navigation("Team2");
                 });
 #pragma warning restore 612, 618
         }

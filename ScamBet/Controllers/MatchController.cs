@@ -20,7 +20,7 @@ namespace ScamBet.Controllers
         // GET: Match
         public async Task<IActionResult> Index()
         {
-            return View(await _context.matches.ToListAsync());
+            return View(await _context.matches.Include(m => m.Team1).Include(m => m.Team2).ToListAsync());
         }
 
         // GET: Match/Details/5
