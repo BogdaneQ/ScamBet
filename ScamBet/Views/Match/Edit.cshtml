@@ -2,23 +2,47 @@
 
 <h2>Edit Match</h2>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="match_ID" />
-    <div class="form-group">
-        <label asp-for="team1">Team A</label>
-        <input asp-for="team1" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="team2">Team B</label>
-        <input asp-for="team2" class="form-control" />
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Home Team</h3>
+            <div class="form-group">
+                <label asp-for="team1_ID">Home Team</label>
+                <select asp-for="team1_ID" class="form-control" asp-items="ViewBag.Team1"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="team1_goals" class="control-label">Home Team Goals</label>
+                <input asp-for="team1_goals" class="form-control" />
+                <span asp-validation-for="team1_goals" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>Away Team</h3>
+            <div class="form-group">
+                <label asp-for="team2_ID">Away Team</label>
+                <select asp-for="team2_ID" class="form-control" asp-items="ViewBag.Team2"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="team2_goals" class="control-label">Away Team Goals</label>
+                <input asp-for="team2_goals" class="form-control" />
+                <span asp-validation-for="team2_goals" class="text-danger"></span>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label asp-for="time">Date</label>
         <input asp-for="time" class="form-control" />
     </div>
-    <div class="form-group">
-        <label asp-for="winner">Result</label>
-        <input asp-for="winner" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <input type="hidden" asp-for="match_ID" />
+    <button type="submit" class="btn btn-primary">Save</button>
 </form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

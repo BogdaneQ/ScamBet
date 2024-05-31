@@ -18,12 +18,7 @@
         <dd class="col-sm-10">
             @Model.name
         </dd>
-        <dt class="col-sm-2">
-            Difficulty
-        </dt>
-        <dd class="col-sm-10">
-            @Model.difficulty
-        </dd>
+        
     </dl>
     <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="roulette_ID" />

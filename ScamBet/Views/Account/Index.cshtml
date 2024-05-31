@@ -13,31 +13,38 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.username)
+                Username
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.surname)
+                Surname
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.password)
+                Password
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.email)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.phone_number)
+                Phone Number
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.isBanned)
+                Account Balance
+            </th>
+            <th>
+                Role
+            </th>
+            <th>
+                IsBanned
             </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+    var rowClass = item.isBanned ? "table-danger" : "";
+        <tr class="@rowClass">
             <td>
                 @Html.DisplayFor(modelItem => item.username)
             </td>
@@ -48,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.surname)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.password)
+                *******
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.email)
@@ -56,9 +63,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.phone_number)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isBanned)
-            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.acc_balance)
+            </th>
+                <th>
+                    @if (item.role_ID == 0)
+                    {
+                        <text>User</text>
+                    }
+                    else if (item.role_ID == 1)
+                    {
+                        <text>Admin</text>
+                    }
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isBanned)
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.user_ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.user_ID">Details</a> |

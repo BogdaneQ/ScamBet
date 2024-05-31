@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow.PointsToAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
-    [Authorize(Policy = "AdminPolicy")]
     public class TeamController : Controller
     {
         private readonly BookmacherDBContext _context;
@@ -52,8 +53,9 @@ namespace ScamBet.Controllers
         // POST: Team/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("team_ID,name,wins,draws,loses,points")] Team team)
+        public async Task<IActionResult> Create([Bind("team_ID,name,wins,draws,loses")] Team team)
         {
+            team.points = team.wins * 2 + team.draws;
             if (ModelState.IsValid)
             {
                 _context.Add(team);
@@ -82,12 +84,14 @@ namespace ScamBet.Controllers
         // POST: Team/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("team_ID,name,wins,draws,loses,points")] Team team)
+        public async Task<IActionResult> Edit(int id, [Bind("team_ID,name,wins,draws,loses")] Team team)
         {
             if (id != team.team_ID)
             {
                 return NotFound();
             }
+
+            team.points = team.wins * 2 + team.draws;
 
             if (ModelState.IsValid)
             {

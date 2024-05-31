@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" />
+                <input asp-for="password" class="form-control" type="password" />
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,11 +41,6 @@
                 <label asp-for="phone_number" class="control-label"></label>
                 <input asp-for="phone_number" class="form-control" />
                 <span asp-validation-for="phone_number" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="isBanned" /> @Html.DisplayNameFor(model => model.isBanned)
-                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

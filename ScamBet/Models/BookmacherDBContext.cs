@@ -5,12 +5,10 @@ namespace ScamBet.Entities
     public class BookmacherDBContext : DbContext
     {
         public DbSet<Account> accounts { get; set; }
-        public DbSet<Admin> admins { get; set; }
         public DbSet<Bet> bets { get; set; }
         public DbSet<Match> matches { get; set; }
         public DbSet<Roulette> roulettes { get; set; }
         public DbSet<Team> teams { get; set; }
-        public DbSet<User> users { get; set; }
 
         public BookmacherDBContext (DbContextOptions<BookmacherDBContext> options) : base(options)
         {

@@ -15,7 +15,7 @@ namespace ScamBet.Entities
 
         [Required]
         [StringLength(50)]
-        public string winnner {  get; set; }
+        public string succes {  get; set; }
 
         [ForeignKey("Match")]
         [Required]

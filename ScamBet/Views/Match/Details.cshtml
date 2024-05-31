@@ -1,0 +1,58 @@
+﻿@model ScamBet.Entities.Match
+
+@{
+    ViewData["Title"] = "Match Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <dl class="row">
+       
+        <dt class="col-sm-3">
+            Teams:
+        </dt>
+        <dd class="col-sm-9">
+            @Model.team1_ID vs @Model.team2_ID
+        </dd>
+
+        <dt class="col-sm-3">
+            Time:
+        </dt>
+        <dd class="col-sm-9">
+            @Model.time
+        </dd>
+
+        <dt class="col-sm-3">
+            Home Team Goals:
+        </dt>
+        <dd class="col-sm-9">
+            @Model.team1_goals
+        </dd>
+
+        <dt class="col-sm-3">
+            Away Team Goals:
+        </dt>
+        <dd class="col-sm-9">
+            @Model.team2_goals
+        </dd>
+        <dt class="col-sm-3">
+            Winner:
+        </dt>
+        <dd class="col-sm-9">
+            @if (Model.winner_ID == 0)
+            {
+                <span>Draw</span>
+            }
+            else
+            {
+                <span>@Model.winner_ID</span>
+            }
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.match_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

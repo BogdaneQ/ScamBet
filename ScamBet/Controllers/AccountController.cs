@@ -10,7 +10,6 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
-    [Authorize(Policy = "AdminPolicy")]
     public class AccountController : Controller
     {
         private readonly BookmacherDBContext _context;
@@ -54,10 +53,13 @@ namespace ScamBet.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("user_ID,username,name,surname,password,email,phone_number,isBanned")] Account account)
+        public async Task<IActionResult> Create([Bind("user_ID,username,name,surname,password,email,phone_number")] Account account)
         {
             if (ModelState.IsValid)
             {
+                account.acc_balance = 0;
+                account.isBanned = false;
+                account.role_ID = 0;
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -78,13 +80,21 @@ namespace ScamBet.Controllers
             {
                 return NotFound();
             }
+
+            // Ustawienie możliwych opcji roli do wyboru
+            ViewData["RoleOptions"] = new SelectList(new[]
+            {
+                new { Value = 0, Text = "User" },
+                new { Value = 1, Text = "Admin" }
+            }, "Value", "Text", account.role_ID);
+
             return View(account);
         }
 
         // POST: Account/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("user_ID,username,name,surname,password,email,phone_number,isBanned")] Account account)
+        public async Task<IActionResult> Edit(int id, [Bind("user_ID,username,name,surname,password,email,phone_number,isBanned,acc_balance,role_ID")] Account account)
         {
             if (id != account.user_ID)
             {
@@ -111,6 +121,14 @@ namespace ScamBet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            // Ustawienie możliwych opcji roli do wyboru
+            ViewData["RoleOptions"] = new SelectList(new[]
+            {
+                new { Value = 0, Text = "User" },
+                new { Value = 1, Text = "Admin" }
+            }, "Value", "Text", account.role_ID);
+
             return View(account);
         }
 

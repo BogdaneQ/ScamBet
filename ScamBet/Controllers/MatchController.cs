@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
-using System.Linq;
 
 namespace ScamBet.Controllers
 {
-    [Authorize(Policy = "AdminPolicy")]
     public class MatchController : Controller
     {
         private readonly BookmacherDBContext _context;
@@ -17,66 +17,119 @@ namespace ScamBet.Controllers
             _context = context;
         }
 
-        // GET: Match/Index
-        public IActionResult Index()
+        // GET: Match
+        public async Task<IActionResult> Index()
         {
-            var matches = _context.matches.ToList();
-            return View(matches);
+            return View(await _context.matches.ToListAsync());
         }
+
+        // GET: Match/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var match = await _context.matches.FindAsync(id);
+            if (match == null)
+            {
+                return NotFound();
+            }
+
+            return View(match);
+        }
+
 
         // GET: Match/Create
         public IActionResult Create()
         {
-            var allTeams = _context.teams.ToList();
-            ViewBag.Teams1 = new SelectList(allTeams, "team1_ID", "Name");
-            ViewBag.Teams2 = new SelectList(allTeams, "team2_ID", "Name");
+            ViewData["Team1"] = new SelectList(_context.teams, "team_ID", "name");
+            ViewData["Team2"] = new SelectList(_context.teams, "team_ID", "name");
             return View();
         }
 
         // POST: Match/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Match match)
+        public async Task<IActionResult> Create([Bind("match_ID,team1_ID,team2_ID,time,team1_goals,team2_goals,isPlayed,winner_ID")] Match match)
         {
-            var allTeams = _context.teams.ToList();
-            ViewBag.Teams1 = new SelectList(allTeams, "team1_ID", "Name");
-            ViewBag.Teams2 = new SelectList(allTeams, "team2_ID", "Name");
+            if (ModelState.IsValid)
+            {
+                AssignWinner(match);
+                _context.Add(match);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Team1"] = new SelectList(_context.teams, "team_ID", "name", match.team1_ID);
+            ViewData["Team2"] = new SelectList(_context.teams, "team_ID", "name", match.team2_ID);
             return View(match);
         }
 
         // GET: Match/Edit/5
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            var match = _context.matches.Find(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var match = await _context.matches.FindAsync(id);
             if (match == null)
             {
                 return NotFound();
             }
-            var allTeams = _context.teams.ToList();
-            ViewBag.Teams1 = new SelectList(allTeams, "team_ID", "Name", match.team1_ID);
-            ViewBag.Teams2 = new SelectList(allTeams, "team_ID", "Name", match.team2_ID);
+            ViewData["Team1"] = new SelectList(_context.teams, "team_ID", "name", match.team1_ID);
+            ViewData["Team2"] = new SelectList(_context.teams, "team_ID", "name", match.team2_ID);
             return View(match);
         }
 
         // POST: Match/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Match match)
+        public async Task<IActionResult> Edit(int id, [Bind("match_ID,team1_ID,team2_ID,time,team1_goals,team2_goals,isPlayed,winner_ID")] Match match)
         {
             if (id != match.match_ID)
             {
                 return NotFound();
             }
 
-            var allTeams = _context.teams.ToList();
-            ViewBag.Teams1 = new SelectList(allTeams, "team_ID", "Name", match.team1_ID);
-            ViewBag.Teams2 = new SelectList(allTeams, "team_ID", "Name", match.team2_ID);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    AssignWinner(match);
+                    _context.Update(match);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MatchExists(match.match_ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Team1"] = new SelectList(_context.teams, "team_ID", "name", match.team1_ID);
+            ViewData["Team2"] = new SelectList(_context.teams, "team_ID", "name", match.team2_ID);
             return View(match);
         }
+
         // GET: Match/Delete/5
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var match = _context.matches.Find(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var match = await _context.matches
+                .FirstOrDefaultAsync(m => m.match_ID == id);
             if (match == null)
             {
                 return NotFound();
@@ -88,12 +141,33 @@ namespace ScamBet.Controllers
         // POST: Match/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var match = _context.matches.Find(id);
+            var match = await _context.matches.FindAsync(id);
             _context.matches.Remove(match);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool MatchExists(int id)
+        {
+            return _context.matches.Any(e => e.match_ID == id);
+        }
+
+        private void AssignWinner(Match match)
+        {
+            if (match.team1_goals > match.team2_goals)
+            {
+                match.winner_ID = match.team1_ID;
+            }
+            else if (match.team2_goals > match.team1_goals)
+            {
+                match.winner_ID = match.team2_ID;
+            }
+            else
+            {
+                match.winner_ID = 0; // 0 represents a draw or no winner
+            }
         }
     }
 }

@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<ScamBet.Entities.Match>
 
+@{
+    ViewData["Title"] = "Index";
+}
+
 <h2>Matches</h2>
 
 <p>
@@ -9,26 +13,72 @@
 <table class="table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Home Team</th>
-            <th>Away Team</th>
-            <th>Date</th>
-            <th>Winner</th>
+            <th>
+                @Html.DisplayNameFor(model => model.match_ID)
+            </th>
+            <th>
+                @Html.DisplayName("Home Team")
+            </th>
+            <th>
+                @Html.DisplayName("Away Team")
+            </th>
+            <th>
+                Home Score
+            </th>
+            <th>
+                Away Score
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.time)
+            </th>
+            <th>
+                @Html.DisplayName("Winner")
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var match in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@match.match_ID</td>
-                <td>@match.team1_ID</td>
-                <td>@match.team2_ID</td>
-                <td>@match.time</td>
-                <td>@match.winner</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@match.match_ID">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@match.match_ID">Delete</a>
+                    @Html.DisplayFor(modelItem => item.match_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.team1_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.team2_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.team1_goals)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.team2_goals)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.time)
+                </td>
+                <td>
+                    @{
+                        if (item.winner_ID == item.team1_ID)
+                        {
+                            <span>@item.team1_ID</span>
+                        }
+                        else if (item.winner_ID == item.team2_ID)
+                        {
+                            <span>@item.team2_ID</span>
+                        }
+                        else
+                        {
+                            <span>Draw</span>
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.match_ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.match_ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.match_ID">Delete</a>
                 </td>
             </tr>
         }

@@ -32,7 +32,7 @@
             @Html.DisplayNameFor(model => model.password)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.password)
+            *******
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.email)
@@ -51,6 +51,25 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.isBanned)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.acc_balance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.acc_balance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.role_ID)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.role_ID == 0)
+            {
+                <text>User</text>
+            }
+            else if (Model.role_ID == 1)
+            {
+                <text>Admin</text>
+            }
         </dd>
     </dl>
 </div>

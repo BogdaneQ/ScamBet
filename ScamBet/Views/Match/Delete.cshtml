@@ -13,16 +13,16 @@
             @Model.match_ID
         </dd>
         <dt class="col-sm-2">
-            Team A
+            Home Team
         </dt>
         <dd class="col-sm-10">
-            @Model.team1
+            @Model.team1_ID
         </dd>
         <dt class="col-sm-2">
-            Team B
+            Away Team
         </dt>
         <dd class="col-sm-10">
-            @Model.team2
+            @Model.team2_ID
         </dd>
         <dt class="col-sm-2">
             Date
@@ -34,7 +34,7 @@
             Result
         </dt>
         <dd class="col-sm-10">
-            @Model.winner
+            @Model.winner_ID
         </dd>
     </dl>
     <form asp-action="Delete" method="post">
