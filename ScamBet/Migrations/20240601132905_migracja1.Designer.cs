@@ -12,7 +12,7 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    [Migration("20240531122408_migracja1")]
+    [Migration("20240601132905_migracja1")]
     partial class migracja1
     {
         /// <inheritdoc />

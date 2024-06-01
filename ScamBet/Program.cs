@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Controllers;
 using ScamBet.Entities;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +17,14 @@ builder.Services.AddScoped<RouletteController>();
 builder.Services.AddScoped<TeamController>();
 
 var app = builder.Build();
+void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllersWithViews();
 
-// Configure the HTTP request pipeline.
+    services.AddDbContext<BookmacherDBContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -52,7 +59,7 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "Home",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=LoginView}/{id?}");
 
 app.UseEndpoints(endpoints =>
 {

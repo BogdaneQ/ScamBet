@@ -10,6 +10,7 @@ namespace ScamBet.Entities
         [Required]
         public int user_ID { get; set; }
 
+        [ForeignKey("RoleID")]
         [Required]
         public int role_ID { get; set; }
 

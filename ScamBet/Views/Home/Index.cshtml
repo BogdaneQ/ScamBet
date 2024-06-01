@@ -1,13 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Strona Główna";
+    ViewData["Title"] = "Home Page";
 }
 
-<div id="StronaGlowna">
-    <h1>Witaj na ScamBet - Twoim zaufanym partnerze w zakładach!</h1>
-    <p>Znajdziesz tutaj najlepsze kursy oraz szeroki wybór zakładów na najpopularniejsze wydarzenia sportowe.</p>
-    <p>Dołącz do naszej społeczności już dziś i skorzystaj z ekskluzywnych promocji oraz bonusów!</p>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Welcome to the home page. Please log in to continue.</p>
+    <a href="@Url.Action("Login", "Home")" class="btn btn-primary">Login</a>
 </div>
-
-@section Scripts {
-    <script src="~/dist/StronaGlowna.js"></script>
-}
