@@ -10,6 +10,7 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
+    
     public class AccountController : Controller
     {
         private readonly BookmacherDBContext _context;
@@ -22,7 +23,7 @@ namespace ScamBet.Controllers
         // GET: Account
         public async Task<IActionResult> Index()
         {
-            return View(await _context.accounts.ToListAsync());
+            return View(await _context.Accounts.ToListAsync());
         }
 
         // GET: Account/Details/5
@@ -33,7 +34,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var account = await _context.accounts
+            var account = await _context.Accounts
                 .FirstOrDefaultAsync(m => m.user_ID == id);
             if (account == null)
             {
@@ -75,7 +76,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var account = await _context.accounts.FindAsync(id);
+            var account = await _context.Accounts.FindAsync(id);
             if (account == null)
             {
                 return NotFound();
@@ -140,7 +141,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var account = await _context.accounts
+            var account = await _context.Accounts
                 .FirstOrDefaultAsync(m => m.user_ID == id);
             if (account == null)
             {
@@ -155,10 +156,10 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var account = await _context.accounts.FindAsync(id);
+            var account = await _context.Accounts.FindAsync(id);
             if (account != null)
             {
-                _context.accounts.Remove(account);
+                _context.Accounts.Remove(account);
             }
 
             await _context.SaveChangesAsync();
@@ -167,7 +168,7 @@ namespace ScamBet.Controllers
 
         private bool AccountExists(int id)
         {
-            return _context.accounts.Any(e => e.user_ID == id);
+            return _context.Accounts.Any(e => e.user_ID == id);
         }
     }
 }

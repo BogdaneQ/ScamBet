@@ -11,6 +11,7 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
+    [Authorize]
     public class TeamController : Controller
     {
         private readonly BookmacherDBContext _context;
@@ -23,7 +24,7 @@ namespace ScamBet.Controllers
         // GET: Teams
         public async Task<IActionResult> Index()
         {
-            return View(await _context.teams.ToListAsync());
+            return View(await _context.Teams.ToListAsync());
         }
 
         // GET: Team/Details/5
@@ -34,7 +35,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var team = await _context.teams
+            var team = await _context.Teams
                 .FirstOrDefaultAsync(m => m.team_ID == id);
             if (team == null)
             {
@@ -73,7 +74,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var team = await _context.teams.FindAsync(id);
+            var team = await _context.Teams.FindAsync(id);
             if (team == null)
             {
                 return NotFound();
@@ -124,7 +125,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var team = await _context.teams
+            var team = await _context.Teams
                 .FirstOrDefaultAsync(m => m.team_ID == id);
             if (team == null)
             {
@@ -139,15 +140,15 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team = _context.teams.Find(id);
-            _context.teams.Remove(team);
+            var team = _context.Teams.Find(id);
+            _context.Teams.Remove(team);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TeamExists(int id)
         {
-            return _context.teams.Any(e => e.team_ID == id);
+            return _context.Teams.Any(e => e.team_ID == id);
         }
     }
 }

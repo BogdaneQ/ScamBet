@@ -7,14 +7,19 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Collections.Generic;
 
+[Authorize]
 public class HomeController : Controller
 {
-    private readonly BookmacherDBContext _context;
+    private readonly ILogger<HomeController> _logger;
 
-    public IActionResult Privacy()
+    public HomeController(ILogger<HomeController> logger)
     {
-        return View();
+        _logger = logger;
     }
 
     public IActionResult Index()
@@ -22,20 +27,14 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet]
-    public IActionResult Login()
+    public IActionResult Privacy()
     {
         return View();
     }
 
-    private string HashPasswordWithSalt(string password, string salt)
+    public async Task<IActionResult> LogOut()
     {
-        using (var sha256 = System.Security.Cryptography.SHA256.Create())
-        {
-            var saltedPassword = $"{password}{salt}";
-            var saltedPasswordBytes = System.Text.Encoding.UTF8.GetBytes(saltedPassword);
-            var hashBytes = sha256.ComputeHash(saltedPasswordBytes);
-            return System.Convert.ToBase64String(hashBytes);
-        }
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Login", "Access");
     }
 }

@@ -9,6 +9,7 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
+    [Authorize]
     public class MatchController : Controller
     {
         private readonly BookmacherDBContext _context;
@@ -21,7 +22,7 @@ namespace ScamBet.Controllers
         // GET: Match
         public async Task<IActionResult> Index()
         {
-            return View(await _context.matches.Include(m => m.Team1).Include(m => m.Team2).ToListAsync());
+            return View(await _context.Matches.Include(m => m.Team1).Include(m => m.Team2).ToListAsync());
         }
 
         // GET: Match/Details/5
@@ -32,7 +33,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var match = await _context.matches.FindAsync(id);
+            var match = await _context.Matches.FindAsync(id);
             if (match == null)
             {
                 return NotFound();
@@ -45,8 +46,8 @@ namespace ScamBet.Controllers
         // GET: Match/Create
         public IActionResult Create()
         {
-            ViewData["Team1"] = new SelectList(_context.teams, "team_ID", "name");
-            ViewData["Team2"] = new SelectList(_context.teams, "team_ID", "name");
+            ViewData["Team1"] = new SelectList(_context.Teams, "team_ID", "name");
+            ViewData["Team2"] = new SelectList(_context.Teams, "team_ID", "name");
             return View();
         }
 
@@ -62,8 +63,8 @@ namespace ScamBet.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Team1"] = new SelectList(_context.teams, "team_ID", "name", match.team1_ID);
-            ViewData["Team2"] = new SelectList(_context.teams, "team_ID", "name", match.team2_ID);
+            ViewData["Team1"] = new SelectList(_context.Teams, "team_ID", "name", match.team1_ID);
+            ViewData["Team2"] = new SelectList(_context.Teams, "team_ID", "name", match.team2_ID);
             return View(match);
         }
 
@@ -75,13 +76,13 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var match = await _context.matches.FindAsync(id);
+            var match = await _context.Matches.FindAsync(id);
             if (match == null)
             {
                 return NotFound();
             }
-            ViewData["Team1"] = new SelectList(_context.teams, "team_ID", "name", match.team1_ID);
-            ViewData["Team2"] = new SelectList(_context.teams, "team_ID", "name", match.team2_ID);
+            ViewData["Team1"] = new SelectList(_context.Teams, "team_ID", "name", match.team1_ID);
+            ViewData["Team2"] = new SelectList(_context.Teams, "team_ID", "name", match.team2_ID);
             return View(match);
         }
 
@@ -116,8 +117,8 @@ namespace ScamBet.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Team1"] = new SelectList(_context.teams, "team_ID", "name", match.team1_ID);
-            ViewData["Team2"] = new SelectList(_context.teams, "team_ID", "name", match.team2_ID);
+            ViewData["Team1"] = new SelectList(_context.Teams, "team_ID", "name", match.team1_ID);
+            ViewData["Team2"] = new SelectList(_context.Teams, "team_ID", "name", match.team2_ID);
             return View(match);
         }
 
@@ -129,7 +130,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var match = await _context.matches
+            var match = await _context.Matches
                 .FirstOrDefaultAsync(m => m.match_ID == id);
             if (match == null)
             {
@@ -144,15 +145,15 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var match = await _context.matches.FindAsync(id);
-            _context.matches.Remove(match);
+            var match = await _context.Matches.FindAsync(id);
+            _context.Matches.Remove(match);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MatchExists(int id)
         {
-            return _context.matches.Any(e => e.match_ID == id);
+            return _context.Matches.Any(e => e.match_ID == id);
         }
 
         private void AssignWinner(Match match)

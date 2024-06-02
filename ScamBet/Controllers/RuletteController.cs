@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScamBet.Controllers
 {
+    [Authorize]
     public class RouletteController : Controller
     {
         private readonly BookmacherDBContext _context;
@@ -19,7 +20,7 @@ namespace ScamBet.Controllers
         // GET: Roulette/Index
         public IActionResult Index()
         {
-            var roulettes = _context.roulettes.ToList();
+            var roulettes = _context.Roulettes.ToList();
             return View(roulettes);
         }
 
@@ -31,7 +32,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var roulette = await _context.roulettes.FirstOrDefaultAsync(m => m.roulette_ID == id);
+            var roulette = await _context.Roulettes.FirstOrDefaultAsync(m => m.roulette_ID == id);
             if (roulette == null)
             {
                 return NotFound();
@@ -68,7 +69,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var roulette = await _context.roulettes.FindAsync(id);
+            var roulette = await _context.Roulettes.FindAsync(id);
             if (roulette == null)
             {
                 return NotFound();
@@ -117,7 +118,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var roulette = await _context.roulettes.FirstOrDefaultAsync(m => m.roulette_ID == id);
+            var roulette = await _context.Roulettes.FirstOrDefaultAsync(m => m.roulette_ID == id);
             if (roulette == null)
             {
                 return NotFound();
@@ -131,15 +132,15 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var roulette = await _context.roulettes.FindAsync(id);
-            _context.roulettes.Remove(roulette);
+            var roulette = await _context.Roulettes.FindAsync(id);
+            _context.Roulettes.Remove(roulette);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RouletteExists(int id)
         {
-            return _context.roulettes.Any(e => e.roulette_ID == id);
+            return _context.Roulettes.Any(e => e.roulette_ID == id);
         }
     }
 }
