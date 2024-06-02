@@ -4,9 +4,9 @@ namespace ScamBet.Models
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Nazwa użytkownika jest wymagana.")]
-        [Display(Name = "Username")]
-        public string Username { get; set; }
+        [Required(ErrorMessage = "Email użytkownika jest wymagany.")]
+        [Display(Name = "Email")]
+        public string email { get; set; }
 
         [Required(ErrorMessage = "Hasło jest wymagane.")]
         [DataType(DataType.Password)]

@@ -20,7 +20,7 @@ namespace ScamBet.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost;Database=ScambetBaza;User=Scambet;Password=Scambet#123321;TrustServerCertificate=true;");
+                optionsBuilder.UseSqlServer("Server = localhost; Database = ScambetBaza; User = Scambet; Password = Scambet#123321; TrustServerCertificate = true;");
             }
         }
     }
