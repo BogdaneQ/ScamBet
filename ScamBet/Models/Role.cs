@@ -1,18 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ScamBet.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ScamBet.Models
 {
+    
     public enum RoleType
     {
-        User = 0,
-        Admin = 1
+        User = 1,
+        Admin = 2
     }
-
+    
     public class Role
     {
         [Key]
         public int role_ID { get; set; }
 
-        public RoleType roleName { get; set; }
+        public string RoleName { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

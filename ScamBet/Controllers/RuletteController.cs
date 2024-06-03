@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ScamBet.Controllers
 {
-    
+    [Authorize]
     public class RouletteController : Controller
     {
         private readonly BookmacherDBContext _context;

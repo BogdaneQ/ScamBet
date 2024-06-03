@@ -9,6 +9,8 @@ using ScamBet.Models;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace ScamBet.Controllers
 {
@@ -28,20 +30,27 @@ namespace ScamBet.Controllers
         {
             return View();
         }
-
+      
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string password)
         {
 
-            var user = _context.Accounts.Include(m => m.role_ID).Where(m => m.email == email).FirstOrDefault();
-                if (user == null)
+            var user = _context.Accounts.Include(a => a.Role).FirstOrDefault(m => m.email == email);
+            if (user == null || user.isBanned)
                 {
                     return View();
                 }
@@ -51,10 +60,9 @@ namespace ScamBet.Controllers
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.Email, email));
                 
-                identity.AddClaim(new Claim(ClaimTypes.Role, user.role_ID.ToString()));
+                identity.AddClaim(new Claim(ClaimTypes.Role, user.Role.RoleName));
 
-                var claims = identity;
-                var principal = new ClaimsPrincipal(claims);
+                var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
                     return RedirectToAction("Index", "Home");

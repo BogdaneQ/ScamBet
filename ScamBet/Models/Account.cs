@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using ScamBet.Models;
 
 namespace ScamBet.Entities
 {
@@ -13,6 +14,7 @@ namespace ScamBet.Entities
         [ForeignKey("RoleID")]
         [Required]
         public int role_ID { get; set; }
+        public virtual Role Role { get; set; }
 
         [Required(ErrorMessage = "Enter your Usermane")]
         [StringLength(25)]

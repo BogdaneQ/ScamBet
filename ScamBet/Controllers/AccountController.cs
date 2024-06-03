@@ -10,7 +10,7 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
-    
+
     
     public class AccountController : Controller
     {
@@ -61,7 +61,7 @@ namespace ScamBet.Controllers
             {
                 account.acc_balance = 0;
                 account.isBanned = false;
-                account.role_ID = 0;
+                account.role_ID = 1;
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,8 +86,8 @@ namespace ScamBet.Controllers
             // Ustawienie możliwych opcji roli do wyboru
             ViewData["RoleOptions"] = new SelectList(new[]
             {
-                new { Value = 0, Text = "User" },
-                new { Value = 1, Text = "Admin" }
+                new { Value = 1, Text = "User" },
+                new { Value = 2, Text = "Admin" }
             }, "Value", "Text", account.role_ID);
 
             return View(account);
@@ -127,8 +127,8 @@ namespace ScamBet.Controllers
             // Ustawienie możliwych opcji roli do wyboru
             ViewData["RoleOptions"] = new SelectList(new[]
             {
-                new { Value = 0, Text = "User" },
-                new { Value = 1, Text = "Admin" }
+                new { Value = 1, Text = "User" },
+                new { Value = 2, Text = "Admin" }
             }, "Value", "Text", account.role_ID);
 
             return View(account);

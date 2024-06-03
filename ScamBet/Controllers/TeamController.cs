@@ -11,7 +11,7 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
-    
+    [Authorize]
     public class TeamController : Controller
     {
         private readonly BookmacherDBContext _context;
