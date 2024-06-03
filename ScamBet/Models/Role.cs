@@ -3,13 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ScamBet.Models
 {
-    
     public enum RoleType
     {
         User = 1,
         Admin = 2
     }
-    
     public class Role
     {
         [Key]

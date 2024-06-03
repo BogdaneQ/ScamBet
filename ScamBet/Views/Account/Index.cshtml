@@ -67,11 +67,11 @@
                 @Html.DisplayFor(modelItem => item.acc_balance)
             </th>
                 <th>
-                    @if (item.role_ID == 0)
+                    @if (item.role_ID == 1)
                     {
                         <text>User</text>
                     }
-                    else if (item.role_ID == 1)
+                    else if (item.role_ID == 2)
                     {
                         <text>Admin</text>
                     }

@@ -28,13 +28,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Home/Login";
         options.LogoutPath = "/Home/Login";
     });
-//builder.Services.ConfigureApplicationCookie(options =>
-//{
-//    options.AccessDeniedPath = "/Home/Login";
-//    options.ExpireTimeSpan = TimeSpan.FromSeconds(60);
-//    options.LoginPath = "/Home/Login";
-//    options.LogoutPath = "/Home/Login";
-//});
 
 var app = builder.Build();
 

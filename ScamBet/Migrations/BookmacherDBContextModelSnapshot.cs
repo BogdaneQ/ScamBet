@@ -224,13 +224,13 @@ namespace ScamBet.Migrations
                     b.HasData(
                         new
                         {
-                            role_ID = 2,
-                            RoleName = "Admin"
+                            role_ID = 1,
+                            RoleName = "User"
                         },
                         new
                         {
-                            role_ID = 1,
-                            RoleName = "User"
+                            role_ID = 2,
+                            RoleName = "Admin"
                         });
                 });
 

@@ -29,8 +29,8 @@ namespace ScamBet.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(
-                new Role { role_ID = (int)RoleType.Admin, RoleName = RoleType.Admin.ToString()},
-                new Role { role_ID = (int)RoleType.User, RoleName = RoleType.User.ToString()}
+                new Role { role_ID = (int)RoleType.User, RoleName = RoleType.User.ToString() },
+                new Role { role_ID = (int)RoleType.Admin, RoleName = RoleType.Admin.ToString()}
             );
 
             modelBuilder.Entity<Account>()

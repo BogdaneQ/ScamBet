@@ -12,7 +12,7 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    [Migration("20240603174146_migracja1")]
+    [Migration("20240603180810_migracja1")]
     partial class migracja1
     {
         /// <inheritdoc />
@@ -227,13 +227,13 @@ namespace ScamBet.Migrations
                     b.HasData(
                         new
                         {
-                            role_ID = 2,
-                            RoleName = "Admin"
+                            role_ID = 1,
+                            RoleName = "User"
                         },
                         new
                         {
-                            role_ID = 1,
-                            RoleName = "User"
+                            role_ID = 2,
+                            RoleName = "Admin"
                         });
                 });
 
