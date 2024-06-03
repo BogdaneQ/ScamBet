@@ -10,7 +10,7 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
-    [Authorize]
+    
     
     public class AccountController : Controller
     {

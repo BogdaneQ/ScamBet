@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ScamBet.Entities
 {
-    public class BookmacherDBContext : IdentityDbContext<IdentityUser>
+    public class BookmacherDBContext : DbContext
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Bet> Bets { get; set; }

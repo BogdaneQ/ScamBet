@@ -19,29 +19,26 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" && ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" ? "active" : "")" asp-controller="Account" asp-action="Index">Accounts</a>
+                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Index">Accounts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString() == "Team" ? "active" : "")" asp-controller="Team" asp-action="Index">Teams</a>
+                            <a class="nav-link text-dark" asp-controller="Team" asp-action="Index">Teams</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString() == "Match" ? "active" : "")" asp-controller="Match" asp-action="Index">Match</a>
+                            <a class="nav-link text-dark" asp-controller="Match" asp-action="Index">Match</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString() == "Roulette" ? "active" : "")" asp-controller="Roulette" asp-action="Index">Roulette</a>
+                            <a class="nav-link text-dark" asp-controller="Roulette" asp-action="Index">Roulette</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" && ViewContext.RouteData.Values["Action"].ToString() == "Privacy" ? "active" : "")" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark " asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        
-                        
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Logout">Log Out</a>
-                            </li>
-                        
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Logout">Log Out</a>
+                        </li>
                     </ul>
                 </div>
             </div>

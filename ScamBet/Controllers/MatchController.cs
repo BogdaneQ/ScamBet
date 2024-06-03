@@ -9,7 +9,7 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
-    [Authorize]
+    
     public class MatchController : Controller
     {
         private readonly BookmacherDBContext _context;

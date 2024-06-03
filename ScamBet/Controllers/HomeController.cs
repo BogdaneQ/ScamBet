@@ -65,11 +65,11 @@ namespace ScamBet.Controllers
                     return View();
                 }
         }
-
+        
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Login");
 
         }
     }
