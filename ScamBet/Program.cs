@@ -9,12 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/Access/Login";
-    });
+.AddCookie();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Home/Login";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    options.LoginPath = "/Home/Login";
+    options.LogoutPath = "/Home/Login";
+});
 
 builder.Services.AddDbContext<BookmacherDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -25,10 +29,8 @@ builder.Services.AddScoped<RouletteController>();
 builder.Services.AddScoped<TeamController>();
 
 builder.Services.AddAuthorization();
+builder.Services.AddAntiforgery();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<BookmacherDBContext>()
-    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -47,7 +49,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "Access",
-    pattern: "{controller=Access}/{action=Login}/{id?}");
+    name: "Home",
+    pattern: "{controller=Home}/{action=Login}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}");
+});
 
 app.Run();
