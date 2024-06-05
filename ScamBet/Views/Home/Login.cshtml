@@ -1,37 +1,35 @@
 ﻿@model ScamBet.Entities.Account
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/LoginForm.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/LoginForm.css">
+    <title>Login</title>
 </head>
-
-@{
-    ViewData["Title"] = "Login";
-}
-
-<div class="container">
-    <div class="login-form">
-        <h2>@ViewData["Title"]</h2>
-
-        <form asp-controller="Home" asp-action="Login" method="post">
+<body>
+    <div class="container">
+        <h1>ScamBet</h1>
+        <form class="login-form" asp-action="Login" method="post">
+            <h2>Login Form</h2>
             <div class="form-group">
-                <label asp-for="email" class="control-label"></label>
+                <label asp-for="email" class="control-label">Email:</label>
                 <input asp-for="email" class="form-control" />
                 <span asp-validation-for="email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="password" class="control-label"></label>
+                <label asp-for="password" class="control-label">Password:</label>
                 <input asp-for="password" class="form-control" type="password" />
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
+            <div class="register-link">
+                <a asp-action="Register">Not registered yet?</a>
+            </div>
         </form>
-        <div>
-            <a asp-action="Register">Don't' have an account? Register.</a>
-        </div>
     </div>
-</div>
+</body>
+</html>

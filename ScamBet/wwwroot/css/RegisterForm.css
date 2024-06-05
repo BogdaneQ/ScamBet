@@ -1,4 +1,4 @@
-﻿/* Styl formularza logowania */
+﻿/* Styl formularza rejestracyjnego */
 body {
     display: flex;
     justify-content: center;
@@ -19,7 +19,7 @@ h1 {
     text-align: center;
 }
 
-.login-form {
+.register-form {
     background-color: #eb0003; /* Light red background */
     padding: 20px;
     border-radius: 20px;
@@ -28,7 +28,7 @@ h1 {
     text-align: left; /* Align text to the left inside the form */
 }
 
-    .login-form h2 {
+    .register-form h2 {
         margin-bottom: 30px;
         text-align: center; /* Center the title */
         color: white;
@@ -66,15 +66,6 @@ h1 {
 }
 
     .register-link a {
-        color: #ffffff; /* Link color */
-        text-decoration: none; /* Remove underline from the link */
-    }
-
-.forgot-password {
-    text-align: center;
-}
-
-    .forgot-password a {
         color: #ffffff; /* Link color */
         text-decoration: none; /* Remove underline from the link */
     }

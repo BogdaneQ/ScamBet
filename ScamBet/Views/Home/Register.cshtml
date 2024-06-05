@@ -1,47 +1,50 @@
 ﻿@model ScamBet.Entities.Account
 
-@{
-    ViewData["Title"] = "Register";
-}
-
-<h2>Register</h2>
-
-<form asp-action="Register" method="post">
-    <div class="form-group">
-        <label asp-for="username" class="control-label"></label>
-        <input asp-for="username" class="form-control" />
-        <span asp-validation-for="username" class="text-danger"></span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/RegisterForm.css">
+    <title>Register</title>
+</head>
+<body>
+    <div class="container">
+        <h1>ScamBet</h1>
+        <form class="register-form" asp-action="Register" method="post">
+            <h2>Registration Form</h2>
+            <div class="form-group">
+                <label asp-for="name" class="control-label">Name:</label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="surname" class="control-label">Surname:</label>
+                <input asp-for="surname" class="form-control" />
+                <span asp-validation-for="surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="username" class="control-label">Username:</label>
+                <input asp-for="username" class="form-control" />
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="email" class="control-label">Email:</label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password" class="control-label">Password:</label>
+                <input asp-for="password" class="form-control" type="password" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+        <div class="register-link">
+            <a asp-action="Login">Already have an account?</a>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="name" class="control-label"></label>
-        <input asp-for="name" class="form-control" />
-        <span asp-validation-for="name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="surname" class="control-label"></label>
-        <input asp-for="surname" class="form-control" />
-        <span asp-validation-for="surname" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="password" class="control-label"></label>
-        <input asp-for="password" class="form-control" type="password" />
-        <span asp-validation-for="password" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="email" class="control-label"></label>
-        <input asp-for="email" class="form-control" />
-        <span asp-validation-for="email" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="phone_number" class="control-label"></label>
-        <input asp-for="phone_number" class="form-control" />
-        <span asp-validation-for="phone_number" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Register" class="btn btn-primary" />
-    </div>
-</form>
-
-<div>
-    <a asp-action="Login">Already have an account? Log in.</a>
-</div>
+</body>
+</html>
