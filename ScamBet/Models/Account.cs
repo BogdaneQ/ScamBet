@@ -45,5 +45,7 @@ namespace ScamBet.Entities
         [Required]
         [Range(0, double.MaxValue)]
         public double acc_balance { get; set; }
+
+        public string AvatarPath { get; set; }
     }
 }

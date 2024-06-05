@@ -70,7 +70,8 @@ namespace ScamBet.Migrations
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     phone_number = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     isBanned = table.Column<bool>(type: "bit", nullable: false),
-                    acc_balance = table.Column<double>(type: "float", nullable: false)
+                    acc_balance = table.Column<double>(type: "float", nullable: false),
+                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

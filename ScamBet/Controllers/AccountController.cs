@@ -29,6 +29,7 @@ namespace ScamBet.Controllers
         }
 
         // GET: Account/MyAccount/5
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> MyAccount()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -94,8 +95,9 @@ namespace ScamBet.Controllers
             }
             return View(account);
         }
-        
+
         // GET: Account/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -118,9 +120,10 @@ namespace ScamBet.Controllers
 
             return View(account);
         }
-        
+
         // POST: Account/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("user_ID,username,name,surname,password,email,phone_number,isBanned,acc_balance,role_ID")] Account account)
         {
@@ -159,7 +162,77 @@ namespace ScamBet.Controllers
 
             return View(account);
         }
-        
+
+
+        // GET: Account/EditProfile
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> EditProfile()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var account = await _context.Accounts.FindAsync(userId);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            return View(account);
+        }
+
+        // POST: Account/EditProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> EditProfile([Bind("user_ID,username,name,surname,password,email,phone_number")] Account account, IFormFile avatar)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (userId != account.user_ID)
+            {
+                return Unauthorized();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var existingAccount = await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(a => a.user_ID == userId);
+                    if (existingAccount == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (avatar != null && avatar.Length > 0)
+                    {
+                        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(avatar.FileName)}";
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await avatar.CopyToAsync(stream);
+                        }
+
+                        account.AvatarPath = $"/images/{fileName}";
+                    }
+
+                    account.role_ID = existingAccount.role_ID; // Ustawienie istniejącego role_ID
+                    _context.Update(account);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AccountExists(account.user_ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(MyAccount));
+            }
+            return View(account);
+        }
+
+
         // GET: Account/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

@@ -73,21 +73,45 @@ namespace ScamBet.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
                 if (user.Role.RoleName == RoleType.Admin.ToString())
-                {
-                    return RedirectToAction("AdminIndex", "Home");
-                }
+                    {
+                        return RedirectToAction("AdminIndex", "Home");
+                    }
                 else
-                {
-                    return RedirectToAction("UserIndex", "Home");
+                    {
+                        return RedirectToAction("UserIndex", "Home");
+                    }
                 }
-            }
 
                 else
                 {
                     return View();
                 }
         }
-        
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("username,name,surname,password,email,phone_number")] Account account)
+        {
+            if (ModelState.IsValid)
+            {
+                account.acc_balance = 0;
+                account.isBanned = false;
+                account.role_ID = 1;
+                _context.Add(account);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Login));
+            }
+            return View(account);
+        }
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

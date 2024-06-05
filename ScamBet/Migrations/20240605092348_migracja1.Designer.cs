@@ -12,7 +12,7 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    [Migration("20240604153405_migracja1")]
+    [Migration("20240605092348_migracja1")]
     partial class migracja1
     {
         /// <inheritdoc />
@@ -32,6 +32,9 @@ namespace ScamBet.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("user_ID"));
+
+                    b.Property<string>("AvatarPath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("acc_balance")
                         .HasColumnType("float");

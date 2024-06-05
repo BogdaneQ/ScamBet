@@ -30,6 +30,9 @@ namespace ScamBet.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("user_ID"));
 
+                    b.Property<string>("AvatarPath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("acc_balance")
                         .HasColumnType("float");
 

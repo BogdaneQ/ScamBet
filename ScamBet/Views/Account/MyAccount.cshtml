@@ -2,6 +2,16 @@
 
 <h1>My Account</h1>
 
+<dd class="col-sm-10">
+    @if (Model.AvatarPath != null)
+    {
+        <img src="@Model.AvatarPath" alt="Avatar" class="img-thumbnail" width="150" height="150" />
+    }
+    else
+    {
+        <p>No avatar uploaded</p>
+    }
+</dd>
 <div>
     <hr />
     <dl class="row">
@@ -50,5 +60,6 @@
     </dl>
 </div>
 <div>
+    <a asp-controller="Account" asp-action="EditProfile">Edit Profile</a> |
     <a asp-controller="Home" asp-action="UserIndex">Back to Menu</a>
 </div>
