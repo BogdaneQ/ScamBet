@@ -10,9 +10,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>ScamBet</h1>
+        <h1><strong>ScamBet</strong></h1>
         <form class="login-form" asp-action="Login" method="post">
-            <h2>Login Form</h2>
+            <h2 class="bordered-heading">Login Form</h2>
             <div class="form-group">
                 <label asp-for="email" class="control-label">Email:</label>
                 <input asp-for="email" class="form-control" />
@@ -26,10 +26,10 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
-            <div class="register-link">
-                <a asp-action="Register">Not registered yet?</a>
-            </div>
         </form>
+        <div class="register-link">
+            <a asp-action="Register">Not registered yet?</a>
+        </div>
     </div>
 </body>
 </html>

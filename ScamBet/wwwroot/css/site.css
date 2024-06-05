@@ -1,22 +1,102 @@
-.App {
+/* Global styling for the body */
+body {
+    background-color: #333; /* Dark background color */
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Styling for the navigation bar */
+.navbar {
+    background-color: #eb0003; /* Light red background */
+}
+
+.nav-link, .navbar-brand {
+    color: white !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Styling for the main content area */
+.container {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Styling for the footer */
+.footer {
+    background-color: #eb0003; /* Light red background */
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border-top: 1px solid #eb0003;
+}
+
+/* Styling for the login form */
+.login-form {
+    background-color: #eb0003; /* Light red background */
+    padding: 20px;
+    border-radius: 20px;
+    margin: 0 auto; /* Center the form horizontally */
+    width: 400px; /* Set a maximum width for responsiveness */
+    text-align: left; /* Align text to the left inside the form */
+}
+
+    .login-form h2 {
+        margin-bottom: 30px;
+        text-align: center; /* Center the title */
+        color: white;
+        border: 2px solid black; /* Add black border to the heading */
+        padding: 10px; /* Add padding to the heading for better spacing */
+    }
+
+.form-group {
+    margin-bottom: 15px; /* Add some spacing between form groups */
+}
+
+    .form-group label {
+        color: white; /* White text for labels */
+    }
+
+    .form-group input {
+        border: 3px solid black; /* Black border for input fields */
+        padding: 10px;
+        border-radius: 5px; /* Rounded corners for individual fields */
+        width: calc(100% - 26px); /* Full width minus padding and border */
+        box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+    }
+
+.btn-primary {
+    background-color: #5f33ff; /* Button background color */
+    border: 1px solid black; /* Button border color */
+    margin-top: 15px; /* Top margin for the button */
+    padding: 10px 20px; /* Padding inside the button */
+    color: white; /* Button text color */
+    display: block; /* Make the button a block element */
+    margin: 15px auto; /* Center the button */
     text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-}
-}
-
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.register-link {
+    text-align: center;
 }
 
-.App-link {
-    color: #61dafb;
+    .register-link a {
+        color: #ffffff; /* Link color */
+        text-decoration: none; /* Remove underline from the link */
+    }
+
+.forgot-password {
+    text-align: center;
 }
+
+    .forgot-password a {
+        color: #ffffff; /* Link color */
+        text-decoration: none; /* Remove underline from the link */
+    }
