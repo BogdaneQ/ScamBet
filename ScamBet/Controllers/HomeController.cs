@@ -25,13 +25,20 @@ namespace ScamBet.Controllers
             _context = context;
             _logger = logger;
         }
-
-        public IActionResult Index()
+      
+        public IActionResult Privacy()
         {
             return View();
         }
-      
-        public IActionResult Privacy()
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminIndex()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "User")]
+        public IActionResult UserIndex()
         {
             return View();
         }
@@ -58,15 +65,22 @@ namespace ScamBet.Controllers
                 if(user.password == password)
                 {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.user_ID.ToString()));
                 identity.AddClaim(new Claim(ClaimTypes.Email, email));
-                
                 identity.AddClaim(new Claim(ClaimTypes.Role, user.Role.RoleName));
 
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                    return RedirectToAction("Index", "Home");
+                if (user.Role.RoleName == RoleType.Admin.ToString())
+                {
+                    return RedirectToAction("AdminIndex", "Home");
                 }
+                else
+                {
+                    return RedirectToAction("UserIndex", "Home");
+                }
+            }
 
                 else
                 {

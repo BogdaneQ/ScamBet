@@ -1,13 +1,20 @@
 ﻿@model ScamBet.Entities.Account
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/LoginForm.css" />
+</head>
+
 @{
     ViewData["Title"] = "Login";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container">
+    <div class="login-form">
+        <h2>@ViewData["Title"]</h2>
 
-<div class="row">
-    <div class="col-md-6">
         <form asp-controller="Home" asp-action="Login" method="post">
             <div class="form-group">
                 <label asp-for="email" class="control-label"></label>

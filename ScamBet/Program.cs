@@ -27,6 +27,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
         options.LoginPath = "/Home/Login";
         options.LogoutPath = "/Home/Login";
+
     });
 
 var app = builder.Build();
@@ -48,5 +49,13 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Login}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "myAccount",
+      pattern: "Account/MyAccount/{id?}",
+      defaults: new { controller = "Account", action = "MyAccount" });
+});
 
 app.Run();

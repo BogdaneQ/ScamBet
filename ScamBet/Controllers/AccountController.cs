@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using ScamBet.Entities;
 
 namespace ScamBet.Controllers
 {
-
+    [Authorize]
     
     public class AccountController : Controller
     {
@@ -20,12 +21,36 @@ namespace ScamBet.Controllers
         {
             _context = context;
         }
-
+        
         // GET: Account
         public async Task<IActionResult> Index()
         {
             return View(await _context.Accounts.ToListAsync());
         }
+
+        // GET: Account/MyAccount/5
+        public async Task<IActionResult> MyAccount()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+            {
+                return NotFound();
+            }
+
+            int id = int.Parse(userId);
+
+            var account = await _context.Accounts
+                .FirstOrDefaultAsync(m => m.user_ID == id);
+            if (account == null)
+            {
+                return NotFound();
+            }
+
+            return View(account);
+        }
+
+
 
         // GET: Account/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -46,6 +71,7 @@ namespace ScamBet.Controllers
         }
 
         // GET: Account/Create
+        
         public IActionResult Create()
         {
             return View();
@@ -68,7 +94,7 @@ namespace ScamBet.Controllers
             }
             return View(account);
         }
-
+        
         // GET: Account/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -92,7 +118,7 @@ namespace ScamBet.Controllers
 
             return View(account);
         }
-
+        
         // POST: Account/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -133,7 +159,7 @@ namespace ScamBet.Controllers
 
             return View(account);
         }
-
+        
         // GET: Account/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -152,6 +178,7 @@ namespace ScamBet.Controllers
             return View(account);
         }
 
+        
         // POST: Accounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

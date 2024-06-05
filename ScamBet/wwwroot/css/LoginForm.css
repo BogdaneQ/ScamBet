@@ -1,0 +1,37 @@
+﻿.login-form {
+    background-color: #eb0003; /* Light red background */
+    padding: 20px;
+    border-radius: 20px;
+    margin: 0 auto; /* Center the form horizontally */
+    width: 400px; /* Set a maximum width for responsiveness */
+}
+
+    .login-form h2 {
+        margin-bottom: 30px;
+        text-align: center; /* Center the title */
+    }
+
+.form-group {
+    margin-bottom: 15px; /* Add some spacing between form groups */
+}
+
+    .form-group input {
+        border: 3px solid red; /* Red border for email and password fields */
+        padding: 10px;
+        border-radius: 5px; /* Rounded corners for individual fields */
+    }
+
+.btn-primary {
+    background-color: #5f33ff;
+    border: 1px solid black;
+    margin-top: 15px;
+    padding: 10px 20px;
+    color: white;
+    margin 0 auto;
+}
+
+.forgot-password a,
+.register-link a {
+    color: #ffffff;
+    text-decoration: none;
+}
