@@ -27,6 +27,13 @@
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
         </form>
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        
+        {
+            <div class="alert alert-danger" role="alert" style="max-height: 100px; max-width: 300px; margin-left: 473px">
+                @ViewBag.ErrorMessage
+            </div>
+        }
         <div class="register-link">
             <a asp-action="Register">Not registered yet?</a>
         </div>

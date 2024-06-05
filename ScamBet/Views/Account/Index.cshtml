@@ -46,7 +46,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    var rowClass = item.isBanned ? "table-danger" : "";
+    var rowClass = item.isBanned ? "table-danger-dark" : "";
         <tr class="@rowClass">
             <td>
                 @Html.DisplayFor(modelItem => item.username)

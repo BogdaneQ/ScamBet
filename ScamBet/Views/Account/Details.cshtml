@@ -8,6 +8,16 @@
 
 <div>
     <h4>Account</h4>
+    <dd class="col-sm-10">
+        @if (Model.AvatarPath != null)
+        {
+            <img src="@Model.AvatarPath" alt="Avatar" class="img-thumbnail" width="150" height="150" />
+        }
+        else
+        {
+            <p>No avatar uploaded</p>
+        }
+    </dd>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -62,11 +72,11 @@
             @Html.DisplayNameFor(model => model.role_ID)
         </dt>
         <dd class="col-sm-10">
-            @if (Model.role_ID == 0)
+            @if (Model.role_ID == 1)
             {
                 <text>User</text>
             }
-            else if (Model.role_ID == 1)
+            else if (Model.role_ID == 2)
             {
                 <text>Admin</text>
             }

@@ -59,7 +59,8 @@ namespace ScamBet.Controllers
             var user = _context.Accounts.Include(a => a.Role).FirstOrDefault(m => m.email == email);
             if (user == null || user.isBanned)
                 {
-                    return View();
+                ViewBag.ErrorMessage = "Nieprawid這wy email lub konto zosta這 zbanowane.";
+                return View();
                 }
 
                 if(user.password == password)
@@ -84,7 +85,8 @@ namespace ScamBet.Controllers
 
                 else
                 {
-                    return View();
+                ViewBag.ErrorMessage = "Nieprawid這we has這.";
+                return View();
                 }
         }
 
@@ -107,6 +109,7 @@ namespace ScamBet.Controllers
                 account.role_ID = 1;
                 _context.Add(account);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Login));
             }
             return View(account);

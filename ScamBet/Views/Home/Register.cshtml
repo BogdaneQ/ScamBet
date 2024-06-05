@@ -42,6 +42,19 @@
                 <button type="submit" class="btn btn-primary">Register</button>
             </div>
         </form>
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+        {
+            <div class="alert alert-success" role="alert">
+                @ViewBag.SuccessMessage
+            </div>
+        }
         <div class="register-link">
             <a asp-action="Login">Already have an account?</a>
         </div>
