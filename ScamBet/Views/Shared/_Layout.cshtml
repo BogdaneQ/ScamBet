@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
+        /* Include the updated CSS code here */
         body {
             background-color: #333; /* Dark background color */
             color: white;
@@ -19,12 +20,34 @@
 
         .nav-link, .navbar-brand {
             color: white !important;
-            font-size: 1.25rem; /* Increase the font size of the nav links */
+            font-size: 1.5rem; /* Increase the font size of the nav links */
+        }
+
+        .navbar-brand {
+            font-size: 40px; /* Increase the font size of the brand */
+            text-shadow: 3px 3px 4px #000000;
         }
 
         .navbar-toggler {
-            font-size: 1.25rem; /* Increase the size of the toggler icon */
+            font-size: 1.5rem; /* Increase the size of the toggler icon */
         }
+
+        /* Custom styles for dropdown menu */
+        .dropdown-menu {
+            background-color: #a00002; /* Darker red background for dropdown */
+        }
+
+        /* Highlight dropdown items on hover */
+        .dropdown-item:hover {
+            background-color: #ff3333; /* Lighter red on hover */
+            color: white; /* White text on hover */
+        }
+
+        /* Move navbar items to the right by 50px */
+        .move-to-right {
+            margin-left: 40px;
+        }
+    
     </style>
 </head>
 <body>
@@ -32,12 +55,12 @@
     {
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">ScamBet</a>
+                <a class="navbar-brand" href="#"><strong>ScamBet</strong></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 move-to-right">
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -68,15 +91,18 @@
                                 <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>
                         }
+                    </ul>
+                    <ul class="navbar-nav mr-auto justify-content-end">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="navbar-toggler-icon"></span>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Log Out</a></li>
                             </ul>
                         </li>
                     </ul>
+
                 </div>
             </div>
         </nav>

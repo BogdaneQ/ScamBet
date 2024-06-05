@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<ScamBet.Entities.Account>
 
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
 @{
     ViewData["Title"] = "Account List";
 }
@@ -9,6 +11,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div style="background-color: #eb0003; border-radius: 20px; padding: 20px;">
 <table class="table">
     <thead>
         <tr>
@@ -88,3 +91,4 @@
 }
     </tbody>
 </table>
+</div>

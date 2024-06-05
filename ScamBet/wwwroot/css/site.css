@@ -1,7 +1,9 @@
+
+
 /* Global styling for the body */
 body {
     background-color: #333; /* Dark background color */
-    color: white;
+    color: white; /* White text color */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -100,3 +102,19 @@ body {
         color: #ffffff; /* Link color */
         text-decoration: none; /* Remove underline from the link */
     }
+
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    color: black;
+}
+
+    .table th,
+    .table td {
+        border-bottom: 3px solid #333; /* Kreska dolna */
+        padding: 12px; /* Wewnêtrzny odstêp */
+        vertical-align: top; /* Wyrównanie tekstu */
+    }
+a {
+    color: lightgrey; /* Ustawienie koloru linków na czerwony */
+}
