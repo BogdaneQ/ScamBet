@@ -227,6 +227,8 @@ namespace ScamBet.Controllers
                         account.AvatarPath = $"/images/{fileName}";
                     }
 
+                    account.acc_balance = existingAccount.acc_balance;
+
                     account.role_ID = existingAccount.role_ID; // Ustawienie istniejącego role_ID
                     _context.Update(account);
                     await _context.SaveChangesAsync();
