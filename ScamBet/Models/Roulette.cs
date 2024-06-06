@@ -19,7 +19,7 @@ namespace ScamBet.Entities
         public string betValue_r { get; set; } // "red", "black", or number as string
 
         [Required(ErrorMessage = "Place amount")]
-        public decimal betAmount_r { get; set; }
+        public double betAmount_r { get; set; }
 
         [Required]
         public DateTime betTime_r { get; set; }

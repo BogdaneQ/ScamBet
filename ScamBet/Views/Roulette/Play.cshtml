@@ -6,18 +6,16 @@
 
 <h2>Play Roulette</h2>
 
-<form asp-action="PlaceBet" method="post">
-    <div class="form-group">
-        <label for="betType">Bet Type</label>
-        <select id="betType" name="betType" class="form-control">
-            <option value="color">Color</option>
-            <option value="number">Number</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="betValue">Bet Value</label>
-        <input type="text" id="betValue" name="betValue" class="form-control" placeholder="Enter color or number">
-    </div>
+<div id="roulette-wheel">
+    <div class="sector" data-value="0">0</div>
+    <div class="sector red" data-value="1">1</div>
+    <div class="sector black" data-value="2">2</div>
+    <!-- Dodaj więcej sektorów dla kolejnych numerów i kolorów -->
+</div>
+
+<form id="betForm" method="post">
+    <input type="hidden" id="betType" name="betType" value="">
+    <input type="hidden" id="betValue" name="betValue" value="">
     <div class="form-group">
         <label for="betAmount">Bet Amount</label>
         <input type="number" id="betAmount" name="betAmount" class="form-control" placeholder="Enter bet amount">
@@ -30,4 +28,23 @@
     <h3>Roulette Result: @ViewBag.RouletteResult</h3>
     <h3>@(ViewBag.IsWin ? "You won!" : "You lost!")</h3>
     <h3>Your new balance: @ViewBag.Balance</h3>
+}
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.sector').forEach(sector => {
+            sector.addEventListener('click', function () {
+                document.getElementById('betType').value = 'number'; // W przypadku sektorów liczbowych
+                document.getElementById('betValue').value = this.dataset.value;
+                document.getElementById('roulette-wheel').classList.add('disabled');
+            });
+        });
+
+        document.getElementById('betForm').addEventListener('submit', function () {
+            if (!document.getElementById('betType').value || !document.getElementById('betValue').value) {
+                alert('Please select a number before placing your bet.');
+                event.preventDefault();
+            }
+        });
+    </script>
 }

@@ -47,10 +47,24 @@
         .move-to-right {
             margin-left: 40px;
         }
+        /* Style for the chat box */
+        #chatBox {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 300px;
+            height: 400px;
+            overflow-y: auto;
+            display: none; /* Initially hidden */
+        }
     
     </style>
 </head>
 <body>
+    
     @if (User.Identity.IsAuthenticated)
     {
         <div id="sessionTimer">Czas sesji: 15:00</div>
@@ -73,6 +87,51 @@
             setInterval(updateSessionTimer, 1000);
         </script>
 
+        <!-- Add this to your _Layout.cshtml before the closing </body> tag -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.18/signalr.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+
+                connection.on("ReceiveMessage", function (user, message) {
+                    const msg = document.createElement("div");
+                    msg.innerHTML = `<strong>${user}</strong>: ${message}`;
+                    document.getElementById("messagesList").appendChild(msg);
+                });
+
+                connection.start().catch(function (err) {
+                    return console.error(err.toString());
+                });
+
+                // Toggle chat visibility
+                document.getElementById("toggleChat").addEventListener("click", function () {
+                    const chatBox = document.getElementById("chatBox");
+                    chatBox.classList.toggle("expanded");
+                    if (chatBox.classList.contains("expanded")) {
+                        connection.start().catch(function (err) {
+                            return console.error(err.toString());
+                        });
+                    } else {
+                        connection.stop().catch(function (err) {
+                            return console.error(err.toString());
+                        });
+                    }
+                });
+
+                document.getElementById("sendButton").addEventListener("click", function (event) {
+                    const user = document.getElementById("userInput").value;
+                    const message = document.getElementById("messageInput").value;
+                    connection.invoke("SendMessage", user, message).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                    document.getElementById("messageInput").value = '';
+                    event.preventDefault();
+                });
+            });
+        </script>
+
+
+
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#"><strong>ScamBet</strong></a>
@@ -81,6 +140,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 move-to-right">
+                       
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -105,10 +165,13 @@
                                 <a class="nav-link" asp-controller="Home" asp-action="UserIndex">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="MyAccount">My Account</a>
+                                <a class="nav-link" asp-controller="Roulette" asp-action="Play">Roulette</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Roulette" asp-action="Play">Roulette</a>
+                                <a class="nav-link" asp-controller="Home" asp-action="Bet">Bet</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="MyBets">My Bets</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -121,6 +184,12 @@
                                 <span class="navbar-toggler-icon"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                                @if (User.IsInRole("User"))
+                                {
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Deposit">Deposit</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Withdraw">Withdraw</a></li>
+                                }
                                 <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Log Out</a></li>
                             </ul>
                         </li>
@@ -130,6 +199,7 @@
             </div>
         </nav>
     }
+    
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -140,6 +210,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

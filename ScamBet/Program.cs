@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ScamBet.Controllers;
 using ScamBet.Entities;
+using ScamBet.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<BookmacherDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<AccountController>();
@@ -61,6 +63,7 @@ app.UseEndpoints(endpoints =>
       name: "myAccount",
       pattern: "Account/MyAccount/{id?}",
       defaults: new { controller = "Account", action = "MyAccount" });
+    endpoints.MapHub<ChatHub>("/chathub");
 });
 
 app.Run();

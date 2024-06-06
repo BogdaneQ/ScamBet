@@ -115,6 +115,55 @@ namespace ScamBet.Controllers
             return View(account);
         }
 
+        [HttpGet]
+        public IActionResult Deposit()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Deposit(double amount)
+        {
+            var user = await _context.Accounts.FirstOrDefaultAsync(a => a.email == User.Identity.Name);
+
+            if (user != null)
+            {
+                user.acc_balance += amount;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(UserIndex));
+        }
+
+        [HttpGet]
+        public IActionResult Withdraw()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Withdraw(double amount)
+        {
+            var user = await _context.Accounts.FirstOrDefaultAsync(a => a.email == User.Identity.Name);
+
+            if (user != null)
+            {
+                if (user.acc_balance >= amount)
+                {
+                    user.acc_balance -= amount;
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Insufficient funds.");
+                    return View();
+                }
+            }
+
+            return RedirectToAction(nameof(UserIndex));
+        }
+
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

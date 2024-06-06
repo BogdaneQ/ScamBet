@@ -12,7 +12,7 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    [Migration("20240605092348_migracja1")]
+    [Migration("20240606123500_migracja1")]
     partial class migracja1
     {
         /// <inheritdoc />
@@ -167,19 +167,35 @@ namespace ScamBet.Migrations
 
             modelBuilder.Entity("ScamBet.Entities.Roulette", b =>
                 {
-                    b.Property<int>("roulette_ID")
+                    b.Property<int>("bet_ID_r")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("roulette_ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bet_ID_r"));
 
-                    b.Property<string>("name")
+                    b.Property<double>("betAmount_r")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("betTime_r")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("betType_r")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("roulette_ID");
+                    b.Property<string>("betValue_r")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Roulettes");
+                    b.Property<bool>("isWin_r")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("user_ID")
+                        .HasColumnType("int");
+
+                    b.HasKey("bet_ID_r");
+
+                    b.ToTable("Roulette");
                 });
 
             modelBuilder.Entity("ScamBet.Entities.Team", b =>

@@ -1,12 +1,47 @@
 ﻿@model ScamBet.Entities.Roulette
 
-<h2>Create New Roulette</h2>
+@{
+    ViewData["Title"] = "Create Roulette Bet";
+}
+
+<h2>Create Roulette Bet</h2>
 
 <form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="user_ID" />
+
     <div class="form-group">
-        <label asp-for="name">Name</label>
-        <input asp-for="name" class="form-control" />
-        <span asp-validation-for="name" class="text-danger"></span>
+        <label asp-for="betType_r" class="control-label"></label>
+        <select asp-for="betType_r" class="form-control">
+            <option value="color">Color</option>
+            <option value="number">Number</option>
+        </select>
+        <span asp-validation-for="betType_r" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+
+    <div class="form-group">
+        <label asp-for="betValue_r" class="control-label"></label>
+        <input asp-for="betValue_r" class="form-control" />
+        <span asp-validation-for="betValue_r" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="betAmount_r" class="control-label"></label>
+        <input asp-for="betAmount_r" class="form-control" />
+        <span asp-validation-for="betAmount_r" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Place Bet" class="btn btn-primary" />
+    </div>
 </form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

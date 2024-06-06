@@ -136,6 +136,16 @@ namespace ScamBet.Controllers
             {
                 try
                 {
+                    var existingAccount = await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(a => a.user_ID == id);
+                    if (existingAccount == null)
+                    {
+                        return NotFound();
+                    }
+                    // Jeśli żadne zdjęcie nie zostało przekazane w żądaniu, zachowaj istniejącą ścieżkę AvatarPath
+                    if (account.AvatarPath == null)
+                    {
+                        account.AvatarPath = existingAccount.AvatarPath;
+                    }
                     _context.Update(account);
                     await _context.SaveChangesAsync();
                 }
@@ -199,7 +209,12 @@ namespace ScamBet.Controllers
                         return NotFound();
                     }
 
-                    if (avatar != null && avatar.Length > 0)
+                    // Jeśli żadne zdjęcie nie zostało przekazane w żądaniu, zachowaj istniejącą ścieżkę AvatarPath
+                    if (avatar == null || avatar.Length == 0)
+                    {
+                        account.AvatarPath = existingAccount.AvatarPath;
+                    }
+                    else // Jeśli przekazano nowe zdjęcie, zaktualizuj ścieżkę AvatarPath
                     {
                         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(avatar.FileName)}";
                         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);

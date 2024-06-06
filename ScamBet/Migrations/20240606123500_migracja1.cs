@@ -27,16 +27,21 @@ namespace ScamBet.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roulettes",
+                name: "Roulette",
                 columns: table => new
                 {
-                    roulette_ID = table.Column<int>(type: "int", nullable: false)
+                    bet_ID_r = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    user_ID = table.Column<int>(type: "int", nullable: false),
+                    betType_r = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    betValue_r = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    betAmount_r = table.Column<double>(type: "float", nullable: false),
+                    betTime_r = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    isWin_r = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roulettes", x => x.roulette_ID);
+                    table.PrimaryKey("PK_Roulette", x => x.bet_ID_r);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,7 +192,7 @@ namespace ScamBet.Migrations
                 name: "Bets");
 
             migrationBuilder.DropTable(
-                name: "Roulettes");
+                name: "Roulette");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
