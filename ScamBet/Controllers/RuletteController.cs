@@ -78,9 +78,25 @@ namespace ScamBet.Controllers
         {
             var random = new Random();
             int number = random.Next(0, 37);
-            string color = number == 0 ? "green" : (number % 2 == 0 ? "red" : "black");
+            string color = "";
+
+            // Przypisz kolor na podstawie numeru
+            switch (number)
+            {
+                case 0:
+                    color = "green";
+                    break;
+                case int n when (n >= 1 && n <= 10) || (n >= 19 && n <= 28):
+                    color = n % 2 == 0 ? "black" : "red";
+                    break;
+                case int n when (n >= 11 && n <= 18) || (n >= 29 && n <= 36):
+                    color = n % 2 == 0 ? "red" : "black";
+                    break;
+            }
+
             return $"{number}:{color}";
         }
+
 
         private bool DetermineWin(string betType, string betValue, string rouletteResult)
         {
