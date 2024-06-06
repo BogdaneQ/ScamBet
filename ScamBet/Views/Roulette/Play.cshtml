@@ -7,45 +7,83 @@
 
 <h2>Play Roulette</h2>
 
-<div id="roulette-wheel">
-    <div class="sector" data-value="0">0</div>
-    <div class="sector red" data-value="1">1</div>
-    <div class="sector black" data-value="2">2</div>
-    <!-- Dodaj więcej sektorów dla kolejnych numerów i kolorów -->
+<div class="roulette-container">
+    <div id="roulette-table">
+        <div class="sector green" data-value="0">0</div>
+        @* Numbers and sectors based on the image *@
+        @for (int i = 1; i <= 36; i++)
+        {
+            var color = (i % 2 == 0) ? "black" : "red";
+            <div class="sector @color" data-value="@i">@i</div>
+        }
+        <div class="sector-label" data-value="1-12">1st 12</div>
+        <div class="sector-label" data-value="13-24">2nd 12</div>
+        <div class="sector-label" data-value="25-36">3rd 12</div>
+
+        <div class="sector-label" data-value="1-18">1-18</div>
+        <div class="sector-label" data-value="even">EVEN</div>
+        <div class="sector-label black" data-value="black">BLACK</div>
+        <div class="sector-label red" data-value="red">RED</div>
+        <div class="sector-label" data-value="odd">ODD</div>
+        <div class="sector-label" data-value="19-36">19-36</div>
+
+        <div class="sector-label" data-value="2to1-1">2 to 1</div>
+        <div class="sector-label" data-value="2to1-2">2 to 1</div>
+        <div class="sector-label" data-value="2to1-3">2 to 1</div>
+    </div>
+
+    <div class="result-info">
+        <form id="betForm" method="post" asp-controller="Roulette" asp-action="PlaceBet">
+            <input type="hidden" id="betType" name="betType" value="">
+            <input type="hidden" id="betValue" name="betValue" value="">
+            <div class="form-group">
+                <label for="betAmount">Bet Amount</label>
+                <input type="number" id="betAmount" name="betAmount" class="form-control" placeholder="Enter bet amount">
+            </div>
+            <button type="submit" class="btn btn-primary">Place Bet</button>
+        </form>
+
+        @if (ViewBag.RouletteResult != null)
+        {
+            <h3>Roulette Result: @ViewBag.RouletteResult</h3>
+            <h3>@(ViewBag.IsWin ? "You won!" : "You lost!")</h3>
+            <h3>Your winnings: @ViewBag.Winnings</h3>
+            <h3>Your new balance: @ViewBag.Balance</h3>
+        }
+    </div>
 </div>
 
-<form id="betForm" method="post">
-    <input type="hidden" id="betType" name="betType" value="">
-    <input type="hidden" id="betValue" name="betValue" value="">
-    <div class="form-group">
-        <label for="betAmount">Bet Amount</label>
-        <input type="number" id="betAmount" name="betAmount" class="form-control" placeholder="Enter bet amount">
-    </div>
-    <button type="submit" class="btn btn-primary">Place Bet</button>
-</form>
-
-@if (ViewBag.RouletteResult != null)
+@section Scripts 
 {
-    <h3>Roulette Result: @ViewBag.RouletteResult</h3>
-    <h3>@(ViewBag.IsWin ? "You won!" : "You lost!")</h3>
-    <h3>Your new balance: @ViewBag.Balance</h3>
-}
-
-@section Scripts {
     <script>
-        document.querySelectorAll('.sector').forEach(sector => {
+        document.querySelectorAll('.sector, .sector-label').forEach(sector => {
             sector.addEventListener('click', function () {
-                document.getElementById('betType').value = 'number'; // W przypadku sektorów liczbowych
+                document.getElementById('betType').value = this.classList.contains('sector-label') ? 'label' : 'number';
                 document.getElementById('betValue').value = this.dataset.value;
-                document.getElementById('roulette-wheel').classList.add('disabled');
+                document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+                this.classList.add('selected');
             });
         });
 
-        document.getElementById('betForm').addEventListener('submit', function () {
+        document.getElementById('betForm').addEventListener('submit', function (event) {
             if (!document.getElementById('betType').value || !document.getElementById('betValue').value) {
                 alert('Please select a number before placing your bet.');
                 event.preventDefault();
             }
         });
+
+        @if (ViewBag.RouletteResult != null)
+        {
+            <text>
+            const result = "@ViewBag.RouletteResult".split(':')[0];
+            const resultElement = document.querySelector(`[data-value="${result}"]`);
+            if (resultElement) {
+                resultElement.classList.add('flash');
+                setTimeout(() => {
+                    resultElement.classList.remove('flash');
+                }, 6000);
+            }
+            </text>
+        }
     </script>
-}
+  }

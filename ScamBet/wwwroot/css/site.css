@@ -158,31 +158,77 @@ a {
     background-color: #333;
     padding: 5px 10px;
 }
-#roulette-wheel {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background-color: #eee;
-    position: relative;
+.roulette-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
-.sector {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 150px 75px 0;
-    border-color: red transparent transparent;
-    transform-origin: bottom;
+#roulette-table {
+    display: grid;
+    grid-template-columns: repeat(13, 50px);
+    grid-template-rows: repeat(4, 50px) 50px 50px;
+    gap: 5px;
+}
+
+.sector, .sector-label {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
     cursor: pointer;
+    font-size: 14px;
 }
 
-.red {
-    border-color: red transparent transparent;
+    .sector.red {
+        background-color: red;
+        color: white;
+    }
+
+    .sector.black, .sector-label.black {
+        background-color: black;
+        color: white;
+    }
+
+    .sector.green {
+        background-color: green;
+        color: white;
+    }
+
+    .sector-label.red {
+        background-color: red;
+        color: white;
+    }
+
+.sector-label {
+    background-color: gray;
 }
 
-.black {
-    border-color: black transparent transparent;
+.selected {
+    background-color: yellow !important;
 }
 
-/* Dodaj wiêcej stylów dla kolejnych numerów i kolorów */
+.flash {
+    animation: flash-animation 0.5s alternate 6;
+}
+
+@keyframes flash-animation {
+    from {
+        background-color: green;
+    }
+
+    to {
+        background-color: lightgreen;
+    }
+}
+
+#roulette-table.disabled .sector, #roulette-table.disabled .sector-label {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.result-info {
+    margin-left: 20px;
+}

@@ -41,9 +41,11 @@ namespace ScamBet.Controllers
             var rouletteResult = GenerateRouletteResult();
             bool isWin = DetermineWin(betType, betValue, rouletteResult);
 
+            double winnings = 0;
             if (isWin)
             {
-                account.acc_balance += betAmount * (betType == "number" ? 35 : 2);
+                winnings = betAmount * (betType == "number" ? 35 : 2);
+                account.acc_balance += winnings;
             }
             else
             {
@@ -65,7 +67,9 @@ namespace ScamBet.Controllers
 
             ViewBag.RouletteResult = rouletteResult;
             ViewBag.IsWin = isWin;
+            ViewBag.Winnings = winnings;
             ViewBag.Balance = account.acc_balance;
+            ViewBag.BetValue = betValue;
 
             return View("Play");
         }

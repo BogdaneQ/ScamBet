@@ -25,7 +25,7 @@ namespace ScamBet.Controllers
             _context = context;
             _logger = logger;
         }
-      
+
         public IActionResult Privacy()
         {
             return View();
@@ -55,16 +55,15 @@ namespace ScamBet.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string password)
         {
-
             var user = _context.Accounts.Include(a => a.Role).FirstOrDefault(m => m.email == email);
             if (user == null || user.isBanned)
-                {
+            {
                 ViewBag.ErrorMessage = "Nieprawid這wy email lub konto zosta這 zbanowane.";
                 return View();
-                }
+            }
 
-                if(user.password == password)
-                {
+            if (user.password == password)
+            {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.user_ID.ToString()));
                 identity.AddClaim(new Claim(ClaimTypes.Email, email));
@@ -74,20 +73,19 @@ namespace ScamBet.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
                 if (user.Role.RoleName == RoleType.Admin.ToString())
-                    {
-                        return RedirectToAction("AdminIndex", "Home");
-                    }
-                else
-                    {
-                        return RedirectToAction("UserIndex", "Home");
-                    }
+                {
+                    return RedirectToAction("AdminIndex", "Home");
                 }
-
                 else
                 {
+                    return RedirectToAction("UserIndex", "Home");
+                }
+            }
+            else
+            {
                 ViewBag.ErrorMessage = "Nieprawid這we has這.";
                 return View();
-                }
+            }
         }
 
         [AllowAnonymous]
@@ -122,17 +120,30 @@ namespace ScamBet.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Deposit(double amount)
         {
-            var user = await _context.Accounts.FirstOrDefaultAsync(a => a.email == User.Identity.Name);
+            if (amount <= 0)
+            {
+                ModelState.AddModelError(string.Empty, "Deposit amount must be greater than zero.");
+                return View();
+            }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var user = await _context.Accounts.FindAsync(int.Parse(userId));
             if (user != null)
             {
                 user.acc_balance += amount;
                 await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(UserIndex));
             }
 
-            return RedirectToAction(nameof(UserIndex));
+            return RedirectToAction(nameof(Login));
         }
 
         [HttpGet]
@@ -142,16 +153,29 @@ namespace ScamBet.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Withdraw(double amount)
         {
-            var user = await _context.Accounts.FirstOrDefaultAsync(a => a.email == User.Identity.Name);
+            if (amount <= 0)
+            {
+                ModelState.AddModelError(string.Empty, "Withdraw amount must be greater than zero.");
+                return View();
+            }
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var user = await _context.Accounts.FindAsync(int.Parse(userId));
             if (user != null)
             {
                 if (user.acc_balance >= amount)
                 {
                     user.acc_balance -= amount;
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(UserIndex));
                 }
                 else
                 {
@@ -160,15 +184,13 @@ namespace ScamBet.Controllers
                 }
             }
 
-            return RedirectToAction(nameof(UserIndex));
+            return RedirectToAction(nameof(Login));
         }
-
 
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
-
         }
     }
 }
