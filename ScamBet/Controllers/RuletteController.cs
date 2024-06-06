@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
+using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ScamBet.Controllers
@@ -17,130 +19,82 @@ namespace ScamBet.Controllers
             _context = context;
         }
 
-        // GET: Roulette/Index
-        public IActionResult Index()
-        {
-            var roulettes = _context.Roulettes.ToList();
-            return View(roulettes);
-        }
-
-        // GET: Roulette/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var roulette = await _context.Roulettes.FirstOrDefaultAsync(m => m.roulette_ID == id);
-            if (roulette == null)
-            {
-                return NotFound();
-            }
-
-            return View(roulette);
-        }
-
-        // GET: Roulette/Create
-        public IActionResult Create()
+        // GET: Roulette/Play
+        public IActionResult Play()
         {
             return View();
         }
 
-        // POST: Roulette/Create
+        // POST: Roulette/PlaceBet
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("roulette_ID,name,difficulty")] Roulette roulette)
+        public async Task<IActionResult> PlaceBet(string betType, string betValue, double betAmount)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(roulette);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(roulette);
-        }
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var account = await _context.Accounts.FindAsync(userId);
 
-        // GET: Roulette/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+            if (account == null || betAmount <= 0 || account.acc_balance < betAmount)
             {
-                return NotFound();
+                return BadRequest("Invalid bet amount or insufficient balance.");
             }
 
-            var roulette = await _context.Roulettes.FindAsync(id);
-            if (roulette == null)
-            {
-                return NotFound();
-            }
-            return View(roulette);
-        }
+            var rouletteResult = GenerateRouletteResult();
+            bool isWin = DetermineWin(betType, betValue, rouletteResult);
 
-        // POST: Roulette/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("roulette_ID,name,difficulty")] Roulette roulette)
-        {
-            if (id != roulette.roulette_ID)
+            if (isWin)
             {
-                return NotFound();
+                account.acc_balance += betAmount * (betType == "number" ? 35 : 2);
+            }
+            else
+            {
+                account.acc_balance -= betAmount;
             }
 
-            if (ModelState.IsValid)
+            var bet = new Roulette
             {
-                try
-                {
-                    _context.Update(roulette);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RouletteExists(roulette.roulette_ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(roulette);
-        }
+                user_ID = userId,
+                betType_r = betType,
+                betValue_r = betValue,
+                betAmount_r = betAmount,
+                betTime_r = DateTime.Now,
+                isWin_r = isWin
+            };
 
-        // GET: Roulette/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var roulette = await _context.Roulettes.FirstOrDefaultAsync(m => m.roulette_ID == id);
-            if (roulette == null)
-            {
-                return NotFound();
-            }
-
-            return View(roulette);
-        }
-
-        // POST: Roulette/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var roulette = await _context.Roulettes.FindAsync(id);
-            _context.Roulettes.Remove(roulette);
+            _context.Roulette.Add(bet);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            ViewBag.RouletteResult = rouletteResult;
+            ViewBag.IsWin = isWin;
+            ViewBag.Balance = account.acc_balance;
+
+            return View("Play");
         }
 
-        private bool RouletteExists(int id)
+        private string GenerateRouletteResult()
         {
-            return _context.Roulettes.Any(e => e.roulette_ID == id);
+            var random = new Random();
+            int number = random.Next(0, 37);
+            string color = number == 0 ? "green" : (number % 2 == 0 ? "red" : "black");
+            return $"{number}:{color}";
+        }
+
+        private bool DetermineWin(string betType, string betValue, string rouletteResult)
+        {
+            var resultParts = rouletteResult.Split(':');
+            var number = resultParts[0];
+            var color = resultParts[1];
+
+            if (betType == "color" && betValue == color)
+            {
+                return true;
+            }
+
+            if (betType == "number" && betValue == number)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
