@@ -163,7 +163,7 @@ a {
     display: flex;
     flex-flow: column-reverse wrap;
     align-content: flex-start;
-    width: auto;
+    width: 900px;
     height: 300px;
     padding: 0px 0px 0px 20px;
 }
@@ -184,7 +184,7 @@ a {
 .zero-item {
     background-color: green;
     border-bottom: 3px solid white;
-    padding-top: 110px;
+    padding-top: 132px;
     padding-bottom: 111px;
 }
 
@@ -199,10 +199,10 @@ a {
 .column-item {
     border: solid white;
     background-color: green;
-    padding-top: 25px;
+    padding-top: 22.6px;
     padding-bottom: 25px;
     text-align: center;
-    width: 50px;
+    width: 60px;
     font-size: 30px;
     color: white;
 }
@@ -210,39 +210,39 @@ a {
 .container-second, .container-third {
     display: flex;
     width: auto;
-    height: 70px;
+    height: 57px;
     flex-flow: row wrap;
     align-content: flex-start;
     padding: 0px 0px 0px 72px;
 }
 
 .doz-item {
-    flex-basis: 220px;
+    flex-basis: 199.3px;
     border: solid white;
     background-color: green;
-    padding-top: 15px;
-    padding-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 50px;
     text-align: center;
-    height: 20px;
+    height: 15px;
     font-size: 30px;
     color: white;
 }
 .outside-section {
-    flex-basis: 107px;
+    flex-basis: 99.6px;
     border: solid white;
     background-color: green;
-    padding-top: 15px;
-    padding-bottom: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: center;
-    height: 20px;
-    font-size: 30px;
+    height: 50px;
+    font-size: 20px;
     color: white;
 }
 
 .rhomb-red, .rhomb-black {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 27px;
+    height: 27px;
     border: solid white;
     transform: rotate(45deg);
 }
