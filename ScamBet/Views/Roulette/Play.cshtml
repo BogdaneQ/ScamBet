@@ -4,13 +4,23 @@
     ViewData["Title"] = "Play Roulette";
 }
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
 <h3>Last Rolls:</h3>
-<div class="recent-bets">
-    @foreach (var bet in ViewBag.RecentBets)
+<div class="recent-results">
+    @if (ViewBag.RecentResults != null)
     {
-        <div class="recent-bet @(bet.isWin_r ? "win" : "loss")">@bet.betValue_r</div>
+        @foreach (var result in ViewBag.RecentResults)
+        {
+            <div class="recent-result @(result.isWin_r ? "win" : "loss")">@result.result_r</div>
+        }
+    }
+    else
+    {
+        <p>No recent results available.</p>
     }
 </div>
+
+
 
 <h2>Roulette</h2>
 

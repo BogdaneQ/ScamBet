@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using System.Web.Helpers;
 
 namespace ScamBet.Controllers
 {
@@ -19,11 +20,13 @@ namespace ScamBet.Controllers
     {
         private readonly BookmacherDBContext _context;
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(BookmacherDBContext context, ILogger<HomeController> logger)
+        public HomeController(BookmacherDBContext context, ILogger<HomeController> logger, IConfiguration configuration)
         {
             _context = context;
             _logger = logger;
+            _configuration = configuration;
         }
 
         public IActionResult Privacy()
@@ -62,7 +65,10 @@ namespace ScamBet.Controllers
                 return View();
             }
 
-            if (user.password == password)
+            var Salt = _configuration.GetSection("salt").Value;
+            string HashAndSalt = string.Concat(password, Salt);
+
+            if (Crypto.VerifyHashedPassword(user.password,HashAndSalt))
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.user_ID.ToString()));
@@ -102,6 +108,11 @@ namespace ScamBet.Controllers
         {
             if (ModelState.IsValid)
             {
+                var Salt = _configuration.GetSection("salt").Value;
+                string HashAndSalt = string.Concat(account.password, Salt);
+
+                string FinalPassword = Crypto.HashPassword(HashAndSalt);
+                account.password = FinalPassword;
                 account.acc_balance = 0;
                 account.isBanned = false;
                 account.role_ID = 1;

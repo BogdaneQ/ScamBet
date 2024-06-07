@@ -22,11 +22,11 @@ namespace ScamBet.Controllers
         // GET: Roulette/Play
         public async Task<IActionResult> Play()
         {
-            var recentBets = await _context.Roulette
+            var recentResults = await _context.Roulette
                                            .OrderByDescending(b => b.betTime_r)
                                            .Take(10)
                                            .ToListAsync();
-            ViewBag.RecentBets = recentBets;
+            ViewBag.RecentBets = recentResults;
             return View();
         }
 
@@ -76,11 +76,11 @@ namespace ScamBet.Controllers
             ViewBag.Balance = account.acc_balance;
             ViewBag.BetValue = betValue;
 
-            var recentBets = await _context.Roulette
+            var recentResults = await _context.Roulette
                                            .OrderByDescending(b => b.betTime_r)
                                            .Take(10)
                                            .ToListAsync();
-            ViewBag.RecentBets = recentBets;
+            ViewBag.RecentBets = recentResults;
 
             return View("Play");
         }
