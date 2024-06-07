@@ -12,7 +12,7 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    [Migration("20240606123500_migracja1")]
+    [Migration("20240607234337_migracja1")]
     partial class migracja1
     {
         /// <inheritdoc />
@@ -189,6 +189,10 @@ namespace ScamBet.Migrations
 
                     b.Property<bool>("isWin_r")
                         .HasColumnType("bit");
+
+                    b.Property<string>("result_r")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("user_ID")
                         .HasColumnType("int");

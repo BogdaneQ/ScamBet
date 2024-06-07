@@ -30,9 +30,6 @@ namespace ScamBet.Controllers
             return View();
         }
 
-        // POST: Roulette/PlaceBet
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PlaceBet(string betType, string betValue, double betAmount)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -64,7 +61,8 @@ namespace ScamBet.Controllers
                 betValue_r = betValue,
                 betAmount_r = betAmount,
                 betTime_r = DateTime.Now,
-                isWin_r = isWin
+                isWin_r = isWin,
+                result_r = rouletteResult // Added result_r property
             };
 
             _context.Roulette.Add(bet);
@@ -84,6 +82,7 @@ namespace ScamBet.Controllers
 
             return View("Play");
         }
+
 
         private string GenerateRouletteResult()
         {

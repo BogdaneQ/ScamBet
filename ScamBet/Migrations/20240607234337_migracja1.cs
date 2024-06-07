@@ -37,7 +37,8 @@ namespace ScamBet.Migrations
                     betValue_r = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     betAmount_r = table.Column<double>(type: "float", nullable: false),
                     betTime_r = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    isWin_r = table.Column<bool>(type: "bit", nullable: false)
+                    isWin_r = table.Column<bool>(type: "bit", nullable: false),
+                    result_r = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

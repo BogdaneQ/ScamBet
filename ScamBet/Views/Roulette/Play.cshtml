@@ -7,20 +7,25 @@
 
 <h3>Last Rolls:</h3>
 <div class="recent-results">
-    @if (ViewBag.RecentResults != null)
+    @if (ViewBag.RecentBets != null)
     {
-        @foreach (var result in ViewBag.RecentResults)
-        {
-            <div class="recent-result @(result.isWin_r ? "win" : "loss")">@result.result_r</div>
-        }
+        <div class="recent-rolls-container">
+            @foreach (var result in ViewBag.RecentBets)
+            {
+                var resultParts = result.result_r.Split(':');
+                var number = resultParts[0];
+                var color = resultParts[1];
+                <div class="recent-roll @(color)">
+                    @number
+                </div>
+            }
+        </div>
     }
     else
     {
         <p>No recent results available.</p>
     }
 </div>
-
-
 
 <h2>Roulette</h2>
 
@@ -133,7 +138,3 @@
         }
     </script>
 }
-
-
-
-

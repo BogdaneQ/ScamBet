@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ScamBet.Entities
 {
     public class Roulette
@@ -25,5 +27,8 @@ namespace ScamBet.Entities
         public DateTime betTime_r { get; set; }
 
         public bool isWin_r { get; set; }
+
+        [Required]
+        public string result_r { get; set; } // Store the result of the roulette spin in format "number:color"
     }
 }

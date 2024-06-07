@@ -304,3 +304,65 @@ a {
 h3 {
     font-size: 20px; /* Ustawienie nowego rozmiaru czcionki */
 }
+
+.recent-rolls-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+.recent-roll {
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+}
+
+    .recent-roll.red {
+        background-color: red;
+    }
+
+    .recent-roll.black {
+        background-color: black;
+    }
+
+    .recent-roll.green {
+        background-color: green;
+    }
+
+.recent-rolls-container .recent-roll {
+    animation: move-left 1s forwards;
+}
+
+@keyframes move-left {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.flash {
+    animation: flash-animation 1s infinite alternate;
+}
+
+@keyframes flash-animation {
+    from {
+        background-color: yellow;
+    }
+
+    to {
+        background-color: orange;
+    }
+}

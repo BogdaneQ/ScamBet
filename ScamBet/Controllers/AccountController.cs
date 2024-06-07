@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,12 +17,14 @@ namespace ScamBet.Controllers
     public class AccountController : Controller
     {
         private readonly BookmacherDBContext _context;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(BookmacherDBContext context)
+        public AccountController(BookmacherDBContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
-        
+
         // GET: Account
         public async Task<IActionResult> Index()
         {
@@ -86,6 +89,10 @@ namespace ScamBet.Controllers
         {
             if (ModelState.IsValid)
             {
+                var Salt = _configuration.GetSection("salt").Value;
+                string HashAndSalt = string.Concat(account.password, Salt);
+                string FinalPassword = Crypto.HashPassword(HashAndSalt);
+                account.password = FinalPassword;
                 account.acc_balance = 0;
                 account.isBanned = false;
                 account.role_ID = 1;

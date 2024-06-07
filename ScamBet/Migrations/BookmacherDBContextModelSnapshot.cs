@@ -187,6 +187,10 @@ namespace ScamBet.Migrations
                     b.Property<bool>("isWin_r")
                         .HasColumnType("bit");
 
+                    b.Property<string>("result_r")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("user_ID")
                         .HasColumnType("int");
 
