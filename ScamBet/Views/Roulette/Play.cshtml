@@ -4,6 +4,13 @@
     ViewData["Title"] = "Play Roulette";
 }
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<h3>Last Rolls:</h3>
+<div class="recent-bets">
+    @foreach (var bet in ViewBag.RecentBets)
+    {
+        <div class="recent-bet @(bet.isWin_r ? "win" : "loss")">@bet.betValue_r</div>
+    }
+</div>
 
 <h2>Roulette</h2>
 
@@ -77,14 +84,6 @@
             <h3>Your winnings: @ViewBag.Winnings</h3>
             <h3>Your new balance: @ViewBag.Balance</h3>
         }
-
-        <h3>Last 10 Rolls:</h3>
-        <div class="recent-bets">
-            @foreach (var bet in ViewBag.RecentBets)
-            {
-                <div class="recent-bet @(bet.isWin_r ? "win" : "loss")">@bet.betValue_r</div>
-            }
-        </div>
     </div>
 </div>
 

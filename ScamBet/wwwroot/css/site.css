@@ -163,7 +163,7 @@ a {
     display: flex;
     flex-flow: column-reverse wrap;
     align-content: flex-start;
-    width: 900px;
+    width: 720px;
     height: 300px;
     padding: 0px 0px 0px 20px;
 }
@@ -267,15 +267,20 @@ a {
         background-color: lightgreen !important;
     }
 
-    .result-info {
-        display: flex;
-        flex-direction: column;
-        margin-left: 20px;
-    }
+.result-info {
+    position: absolute;
+    top: 135px;
+    right: 250px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    align-items: flex-start;
+}
 
     .recent-bets {
         display: flex;
         flex-wrap: wrap;
+        padding-bottom: 10px;
     }
 
     .recent-bet {
@@ -296,3 +301,6 @@ a {
         .recent-bet.loss {
             background-color: lightcoral;
         }
+h3 {
+    font-size: 20px; /* Ustawienie nowego rozmiaru czcionki */
+}
