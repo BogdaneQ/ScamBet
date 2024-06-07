@@ -20,8 +20,13 @@ namespace ScamBet.Controllers
         }
 
         // GET: Roulette/Play
-        public IActionResult Play()
+        public async Task<IActionResult> Play()
         {
+            var recentBets = await _context.Roulette
+                                           .OrderByDescending(b => b.betTime_r)
+                                           .Take(10)
+                                           .ToListAsync();
+            ViewBag.RecentBets = recentBets;
             return View();
         }
 
@@ -44,7 +49,7 @@ namespace ScamBet.Controllers
             double winnings = 0;
             if (isWin)
             {
-                winnings = betAmount * (betType == "number" ? 35 : 2);
+                winnings = betAmount * GetMultiplier(betType);
                 account.acc_balance += winnings;
             }
             else
@@ -70,6 +75,12 @@ namespace ScamBet.Controllers
             ViewBag.Winnings = winnings;
             ViewBag.Balance = account.acc_balance;
             ViewBag.BetValue = betValue;
+
+            var recentBets = await _context.Roulette
+                                           .OrderByDescending(b => b.betTime_r)
+                                           .Take(10)
+                                           .ToListAsync();
+            ViewBag.RecentBets = recentBets;
 
             return View("Play");
         }
@@ -97,11 +108,10 @@ namespace ScamBet.Controllers
             return $"{number}:{color}";
         }
 
-
         private bool DetermineWin(string betType, string betValue, string rouletteResult)
         {
             var resultParts = rouletteResult.Split(':');
-            var number = resultParts[0];
+            var number = int.Parse(resultParts[0]);
             var color = resultParts[1];
 
             if (betType == "color" && betValue == color)
@@ -109,12 +119,43 @@ namespace ScamBet.Controllers
                 return true;
             }
 
-            if (betType == "number" && betValue == number)
+            if (betType == "number" && betValue == number.ToString())
+            {
+                return true;
+            }
+
+            if (betType == "odd_even" && betValue == (number % 2 == 0 ? "even" : "odd"))
+            {
+                return true;
+            }
+
+            if (betType == "dozen" && ((betValue == "1st" && number >= 1 && number <= 12) ||
+                                       (betValue == "2nd" && number >= 13 && number <= 24) ||
+                                       (betValue == "3rd" && number >= 25 && number <= 36)))
+            {
+                return true;
+            }
+
+            if (betType == "half" && ((betValue == "1-18" && number >= 1 && number <= 18) ||
+                                      (betValue == "19-36" && number >= 19 && number <= 36)))
             {
                 return true;
             }
 
             return false;
+        }
+
+        private double GetMultiplier(string betType)
+        {
+            return betType switch
+            {
+                "number" => 35,
+                "color" => 2,
+                "odd_even" => 2,
+                "dozen" => 3,
+                "half" => 2,
+                _ => 1
+            };
         }
     }
 }

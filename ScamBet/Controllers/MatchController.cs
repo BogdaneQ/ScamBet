@@ -22,10 +22,7 @@ namespace ScamBet.Controllers
         // GET: Match
         public async Task<IActionResult> Index()
         {
-            var matches = await _context.Matches
-            .Include(m => m.Team1)
-            .Include(m => m.Team2)
-            .ToListAsync();
+            var matches = await _context.Matches.Include(m => m.Team1).Include(m => m.Team2).ToListAsync();
             return View(matches);
         }
 

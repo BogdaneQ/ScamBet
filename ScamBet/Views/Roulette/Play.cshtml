@@ -8,64 +8,57 @@
 <h2>Roulette</h2>
 
 <div class="roulette-container">
-    <div id="roulette-table">
-        <div class="sector green" data-value="0">0</div>
-        <div class="sector red" data-value="1">1</div>
-        <div class="sector black" data-value="2">2</div>
-        <div class="sector red" data-value="3">3</div>
-        <div class="sector black" data-value="4">4</div>
-        <div class="sector red" data-value="5">5</div>
-        <div class="sector black" data-value="6">6</div>
-        <div class="sector red" data-value="7">7</div>
-        <div class="sector black" data-value="8">8</div>
-        <div class="sector red" data-value="9">9</div>
-        <div class="sector black" data-value="10">10</div>
-        <div class="sector black" data-value="11">11</div>
-        <div class="sector red" data-value="12">12</div>
-        <div class="sector black" data-value="13">13</div>
-        <div class="sector red" data-value="14">14</div>
-        <div class="sector black" data-value="15">15</div>
-        <div class="sector red" data-value="16">16</div>
-        <div class="sector black" data-value="17">17</div>
-        <div class="sector red" data-value="18">18</div>
-        <div class="sector red" data-value="19">19</div>
-        <div class="sector black" data-value="20">20</div>
-        <div class="sector red" data-value="21">21</div>
-        <div class="sector black" data-value="22">22</div>
-        <div class="sector red" data-value="23">23</div>
-        <div class="sector black" data-value="24">24</div>
-        <div class="sector red" data-value="25">25</div>
-        <div class="sector black" data-value="26">26</div>
-        <div class="sector red" data-value="27">27</div>
-        <div class="sector black" data-value="28">28</div>
-        <div class="sector black" data-value="29">29</div>
-        <div class="sector red" data-value="30">30</div>
-        <div class="sector black" data-value="31">31</div>
-        <div class="sector red" data-value="32">32</div>
-        <div class="sector black" data-value="33">33</div>
-        <div class="sector red" data-value="34">34</div>
-        <div class="sector black" data-value="35">35</div>
-        <div class="sector red" data-value="36">36</div>
-
-        <div class="sector-label" data-value="1-12">1st 12</div>
-        <div class="sector-label" data-value="13-24">2nd 12</div>
-        <div class="sector-label" data-value="25-36">3rd 12</div>
-
-        <div class="sector-label" data-value="1-18">1-18</div>
-        <div class="sector-label" data-value="even">EVEN</div>
-        <div class="sector-label black" data-value="black">BLACK</div>
-        <div class="sector-label red" data-value="red">RED</div>
-        <div class="sector-label" data-value="odd">ODD</div>
-        <div class="sector-label" data-value="19-36">19-36</div>
-
-        <div class="sector-label" data-value="2to1-1">2 to 1</div>
-        <div class="sector-label" data-value="2to1-2">2 to 1</div>
-        <div class="sector-label" data-value="2to1-3">2 to 1</div>
+    <div class="container-first">
+        <div class="zero-item" data-value="0">
+            <div class="value">0</div>
+        </div>
+        @for (int i = 1; i <= 36; i++)
+        {
+            <div class="@((i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 12 || i == 14 || i == 16 || i == 18 || i == 19 || i == 21 || i == 23 || i == 25 || i == 27 || i == 30 || i == 32 || i == 34 || i == 36) ? "red-item" : "black-item")" data-value="@i">
+                <div class="value">@i</div>
+            </div>
+        }
+        <div class="column-item">
+            <div class="value">2-1</div>
+        </div>
+        <div class="column-item">
+            <div class="value">2-1</div>
+        </div>
+        <div class="column-item">
+            <div class="value">2-1</div>
+        </div>
     </div>
-
-
-
-
+    <div class="container-second">
+        <div class="doz-item" data-type="dozen" data-value="1st">
+            <div>1st 12</div>
+        </div>
+        <div class="doz-item" data-type="dozen" data-value="2nd">
+            <div>2nd 12</div>
+        </div>
+        <div class="doz-item" data-type="dozen" data-value="3rd">
+            <div>3rd 12</div>
+        </div>
+    </div>
+    <div class="container-third">
+        <div class="outside-section" data-type="half" data-value="1-18">
+            <div>1-18</div>
+        </div>
+        <div class="outside-section" data-type="odd_even" data-value="even">
+            <div>EVEN</div>
+        </div>
+        <div class="outside-section" data-type="color" data-value="red">
+            <div class="rhomb-red"></div>
+        </div>
+        <div class="outside-section" data-type="color" data-value="black">
+            <div class="rhomb-black"></div>
+        </div>
+        <div class="outside-section" data-type="odd_even" data-value="odd">
+            <div>ODD</div>
+        </div>
+        <div class="outside-section" data-type="half" data-value="19-36">
+            <div>19-36</div>
+        </div>
+    </div>
     <div class="result-info">
         <form id="betForm" method="post" asp-controller="Roulette" asp-action="PlaceBet">
             <input type="hidden" id="betType" name="betType" value="">
@@ -84,15 +77,26 @@
             <h3>Your winnings: @ViewBag.Winnings</h3>
             <h3>Your new balance: @ViewBag.Balance</h3>
         }
+
+        <h3>Last 10 Rolls:</h3>
+        <div class="recent-bets">
+            @foreach (var bet in ViewBag.RecentBets)
+            {
+                <div class="recent-bet @(bet.isWin_r ? "win" : "loss")">@bet.betValue_r</div>
+            }
+        </div>
     </div>
 </div>
 
 @section Scripts {
     <script>
-        document.querySelectorAll('.sector, .sector-label').forEach(sector => {
+        document.querySelectorAll('.zero-item, .red-item, .black-item, .column-item, .doz-item, .outside-section').forEach(sector => {
             sector.addEventListener('click', function () {
-                document.getElementById('betType').value = this.classList.contains('sector-label') ? 'label' : 'number';
-                document.getElementById('betValue').value = this.dataset.value;
+                const type = this.dataset.type || 'number';
+                const value = this.dataset.value || this.innerText.trim();
+                document.getElementById('betType').value = type;
+                document.getElementById('betValue').value = value;
+
                 document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
                 this.classList.add('selected');
             });
@@ -100,7 +104,7 @@
 
         document.getElementById('betForm').addEventListener('submit', function (event) {
             if (!document.getElementById('betType').value || !document.getElementById('betValue').value) {
-                alert('Please select a number before placing your bet.');
+                alert('Please select a bet before placing your bet.');
                 event.preventDefault();
             }
         });
@@ -108,8 +112,8 @@
         @if (ViewBag.RouletteResult != null)
         {
             <text>
-                        const result = "@ViewBag.RouletteResult".split(':')[0];
-            const resultElement = document.querySelector(`[data-value="${result}"]`);
+                            const resultValue = "@ViewBag.RouletteResult".split(':')[0];
+            const resultElement = document.querySelector(`[data-value="${resultValue}"]`);
             if (resultElement) {
                 resultElement.classList.add('flash');
                 setTimeout(() => {
@@ -120,3 +124,7 @@
         }
     </script>
 }
+
+
+
+
