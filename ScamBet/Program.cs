@@ -53,10 +53,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Login}/{id?}");
 
-app.MapControllerRoute(
-    name: "roulette",
-    pattern: "{controller=Roulette}/{action=Play}/{id?}");
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
