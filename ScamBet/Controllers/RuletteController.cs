@@ -73,6 +73,7 @@ namespace ScamBet.Controllers
             ViewBag.Winnings = winnings;
             ViewBag.Balance = account.acc_balance;
             ViewBag.BetValue = betValue;
+            ViewBag.BetAmount = betAmount; // Add bet amount to ViewBag
 
             var recentResults = await _context.Roulette
                                            .OrderByDescending(b => b.betTime_r)
@@ -83,6 +84,24 @@ namespace ScamBet.Controllers
             return View("Play");
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RepeatBet()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var lastBet = await _context.Roulette
+                                        .Where(b => b.user_ID == userId)
+                                        .OrderByDescending(b => b.betTime_r)
+                                        .FirstOrDefaultAsync();
+
+            if (lastBet == null)
+            {
+                return BadRequest("No previous bet to repeat.");
+            }
+
+            return await PlaceBet(lastBet.betType_r, lastBet.betValue_r, lastBet.betAmount_r);
+        }
 
         private string GenerateRouletteResult()
         {
@@ -141,6 +160,13 @@ namespace ScamBet.Controllers
                 return true;
             }
 
+            if (betType == "row" && ((betValue == "1st" && number % 3 == 1) ||
+                                     (betValue == "2nd" && number % 3 == 2) ||
+                                     (betValue == "3rd" && number % 3 == 0)))
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -153,6 +179,7 @@ namespace ScamBet.Controllers
                 "odd_even" => 2,
                 "dozen" => 3,
                 "half" => 2,
+                "row" => 3,
                 _ => 1
             };
         }

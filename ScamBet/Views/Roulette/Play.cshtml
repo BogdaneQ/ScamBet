@@ -40,13 +40,13 @@
                 <div class="value">@i</div>
             </div>
         }
-        <div class="column-item">
+        <div class="column-item" data-type="row" data-value="1st">
             <div class="value">2-1</div>
         </div>
-        <div class="column-item">
+        <div class="column-item" data-type="row" data-value="2nd">
             <div class="value">2-1</div>
         </div>
-        <div class="column-item">
+        <div class="column-item" data-type="row" data-value="3rd">
             <div class="value">2-1</div>
         </div>
     </div>
@@ -87,9 +87,13 @@
             <input type="hidden" id="betValue" name="betValue" value="">
             <div class="form-group">
                 <label for="betAmount">Bet Amount</label>
-                <input type="number" id="betAmount" name="betAmount" class="form-control" placeholder="Enter bet amount">
+                <input type="number" id="betAmount" name="betAmount" class="form-control" placeholder="Enter bet amount" value="@ViewBag.BetAmount">
             </div>
             <button type="submit" class="btn btn-primary">Place Bet</button>
+        </form>
+
+        <form id="repeatBetForm" method="post" asp-controller="Roulette" asp-action="RepeatBet">
+            <button type="submit" class="btn btn-secondary">Repeat Last Bet</button>
         </form>
 
         @if (ViewBag.RouletteResult != null)
