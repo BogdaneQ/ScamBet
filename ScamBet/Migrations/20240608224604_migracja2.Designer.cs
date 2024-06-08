@@ -12,8 +12,8 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    [Migration("20240608192350_migracja1")]
-    partial class migracja1
+    [Migration("20240608224604_migracja2")]
+    partial class migracja2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,9 @@ namespace ScamBet.Migrations
 
                     b.Property<string>("AvatarPath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalWinnings")
+                        .HasColumnType("float");
 
                     b.Property<double>("acc_balance")
                         .HasColumnType("float");

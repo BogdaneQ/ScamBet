@@ -83,8 +83,8 @@
     </div>
     <div class="result-info">
         <form id="betForm" method="post" asp-controller="Roulette" asp-action="PlaceBet">
-            <input type="hidden" id="betType" name="betType" value="">
-            <input type="hidden" id="betValue" name="betValue" value="">
+            <input type="hidden" id="betType" name="betType" value="@ViewBag.BetType">
+            <input type="hidden" id="betValue" name="betValue" value="@ViewBag.BetValue">
             <div class="form-group">
                 <label for="betAmount">Bet Amount</label>
                 <input type="number" id="betAmount" name="betAmount" class="form-control" placeholder="Enter bet amount" value="@ViewBag.BetAmount">
@@ -98,10 +98,16 @@
 
         @if (ViewBag.RouletteResult != null)
         {
+           
+            
+                string message = ViewBag.IsWin ? "You WON!" : "You LOST!";
+                string color = ViewBag.IsWin ? "green" : "red";
+            
+
+            <h3 style="color: @color;">@message</h3>
             <h3>Roulette Result: @ViewBag.RouletteResult</h3>
-            <h3>@(ViewBag.IsWin ? "You won!" : "You lost!")</h3>
-            <h3>Your winnings: @ViewBag.Winnings</h3>
-            <h3>Your new balance: @ViewBag.Balance</h3>
+            <h3>Winnings: @ViewBag.Winnings</h3>
+            <h3>New balance: @ViewBag.Balance</h3>
         }
     </div>
 </div>
@@ -130,13 +136,13 @@
         @if (ViewBag.RouletteResult != null)
         {
             <text>
-                            const resultValue = "@ViewBag.RouletteResult".split(':')[0];
+                                        const resultValue = "@ViewBag.RouletteResult".split(':')[0];
             const resultElement = document.querySelector(`[data-value="${resultValue}"]`);
             if (resultElement) {
                 resultElement.classList.add('flash');
                 setTimeout(() => {
                     resultElement.classList.remove('flash');
-                }, 6000);
+                }, 5000);
             }
             </text>
         }

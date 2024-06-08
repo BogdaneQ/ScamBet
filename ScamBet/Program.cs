@@ -59,7 +59,7 @@ app.UseEndpoints(endpoints =>
       name: "myAccount",
       pattern: "Account/MyAccount/{id?}",
       defaults: new { controller = "Account", action = "MyAccount" });
-    endpoints.MapHub<ChatHub>("/chathub");
+
 });
 
 app.Run();

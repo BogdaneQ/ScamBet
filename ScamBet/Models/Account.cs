@@ -47,5 +47,7 @@ namespace ScamBet.Entities
         public double acc_balance { get; set; }
 
         public string AvatarPath { get; set; }
+        public double TotalWinnings { get; set; }
+
     }
 }

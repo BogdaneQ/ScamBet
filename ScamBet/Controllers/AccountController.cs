@@ -237,6 +237,15 @@ namespace ScamBet.Controllers
                     account.acc_balance = existingAccount.acc_balance;
 
                     account.role_ID = existingAccount.role_ID; // Ustawienie istniejącego role_ID
+
+                    if (!string.IsNullOrEmpty(account.password))
+                    {
+                        var Salt = _configuration.GetSection("salt").Value;
+                        string HashAndSalt = string.Concat(account.password, Salt);
+                        string FinalPassword = Crypto.HashPassword(HashAndSalt);
+                        account.password = FinalPassword;
+                    }
+
                     _context.Update(account);
                     await _context.SaveChangesAsync();
                 }

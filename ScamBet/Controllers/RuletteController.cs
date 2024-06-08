@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
+using ScamBet.Models;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -18,6 +19,14 @@ namespace ScamBet.Controllers
         {
             _context = context;
         }
+
+        // GET: Roulette/Index
+        
+            public async Task<IActionResult> Index()
+            {
+                return View();
+            }
+        
 
         // GET: Roulette/Play
         public async Task<IActionResult> Play()
@@ -183,5 +192,6 @@ namespace ScamBet.Controllers
                 _ => 1
             };
         }
+        
     }
 }

@@ -55,9 +55,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Match" asp-action="Index">Match</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Roulette" asp-action="Index">TopWins</a>
-                            </li>
                         }
                         else if (User.IsInRole("User"))
                         {
@@ -75,9 +72,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Bet" asp-action="MyBets">MyBets</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Roulette" asp-action="Index">TopWins</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>

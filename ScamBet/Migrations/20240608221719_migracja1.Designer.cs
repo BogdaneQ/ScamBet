@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScamBet.Entities;
 
@@ -11,9 +12,11 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    partial class BookmacherDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240608221719_migracja1")]
+    partial class migracja1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +35,6 @@ namespace ScamBet.Migrations
 
                     b.Property<string>("AvatarPath")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("TotalWinnings")
-                        .HasColumnType("float");
 
                     b.Property<double>("acc_balance")
                         .HasColumnType("float");

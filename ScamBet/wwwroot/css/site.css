@@ -257,13 +257,13 @@ a {
         transform: none;
     }
 
-    .selected {
-        background-color: yellow !important;
-    }
+.selected {
+    background-color: yellow !important;
+}
 
-    .flash {
-        background-color: lightgreen !important;
-    }
+.flash {
+    background-color: lightgreen !important;
+}
 
 .result-info {
     position: absolute;
@@ -275,30 +275,31 @@ a {
     align-items: flex-start;
 }
 
-    .recent-bets {
-        display: flex;
-        flex-wrap: wrap;
-        padding-bottom: 10px;
+.recent-bets {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+}
+
+.recent-bet {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ccc;
+    font-size: 16px;
+}
+
+    .recent-bet.win {
+        background-color: lightgreen;
     }
 
-    .recent-bet {
-        width: 40px;
-        height: 40px;
-        margin: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 2px solid #ccc;
-        font-size: 16px;
+    .recent-bet.loss {
+        background-color: lightcoral;
     }
 
-        .recent-bet.win {
-            background-color: lightgreen;
-        }
-
-        .recent-bet.loss {
-            background-color: lightcoral;
-        }
 h3 {
     font-size: 20px;
 }
@@ -352,16 +353,16 @@ h3 {
 }
 
 .flash {
-    animation: flash-animation 3s infinite alternate;
+    animation: flash-animation 5s forwards;
 }
 
 @keyframes flash-animation {
     from {
-        background-color: yellow;
+        background-color: lightgreen;
     }
 
     to {
-        background-color: orange;
+        background-color: lightgreen;
     }
 }
 
