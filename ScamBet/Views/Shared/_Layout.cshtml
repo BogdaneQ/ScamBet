@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    
     @if (User.Identity.IsAuthenticated)
     {
+
         <div id="sessionTimer">Czas sesji: 15:00</div>
         <script>
             var sessionTimer = document.getElementById('sessionTimer');
@@ -132,6 +132,7 @@
                                 @if (User.IsInRole("User"))
                                 {
                                     <li><a class="dropdown-item" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="History">History</a></li>
                                     <li><a class="dropdown-item" asp-controller="Home" asp-action="Deposit">Deposit</a></li>
                                     <li><a class="dropdown-item" asp-controller="Home" asp-action="Withdraw">Withdraw</a></li>
                                 }

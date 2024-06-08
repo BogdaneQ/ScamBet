@@ -13,6 +13,7 @@ namespace ScamBet.Entities
         public DbSet<Match> Matches { get; set; }
         public DbSet<Roulette> Roulette { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
         public BookmacherDBContext(DbContextOptions<BookmacherDBContext> options) : base(options)
         {

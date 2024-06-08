@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ScamBet.Entities.Transaction>
+
+@{
+    ViewData["Title"] = "Transaction History";
+}
+
+<h2>Transaction History</h2>
+<div style="background-color: #eb0003; border-radius: 20px; padding: 20px;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in Model)
+            {
+                var rowStyle = transaction.Type == ScamBet.Entities.TransactionType.Deposit
+                ? "background-color: lightgreen;"
+                : "background-color: lightbrown;";
+
+                <tr style="@rowStyle">
+                    <td>@transaction.Date</td>
+                    <td>@transaction.Type</td>
+                    <td>@transaction.Amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

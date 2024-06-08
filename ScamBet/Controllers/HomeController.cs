@@ -150,7 +150,18 @@ namespace ScamBet.Controllers
             if (user != null)
             {
                 user.acc_balance += amount;
+
+                var transaction = new Transaction
+                {
+                    AccountId = user.user_ID,
+                    Amount = amount,
+                    Date = DateTime.Now,
+                    Type = TransactionType.Deposit
+                };
+
+                _context.Transactions.Add(transaction);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(UserIndex));
             }
 
@@ -185,7 +196,18 @@ namespace ScamBet.Controllers
                 if (user.acc_balance >= amount)
                 {
                     user.acc_balance -= amount;
+
+                    var transaction = new Transaction
+                    {
+                        AccountId = user.user_ID,
+                        Amount = amount,
+                        Date = DateTime.Now,
+                        Type = TransactionType.Withdrawal
+                    };
+
+                    _context.Transactions.Add(transaction);
                     await _context.SaveChangesAsync();
+
                     return RedirectToAction(nameof(UserIndex));
                 }
                 else
@@ -196,6 +218,24 @@ namespace ScamBet.Controllers
             }
 
             return RedirectToAction(nameof(Login));
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> History()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var transactions = await _context.Transactions
+                .Where(t => t.AccountId == int.Parse(userId))
+                .OrderByDescending(t => t.Date)
+                .ToListAsync();
+
+            return View(transactions);
         }
 
         public async Task<IActionResult> Logout()

@@ -12,7 +12,7 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    [Migration("20240607234337_migracja1")]
+    [Migration("20240608125255_migracja1")]
     partial class migracja1
     {
         /// <inheritdoc />
@@ -232,6 +232,33 @@ namespace ScamBet.Migrations
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("ScamBet.Entities.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Transactions");
+                });
+
             modelBuilder.Entity("ScamBet.Models.Role", b =>
                 {
                     b.Property<int>("role_ID")
@@ -299,6 +326,17 @@ namespace ScamBet.Migrations
                     b.Navigation("Team1");
 
                     b.Navigation("Team2");
+                });
+
+            modelBuilder.Entity("ScamBet.Entities.Transaction", b =>
+                {
+                    b.HasOne("ScamBet.Entities.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("ScamBet.Models.Role", b =>
