@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
+using System.IO;
 
 namespace ScamBet.Controllers
 {
@@ -180,6 +181,31 @@ namespace ScamBet.Controllers
             return View(account);
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DownloadProfilePicture(int id)
+        {
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null || string.IsNullOrEmpty(account.AvatarPath))
+            {
+                return NotFound();
+            }
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", account.AvatarPath.TrimStart('/'));
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound();
+            }
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            var fileName = Path.GetFileName(filePath);
+            return File(memory, "application/octet-stream", fileName);
+        }
 
         // GET: Account/EditProfile
         [Authorize(Roles = "User")]
@@ -290,6 +316,7 @@ namespace ScamBet.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool AccountExists(int id)
         {

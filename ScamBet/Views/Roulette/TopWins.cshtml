@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ScamBet.Entities.Roulette>
+
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+@{
+    ViewData["Title"] = "Roulette Bets";
+}
+
+<h3>Largest Wins:</h3>
+<div class="largest-wins">
+    @if (ViewBag.LargestWins != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Bet Type</th>
+                    <th>Bet Value</th>
+                    <th>Bet Amount</th>
+                    <th>Bet Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var win in ViewBag.LargestWins)
+                {
+                    <tr>
+                        <td>@win.Username</td>
+                        <td>@win.betType_r</td>
+                        <td>@win.betValue_r</td>
+                        <td>@win.betAmount_r</td>
+                        <td>@win.betTime_r</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No win data available.</p>
+    }
+</div>
