@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
+using System.IO;
 
 namespace ScamBet.Controllers
 {
-  //  [Authorize]
+    [Authorize]
     
     public class AccountController : Controller
     {
@@ -103,7 +104,7 @@ namespace ScamBet.Controllers
         }
 
         // GET: Account/Edit/5
-  //      [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -129,7 +130,7 @@ namespace ScamBet.Controllers
 
         // POST: Account/Edit/5
         [HttpPost]
- //       [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("user_ID,username,name,surname,password,email,phone_number,isBanned,acc_balance,role_ID")] Account account)
         {
@@ -290,6 +291,31 @@ namespace ScamBet.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DownloadProfilePicture(int id)
+        {
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null || string.IsNullOrEmpty(account.AvatarPath))
+            {
+                return NotFound();
+            }
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", account.AvatarPath.TrimStart('/'));
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound();
+            }
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            var fileName = Path.GetFileName(filePath);
+            return File(memory, "application/octet-stream", fileName);
+        }
         private bool AccountExists(int id)
         {
             return _context.Accounts.Any(e => e.user_ID == id);

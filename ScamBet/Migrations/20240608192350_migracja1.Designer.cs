@@ -12,7 +12,7 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    [Migration("20240608190917_migracja1")]
+    [Migration("20240608192350_migracja1")]
     partial class migracja1
     {
         /// <inheritdoc />
@@ -98,16 +98,16 @@ namespace ScamBet.Migrations
                     b.Property<int?>("match_ID1")
                         .HasColumnType("int");
 
-                    b.Property<double>("potential_winning")
+                    b.Property<double>("price")
                         .HasColumnType("float");
-
-                    b.Property<string>("prediction")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<double>("ratio")
                         .HasColumnType("float");
+
+                    b.Property<string>("succes")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("user_ID")
                         .HasColumnType("int");
@@ -132,8 +132,11 @@ namespace ScamBet.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("match_ID"));
 
-                    b.Property<bool>("isPlayed")
-                        .HasColumnType("bit");
+                    b.Property<int?>("Team1team_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Team2team_ID")
+                        .HasColumnType("int");
 
                     b.Property<int>("team1_ID")
                         .HasColumnType("int");
@@ -150,14 +153,14 @@ namespace ScamBet.Migrations
                     b.Property<DateTime>("time")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("winner_ID")
+                    b.Property<int>("winner_ID")
                         .HasColumnType("int");
 
                     b.HasKey("match_ID");
 
-                    b.HasIndex("team1_ID");
+                    b.HasIndex("Team1team_ID");
 
-                    b.HasIndex("team2_ID");
+                    b.HasIndex("Team2team_ID");
 
                     b.ToTable("Matches");
                 });
@@ -314,15 +317,11 @@ namespace ScamBet.Migrations
                 {
                     b.HasOne("ScamBet.Entities.Team", "Team1")
                         .WithMany()
-                        .HasForeignKey("team1_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Team1team_ID");
 
                     b.HasOne("ScamBet.Entities.Team", "Team2")
                         .WithMany()
-                        .HasForeignKey("team2_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Team2team_ID");
 
                     b.Navigation("Team1");
 

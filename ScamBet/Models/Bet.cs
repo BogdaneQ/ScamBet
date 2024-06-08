@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace ScamBet.Entities
 {
     public class Bet
@@ -16,7 +15,7 @@ namespace ScamBet.Entities
 
         [Required]
         [StringLength(50)]
-        public string prediction { get; set; }
+        public string succes { get; set; }
 
         [ForeignKey("Match")]
         [Required]
@@ -30,7 +29,7 @@ namespace ScamBet.Entities
         public double value { get; set; }
 
         [Required]
-        public double potential_winning { get; set; }
+        public double price { get; set; }
 
         [Required]
         public bool active { get; set; } = true;

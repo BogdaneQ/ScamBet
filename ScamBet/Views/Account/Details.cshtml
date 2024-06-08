@@ -17,6 +17,10 @@
             <p>No avatar uploaded</p>
         }
     </dd>
+    @if (!string.IsNullOrEmpty(Model.AvatarPath))
+    {
+        <a href="@Url.Action("DownloadProfilePicture", "Account", new { id = Model.user_ID })" class="btn btn-primary">Download Profile Picture</a>
+    }
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">

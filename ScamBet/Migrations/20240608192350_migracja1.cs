@@ -97,28 +97,27 @@ namespace ScamBet.Migrations
                     match_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     team1_ID = table.Column<int>(type: "int", nullable: false),
+                    Team1team_ID = table.Column<int>(type: "int", nullable: true),
                     team2_ID = table.Column<int>(type: "int", nullable: false),
+                    Team2team_ID = table.Column<int>(type: "int", nullable: true),
                     team1_goals = table.Column<int>(type: "int", nullable: false),
                     team2_goals = table.Column<int>(type: "int", nullable: false),
                     time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    winner_ID = table.Column<int>(type: "int", nullable: true),
-                    isPlayed = table.Column<bool>(type: "bit", nullable: false)
+                    winner_ID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Matches", x => x.match_ID);
                     table.ForeignKey(
-                        name: "FK_Matches_Teams_team1_ID",
-                        column: x => x.team1_ID,
+                        name: "FK_Matches_Teams_Team1team_ID",
+                        column: x => x.Team1team_ID,
                         principalTable: "Teams",
-                        principalColumn: "team_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "team_ID");
                     table.ForeignKey(
-                        name: "FK_Matches_Teams_team2_ID",
-                        column: x => x.team2_ID,
+                        name: "FK_Matches_Teams_Team2team_ID",
+                        column: x => x.Team2team_ID,
                         principalTable: "Teams",
-                        principalColumn: "team_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "team_ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -151,12 +150,12 @@ namespace ScamBet.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     user_ID = table.Column<int>(type: "int", nullable: false),
                     bet_placeruser_ID = table.Column<int>(type: "int", nullable: true),
-                    prediction = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    succes = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     match_ID = table.Column<int>(type: "int", nullable: false),
                     match_ID1 = table.Column<int>(type: "int", nullable: true),
                     ratio = table.Column<double>(type: "float", nullable: false),
                     value = table.Column<double>(type: "float", nullable: false),
-                    potential_winning = table.Column<double>(type: "float", nullable: false),
+                    price = table.Column<double>(type: "float", nullable: false),
                     active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -199,14 +198,14 @@ namespace ScamBet.Migrations
                 column: "match_ID1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Matches_team1_ID",
+                name: "IX_Matches_Team1team_ID",
                 table: "Matches",
-                column: "team1_ID");
+                column: "Team1team_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Matches_team2_ID",
+                name: "IX_Matches_Team2team_ID",
                 table: "Matches",
-                column: "team2_ID");
+                column: "Team2team_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_AccountId",
