@@ -42,17 +42,15 @@ body {
 .move-to-right {
     margin-left: 40px;
 }
-#chatBox {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
+#chat-box.collapsed {
+    height: 30px;
     width: 300px;
-    height: 400px;
-    overflow-y: auto;
-    display: none; /* Initially hidden */
+    overflow: hidden;
+}
+
+#chat-box.expanded {
+    height: 300px;
+    width: 300px;
 }
 
 /* Styling for the main content area */
@@ -184,7 +182,7 @@ a {
 .zero-item {
     background-color: green;
     border-bottom: 3px solid white;
-    padding-top: 132px;
+    padding-top: 131px;
     padding-bottom: 111px;
 }
 
@@ -354,7 +352,7 @@ h3 {
 }
 
 .flash {
-    animation: flash-animation 1s infinite alternate;
+    animation: flash-animation 3s infinite alternate;
 }
 
 @keyframes flash-animation {

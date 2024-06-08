@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿// ChatHub.cs
+using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
 namespace ScamBet.Hubs
