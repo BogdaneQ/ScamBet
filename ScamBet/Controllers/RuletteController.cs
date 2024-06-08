@@ -27,7 +27,6 @@ namespace ScamBet.Controllers
                                            .Take(10)
                                            .ToListAsync();
             ViewBag.RecentBets = recentResults;
-
             return View();
         }
 

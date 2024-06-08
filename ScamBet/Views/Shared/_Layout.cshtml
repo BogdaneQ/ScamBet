@@ -14,10 +14,10 @@
     @if (User.Identity.IsAuthenticated)
     {
 
-        <div id="sessionTimer">Czas sesji: 10:00</div>
+        <div id="sessionTimer">Czas sesji: 15:00</div>
         <script>
             var sessionTimer = document.getElementById('sessionTimer');
-            var sessionTimeInSeconds = 10 * 60;
+            var sessionTimeInSeconds = 15 * 60;
 
             function updateSessionTimer() {
                 var minutes = Math.floor(sessionTimeInSeconds / 60);
@@ -101,7 +101,7 @@
                                 <a class="nav-link" asp-controller="Match" asp-action="Index">Match</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Roulette" asp-action="TopWins">TopWins</a>
+                                <a class="nav-link" asp-controller="Roulette" asp-action="Index">Roulette</a>
                             </li>
                         }
                         else if (User.IsInRole("User"))
@@ -120,9 +120,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="LiveGame" asp-action="Index">LiveGame</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Roulette" asp-action="TopWins">TopWins</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>

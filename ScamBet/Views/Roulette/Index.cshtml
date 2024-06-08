@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ScamBet.Entities.Roulette>
+
+@{
+    ViewData["Title"] = "Roulette Bets";
+}
+
+<h2>Roulette Bets</h2>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.bet_ID_r)</th>
+            <th>User ID</th>
+            <th>@Html.DisplayNameFor(model => model.betType_r)</th>
+            <th>@Html.DisplayNameFor(model => model.betValue_r)</th>
+            <th>@Html.DisplayNameFor(model => model.betAmount_r)</th>
+            <th>@Html.DisplayNameFor(model => model.betTime_r)</th>
+            <th>@Html.DisplayNameFor(model => model.isWin_r)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.bet_ID_r)</td>
+                <td>@Html.DisplayFor(modelItem => item.user_ID)</td>
+                <td>@Html.DisplayFor(modelItem => item.betType_r)</td>
+                <td>@Html.DisplayFor(modelItem => item.betValue_r)</td>
+                <td>@Html.DisplayFor(modelItem => item.betAmount_r)</td>
+                <td>@Html.DisplayFor(modelItem => item.betTime_r)</td>
+                <td>@Html.DisplayFor(modelItem => item.isWin_r)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.bet_ID_r">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.bet_ID_r">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.bet_ID_r">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Create">Create New Bet</a>
+</p>

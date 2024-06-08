@@ -364,7 +364,3 @@ h3 {
         background-color: orange;
     }
 }
-.recent-rolls-container {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-}
