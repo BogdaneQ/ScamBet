@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Account" asp-action="Index">Accounts</a>
+    </li>
     @if (User.Identity.IsAuthenticated)
     {
 
@@ -69,10 +72,10 @@
                                 <a class="nav-link" asp-controller="Roulette" asp-action="Play">Roulette</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="Bet">Bet</a>
+                                <a class="nav-link" asp-controller="Bet" asp-action="Create">Bet</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Home" asp-action="MyBets">MyBets</a>
+                                <a class="nav-link" asp-controller="Bet" asp-action="MyBets">MyBets</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="LiveGame" asp-action="Index">LiveGame</a>

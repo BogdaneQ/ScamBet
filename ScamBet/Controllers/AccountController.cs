@@ -13,7 +13,7 @@ using System.IO;
 
 namespace ScamBet.Controllers
 {
-    [Authorize]
+  //  [Authorize]
     
     public class AccountController : Controller
     {
@@ -45,8 +45,7 @@ namespace ScamBet.Controllers
 
             int id = int.Parse(userId);
 
-            var account = await _context.Accounts
-                .FirstOrDefaultAsync(m => m.user_ID == id);
+            var account = await _context.Accounts.FirstOrDefaultAsync(m => m.user_ID == id);
             if (account == null)
             {
                 return NotFound();
@@ -105,7 +104,7 @@ namespace ScamBet.Controllers
         }
 
         // GET: Account/Edit/5
-        [Authorize(Roles = "Admin")]
+  //      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -131,7 +130,7 @@ namespace ScamBet.Controllers
 
         // POST: Account/Edit/5
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+ //       [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("user_ID,username,name,surname,password,email,phone_number,isBanned,acc_balance,role_ID")] Account account)
         {

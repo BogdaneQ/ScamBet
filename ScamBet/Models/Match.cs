@@ -10,12 +10,12 @@ namespace ScamBet.Entities
         [Required]
         public int match_ID { get; set; }
 
-        [ForeignKey("team1")]
+        [ForeignKey("Team1")]
         [Required]
         public int team1_ID { get; set; }
         public virtual Team Team1 { get; set; }
 
-        [ForeignKey("team2")]
+        [ForeignKey("Team2")]
         [Required]
         public int team2_ID { get; set; }
         public virtual Team Team2 { get; set; }
@@ -29,6 +29,9 @@ namespace ScamBet.Entities
         [Required]
         public DateTime time { get; set; }
 
-        public int winner_ID { get; set; }
+        public int? winner_ID { get; set; }
+
+        [Required]
+        public bool isPlayed { get; set; } 
     }
 }

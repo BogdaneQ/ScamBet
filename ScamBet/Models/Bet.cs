@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ScamBet.Entities
 {
     public class Bet
     {
         [Key]
-        [Required] 
-        public int bet_ID {  get; set; }
+        [Required]
+        public int bet_ID { get; set; }
 
         [ForeignKey("Account")]
         [Required]
@@ -15,7 +16,7 @@ namespace ScamBet.Entities
 
         [Required]
         [StringLength(50)]
-        public string succes {  get; set; }
+        public string prediction { get; set; }
 
         [ForeignKey("Match")]
         [Required]
@@ -29,7 +30,7 @@ namespace ScamBet.Entities
         public double value { get; set; }
 
         [Required]
-        public double price { get; set; }
+        public double potential_winning { get; set; }
 
         [Required]
         public bool active { get; set; } = true;

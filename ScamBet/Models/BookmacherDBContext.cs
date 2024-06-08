@@ -38,6 +38,8 @@ namespace ScamBet.Entities
                 .HasOne(a => a.Role)
                 .WithMany(r => r.Accounts)
                 .HasForeignKey(a => a.role_ID);
+
         }
+
     }
 }
