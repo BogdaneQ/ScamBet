@@ -269,7 +269,7 @@ a {
 
 .result-info {
     position: absolute;
-    top: 135px;
+    top: 155px;
     right: 250px;
     display: flex;
     flex-direction: column;
@@ -302,7 +302,7 @@ a {
             background-color: lightcoral;
         }
 h3 {
-    font-size: 20px; /* Ustawienie nowego rozmiaru czcionki */
+    font-size: 20px;
 }
 
 .recent-rolls-container {
