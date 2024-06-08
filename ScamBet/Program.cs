@@ -5,10 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ScamBet.Controllers;
 using ScamBet.Entities;
-using ScamBet.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddHttpClient();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
@@ -41,6 +40,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseCors(options =>
+    options.AllowAnyHeader()
+           .AllowAnyOrigin()
+           .AllowAnyMethod());
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -59,7 +63,6 @@ app.UseEndpoints(endpoints =>
       name: "myAccount",
       pattern: "Account/MyAccount/{id?}",
       defaults: new { controller = "Account", action = "MyAccount" });
-    endpoints.MapHub<ChatHub>("/chathub");
 });
 
 app.Run();

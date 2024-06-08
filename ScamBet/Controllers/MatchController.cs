@@ -23,6 +23,7 @@ namespace ScamBet.Controllers
         public async Task<IActionResult> Index()
         {
             var matches = await _context.Matches.Include(m => m.Team1).Include(m => m.Team2).ToListAsync();
+            
             return View(matches);
         }
 
@@ -61,6 +62,7 @@ namespace ScamBet.Controllers
             {
                 AssignWinner(match);
                 _context.Add(match);
+                match.time = DateTime.Now;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -131,8 +133,7 @@ namespace ScamBet.Controllers
                 return NotFound();
             }
 
-            var match = await _context.Matches
-                .FirstOrDefaultAsync(m => m.match_ID == id);
+            var match = await _context.Matches.FirstOrDefaultAsync(m => m.match_ID == id);
             if (match == null)
             {
                 return NotFound();
