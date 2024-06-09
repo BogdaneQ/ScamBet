@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ScamBet.Models.AccountViewModel>
+
+@{
+    ViewData["Title"] = "Total Winnings";
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<h2>Hall of Fame</h2>
+<div style="background-color: #eb0003; border-radius: 20px; padding: 20px;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                @if (isAdmin)
+                {
+                    <th>ID</th>
+                }
+                <th>Username</th>
+                <th>Total Winnings</th>
+                @if (isAdmin)
+                {
+                    <th>Total Deposits</th>
+                    <th>Total Withdrawals</th>
+                    <th>Account Balance</th>
+                    <th>Balance</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int rowNumber = 1;
+                bool isGrey = true;
+            }
+            @foreach (var account in Model)
+            {
+                var backgroundColor = isAdmin && account.Balance > 0 ? "lightgreen" : (isGrey ? "#E05800" : "#E02F00");
+                <tr style="background-color: @backgroundColor;">
+                    <td>@rowNumber</td>
+                    @if (isAdmin)
+                    {
+                        <td>@account.user_ID</td>
+                    }
+                    <td>@account.username</td>
+                    <td>@account.TotalWinnings.ToString("C")</td>
+                    @if (isAdmin)
+                    {
+                        <td>@account.TotalDeposits.ToString("C")</td>
+                        <td>@account.TotalWithdrawals.ToString("C")</td>
+                        <td>@account.acc_balance.ToString("C")</td>
+                        <td>@account.Balance.ToString("C")</td>
+                    }
+                </tr>
+                rowNumber++;
+                isGrey = !isGrey;
+            }
+        </tbody>
+    </table>
+</div>

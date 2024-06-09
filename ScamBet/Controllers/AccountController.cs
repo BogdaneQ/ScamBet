@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ScamBet.Entities;
 using System.IO;
+using ScamBet.Models;
 
 namespace ScamBet.Controllers
 {
@@ -153,6 +154,15 @@ namespace ScamBet.Controllers
                     {
                         account.AvatarPath = existingAccount.AvatarPath;
                     }
+
+                    if (!string.IsNullOrEmpty(account.password))
+                    {
+                        var Salt = _configuration.GetSection("salt").Value;
+                        string HashAndSalt = string.Concat(account.password, Salt);
+                        string FinalPassword = Crypto.HashPassword(HashAndSalt);
+                        account.password = FinalPassword;
+                    }
+
                     _context.Update(account);
                     await _context.SaveChangesAsync();
                 }
@@ -324,6 +334,43 @@ namespace ScamBet.Controllers
 
             var fileName = Path.GetFileName(filePath);
             return File(memory, "application/octet-stream", fileName);
+        }
+
+        // GET: Account/TotalWinnings
+        public async Task<IActionResult> TotalWinnings()
+        {
+            var accountsWithWinnings = await _context.Accounts
+                .Where(a => a.role_ID != 2) // Zakładając, że rola "Admin" ma role_ID == 2
+                .Select(a => new
+                {
+                    a.user_ID,
+                    a.username,
+                    a.acc_balance,
+                    TotalWinnings = _context.Roulette
+                        .Where(r => r.user_ID == a.user_ID && r.isWin_r)
+                        .Sum(r => r.betAmount_r),
+                    TotalDeposits = _context.Transactions
+                        .Where(t => t.AccountId == a.user_ID && t.Type == TransactionType.Deposit)
+                        .Sum(t => t.Amount),
+                    TotalWithdrawals = _context.Transactions
+                        .Where(t => t.AccountId == a.user_ID && t.Type == TransactionType.Withdrawal)
+                        .Sum(t => t.Amount)
+                })
+                .OrderByDescending(a => a.TotalWinnings)
+                .ToListAsync();
+
+            var viewModel = accountsWithWinnings.Select(a => new AccountViewModel
+            {
+                user_ID = a.user_ID,
+                username = a.username,
+                acc_balance = a.acc_balance,
+                TotalWinnings = a.TotalWinnings,
+                TotalDeposits = a.TotalDeposits,
+                TotalWithdrawals = a.TotalWithdrawals,
+                Balance = a.acc_balance + a.TotalWithdrawals - a.TotalDeposits // Oblicz saldo
+            }).ToList();
+
+            return View(viewModel);
         }
         private bool AccountExists(int id)
         {

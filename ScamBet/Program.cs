@@ -60,6 +60,11 @@ app.UseEndpoints(endpoints =>
       pattern: "Account/MyAccount/{id?}",
       defaults: new { controller = "Account", action = "MyAccount" });
 
+    endpoints.MapControllerRoute(
+        name: "totalwinnings",
+        pattern: "Account/TotalWinnings",
+        defaults: new { controller = "Account", action = "TotalWinnings" });
+
 });
 
 app.Run();
