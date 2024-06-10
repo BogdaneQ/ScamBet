@@ -347,22 +347,22 @@ namespace ScamBet.Controllers
         // GET: Account/TotalWinnings
         public async Task<IActionResult> TotalWinnings(string searchString)
         {
+            // Fetch accounts with required calculations
             var query = _context.Accounts
-                .Where(a => a.role_ID != 2) // Zakładając, że rola "Admin" ma role_ID == 2
-                .Select(a => new
+                .Where(a => a.role_ID != 2) // Assuming role_ID == 2 is Admin
+                .Select(a => new AccountViewModel
                 {
-                    a.user_ID,
-                    a.username,
-                    a.acc_balance,
-                    TotalWinnings = _context.Roulette
-                        .Where(r => r.user_ID == a.user_ID && r.isWin_r)
-                        .Sum(r => r.betAmount_r),
+                    user_ID = a.user_ID,
+                    username = a.username,
+                    acc_balance = a.acc_balance,
+                    TotalWinnings = a.TotalWinnings, // Directly from Account model
                     TotalDeposits = _context.Transactions
                         .Where(t => t.AccountId == a.user_ID && t.Type == TransactionType.Deposit)
                         .Sum(t => t.Amount),
                     TotalWithdrawals = _context.Transactions
                         .Where(t => t.AccountId == a.user_ID && t.Type == TransactionType.Withdrawal)
-                        .Sum(t => t.Amount)
+                        .Sum(t => t.Amount),
+                    Balance = a.acc_balance // Placeholder for initial balance
                 });
 
             if (!string.IsNullOrEmpty(searchString))
@@ -372,19 +372,15 @@ namespace ScamBet.Controllers
 
             var accountsWithWinnings = await query.OrderByDescending(a => a.TotalWinnings).ToListAsync();
 
-            var viewModel = accountsWithWinnings.Select(a => new AccountViewModel
+            // Calculate final balance
+            accountsWithWinnings.ForEach(a =>
             {
-                user_ID = a.user_ID,
-                username = a.username,
-                acc_balance = a.acc_balance,
-                TotalWinnings = a.TotalWinnings,
-                TotalDeposits = a.TotalDeposits,
-                TotalWithdrawals = a.TotalWithdrawals,
-                Balance = a.acc_balance + a.TotalWithdrawals - a.TotalDeposits // Oblicz saldo
-            }).ToList();
+                a.Balance = a.acc_balance + a.TotalWithdrawals - a.TotalDeposits;
+            });
 
-            return View(viewModel);
+            return View(accountsWithWinnings);
         }
+
 
 
         private bool AccountExists(int id)
