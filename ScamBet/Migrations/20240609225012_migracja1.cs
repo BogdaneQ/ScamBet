@@ -14,6 +14,23 @@ namespace ScamBet.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Coinflip",
+                columns: table => new
+                {
+                    bet_ID_cf = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    user_ID = table.Column<int>(type: "int", nullable: false),
+                    BetAmount_cf = table.Column<double>(type: "float", nullable: false),
+                    Choice = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BetTime_cf = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsWin_cf = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Coinflip", x => x.bet_ID_cf);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -77,7 +94,8 @@ namespace ScamBet.Migrations
                     phone_number = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     isBanned = table.Column<bool>(type: "bit", nullable: false),
                     acc_balance = table.Column<double>(type: "float", nullable: false),
-                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalWinnings = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -218,6 +236,9 @@ namespace ScamBet.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Bets");
+
+            migrationBuilder.DropTable(
+                name: "Coinflip");
 
             migrationBuilder.DropTable(
                 name: "Roulette");

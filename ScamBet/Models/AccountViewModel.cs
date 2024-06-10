@@ -1,4 +1,6 @@
-﻿namespace ScamBet.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ScamBet.Models
 {
     public class AccountViewModel
     {

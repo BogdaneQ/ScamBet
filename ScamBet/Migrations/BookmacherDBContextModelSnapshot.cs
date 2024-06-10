@@ -259,6 +259,35 @@ namespace ScamBet.Migrations
                     b.ToTable("Transactions");
                 });
 
+            modelBuilder.Entity("ScamBet.Models.Coinflip", b =>
+                {
+                    b.Property<int>("bet_ID_cf")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bet_ID_cf"));
+
+                    b.Property<double>("BetAmount_cf")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("BetTime_cf")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Choice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsWin_cf")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("user_ID")
+                        .HasColumnType("int");
+
+                    b.HasKey("bet_ID_cf");
+
+                    b.ToTable("Coinflip");
+                });
+
             modelBuilder.Entity("ScamBet.Models.Role", b =>
                 {
                     b.Property<int>("role_ID")

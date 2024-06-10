@@ -1,0 +1,84 @@
+﻿@model ScamBet.Models.Coinflip
+
+@{
+    ViewData["Title"] = "Coinflip";
+}
+
+<h2>Coinflip</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PlaceBet" method="post">
+            <div class="form-group">
+                <label for="Choice">Select bet:</label>
+                <select class="form-control" id="Choice" name="Choice">
+                    <option value="heads">Heads</option>
+                    <option value="tails">Tails</option>
+                    <option value="back">Back</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="betAmount">Bet amount:</label>
+                <input type="number" class="form-control" id="betAmount" name="betAmount" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Place Bet</button>
+        </form>
+        <form asp-action="RepeatBet" method="post">
+            <button type="submit" class="btn btn-secondary mt-2">Repeat Last Bet</button>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <h3>Recent Bets</h3>
+        <div style="background-color: #eb0003; border-radius: 20px; padding: 20px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Bet Value</th>
+                    <th>Bet Amount</th>
+                    <th>Result</th>
+                    <th>Win?</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.RecentBets != null && ViewBag.RecentBets.Count > 0)
+                {
+                    foreach (var bet in ViewBag.RecentBets)
+                    {
+                        <tr>
+                            <td>@bet.Choice</td>
+                            <td>@bet.BetAmount_cf</td>
+                            <td>@bet.BetTime_cf</td>
+                            <td>@(bet.IsWin_cf ? "Yes" : "No")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4">No recent bets available.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.ResultImage != null)
+{
+    <div class="mt-3">
+        <h4>Result:</h4>
+        <img src="~/images/@ViewBag.ResultImage" alt="Result Image" />
+        @if (ViewBag.IsWin)
+        {
+            <h5 class="text-success">Congratulations! You won @ViewBag.Winnings</h5>
+        }
+        else
+        {
+            <h5 class="text-danger">Better luck next time!</h5>
+        }
+        <p>Your balance: @ViewBag.Balance</p>
+        <p>Your bet value: @ViewBag.BetValue</p>
+        <p>Your bet amount: @ViewBag.BetAmount</p>
+    </div>
+}

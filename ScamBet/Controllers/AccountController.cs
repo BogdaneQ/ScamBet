@@ -28,10 +28,18 @@ namespace ScamBet.Controllers
         }
 
         // GET: Account
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Accounts.ToListAsync());
+            IQueryable<Account> accounts = _context.Accounts;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                accounts = accounts.Where(a => a.username.Contains(searchString));
+            }
+
+            return View(await accounts.ToListAsync());
         }
+
 
         // GET: Account/MyAccount/5
         [Authorize(Roles = "User")]
@@ -337,9 +345,9 @@ namespace ScamBet.Controllers
         }
 
         // GET: Account/TotalWinnings
-        public async Task<IActionResult> TotalWinnings()
+        public async Task<IActionResult> TotalWinnings(string searchString)
         {
-            var accountsWithWinnings = await _context.Accounts
+            var query = _context.Accounts
                 .Where(a => a.role_ID != 2) // Zakładając, że rola "Admin" ma role_ID == 2
                 .Select(a => new
                 {
@@ -355,9 +363,14 @@ namespace ScamBet.Controllers
                     TotalWithdrawals = _context.Transactions
                         .Where(t => t.AccountId == a.user_ID && t.Type == TransactionType.Withdrawal)
                         .Sum(t => t.Amount)
-                })
-                .OrderByDescending(a => a.TotalWinnings)
-                .ToListAsync();
+                });
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(a => a.username.Contains(searchString));
+            }
+
+            var accountsWithWinnings = await query.OrderByDescending(a => a.TotalWinnings).ToListAsync();
 
             var viewModel = accountsWithWinnings.Select(a => new AccountViewModel
             {
@@ -372,6 +385,8 @@ namespace ScamBet.Controllers
 
             return View(viewModel);
         }
+
+
         private bool AccountExists(int id)
         {
             return _context.Accounts.Any(e => e.user_ID == id);

@@ -12,8 +12,8 @@ using ScamBet.Entities;
 namespace ScamBet.Migrations
 {
     [DbContext(typeof(BookmacherDBContext))]
-    [Migration("20240608224604_migracja2")]
-    partial class migracja2
+    [Migration("20240609225012_migracja1")]
+    partial class migracja1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -260,6 +260,35 @@ namespace ScamBet.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("ScamBet.Models.Coinflip", b =>
+                {
+                    b.Property<int>("bet_ID_cf")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bet_ID_cf"));
+
+                    b.Property<double>("BetAmount_cf")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("BetTime_cf")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Choice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsWin_cf")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("user_ID")
+                        .HasColumnType("int");
+
+                    b.HasKey("bet_ID_cf");
+
+                    b.ToTable("Coinflip");
                 });
 
             modelBuilder.Entity("ScamBet.Models.Role", b =>

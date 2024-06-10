@@ -39,6 +39,7 @@ namespace ScamBet.Controllers
             return View();
         }
 
+        //POST
         public async Task<IActionResult> PlaceBet(string betType, string betValue, double betAmount)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -55,8 +56,10 @@ namespace ScamBet.Controllers
             double winnings = 0;
             if (isWin)
             {
-                winnings = betAmount * GetMultiplier(betType);
+                winnings = (betAmount * GetMultiplier(betType));
+                account.acc_balance -= betAmount;
                 account.acc_balance += winnings;
+                account.TotalWinnings += winnings - betAmount;
             }
             else
             {
