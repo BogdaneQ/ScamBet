@@ -46,26 +46,27 @@ namespace ScamBet.Controllers
                 return BadRequest("Invalid bet amount or insufficient balance.");
             }
 
+
             double winnings = 0;
             bool isWin = false;
             string resultImage = string.Empty;
 
             var randomNumber = new Random().Next(0, 100);
 
-            if (randomNumber < 48 && choice == "heads")
+            if (randomNumber >= 1 && randomNumber < 48 && choice == "heads")
             {
                 isWin = true;
-                resultImage = "heads.jpg";
+                resultImage = "heads.png";
             }
-            else if (randomNumber < 96 && choice == "tails") 
+            else if (randomNumber >= 48 && randomNumber < 96 && choice == "tails") 
             {
                 isWin = true;
-                resultImage = "tails.jpg";
+                resultImage = "tails.png";
             }
             else if (randomNumber >= 96 && choice == "back") 
             {
                 isWin = true;
-                resultImage = "back.jpg";
+                resultImage = "back.png";
             }
 
             // Update account balance and TotalWinnings
@@ -78,7 +79,15 @@ namespace ScamBet.Controllers
             else
             {
                 account.acc_balance -= betAmount;
-                resultImage = choice == "heads" ? "tails.jpg" : (choice == "tails" ? "heads.jpg" : "back.jpg");
+
+                if (choice == "back")
+                {
+                    resultImage = randomNumber < 48 ? "heads.png" : "tails.png";
+                }
+                else
+                {
+                    resultImage = choice == "heads" ? "tails.png" : "heads.png";
+                }
             }
 
             // Save the bet details
