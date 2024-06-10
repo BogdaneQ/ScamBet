@@ -9,7 +9,6 @@ namespace ScamBet.Entities
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Bet> Bets { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Roulette> Roulette { get; set; }
         public DbSet<Coinflip> Coinflip { get; set; }

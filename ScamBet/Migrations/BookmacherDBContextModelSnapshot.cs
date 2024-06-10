@@ -78,52 +78,6 @@ namespace ScamBet.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("ScamBet.Entities.Bet", b =>
-                {
-                    b.Property<int>("bet_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bet_ID"));
-
-                    b.Property<bool>("active")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("bet_placeruser_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("match_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("match_ID1")
-                        .HasColumnType("int");
-
-                    b.Property<double>("price")
-                        .HasColumnType("float");
-
-                    b.Property<double>("ratio")
-                        .HasColumnType("float");
-
-                    b.Property<string>("succes")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("user_ID")
-                        .HasColumnType("int");
-
-                    b.Property<double>("value")
-                        .HasColumnType("float");
-
-                    b.HasKey("bet_ID");
-
-                    b.HasIndex("bet_placeruser_ID");
-
-                    b.HasIndex("match_ID1");
-
-                    b.ToTable("Bets");
-                });
-
             modelBuilder.Entity("ScamBet.Entities.Match", b =>
                 {
                     b.Property<int>("match_ID")
@@ -325,21 +279,6 @@ namespace ScamBet.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("ScamBet.Entities.Bet", b =>
-                {
-                    b.HasOne("ScamBet.Entities.Account", "bet_placer")
-                        .WithMany()
-                        .HasForeignKey("bet_placeruser_ID");
-
-                    b.HasOne("ScamBet.Entities.Match", "match")
-                        .WithMany()
-                        .HasForeignKey("match_ID1");
-
-                    b.Navigation("bet_placer");
-
-                    b.Navigation("match");
                 });
 
             modelBuilder.Entity("ScamBet.Entities.Match", b =>

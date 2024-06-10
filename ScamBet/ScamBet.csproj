@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\audio\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
 </Project>
