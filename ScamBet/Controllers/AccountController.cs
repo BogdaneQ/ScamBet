@@ -157,13 +157,18 @@ namespace ScamBet.Controllers
                     {
                         return NotFound();
                     }
-                    // Jeśli żadne zdjęcie nie zostało przekazane w żądaniu, zachowaj istniejącą ścieżkę AvatarPath
+                    
                     if (account.AvatarPath == null)
                     {
                         account.AvatarPath = existingAccount.AvatarPath;
                     }
 
-                    if (!string.IsNullOrEmpty(account.password))
+                    // Preserve the existing password if no new password is provided
+                    if (string.IsNullOrEmpty(account.password))
+                    {
+                        account.password = existingAccount.password;
+                    }
+                    else
                     {
                         var Salt = _configuration.GetSection("salt").Value;
                         string HashAndSalt = string.Concat(account.password, Salt);
@@ -253,10 +258,16 @@ namespace ScamBet.Controllers
                     }
 
                     account.acc_balance = existingAccount.acc_balance;
+                    account.TotalWinnings = existingAccount.TotalWinnings;
+                    account.role_ID = existingAccount.role_ID;
 
-                    account.role_ID = existingAccount.role_ID; // Ustawienie istniejącego role_ID
 
-                    if (!string.IsNullOrEmpty(account.password))
+                    // Preserve the existing password if no new password is provided
+                    if (string.IsNullOrEmpty(account.password))
+                    {
+                        account.password = existingAccount.password;
+                    }
+                    else
                     {
                         var Salt = _configuration.GetSection("salt").Value;
                         string HashAndSalt = string.Concat(account.password, Salt);
