@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Coinflip";
+    var betAmount = ViewBag.BetAmount ?? 0;
 }
 
 <h2>Coinflip</h2>
@@ -11,7 +12,7 @@
         <form asp-action="PlaceBet" method="post">
             <div class="form-group">
                 <label for="betAmount">Bet amount:</label>
-                <input type="number" class="form-control" id="betAmount" name="betAmount" required>
+                <input type="number" class="form-control" id="betAmount" name="betAmount" required value="@betAmount">
             </div>
             <div class="form-group">
                 <label>Select bet:</label>

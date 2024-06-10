@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Play Roulette";
+    var betAmount = ViewBag.BetAmount ?? 0;
 }
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
@@ -87,7 +88,7 @@
             <input type="hidden" id="betValue" name="betValue" value="@ViewBag.BetValue">
             <div class="form-group">
                 <label for="betAmount">Bet Amount</label>
-                <input type="number" id="betAmount" name="betAmount" class="form-control" placeholder="Enter bet amount" value="@ViewBag.BetAmount">
+                <input type="number" id="betAmount" name="betAmount" class="form-control" placeholder="Enter bet amount" required value="@betAmount">
             </div>
             <button type="submit" class="btn btn-primary">Place Bet</button>
         </form>

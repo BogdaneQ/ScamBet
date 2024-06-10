@@ -50,6 +50,8 @@ namespace ScamBet.Controllers
                 return BadRequest("Invalid bet amount or insufficient balance.");
             }
 
+            ViewBag.BetAmount = betAmount;
+
             var rouletteResult = GenerateRouletteResult();
             bool isWin = DetermineWin(betType, betValue, rouletteResult);
 
@@ -74,7 +76,7 @@ namespace ScamBet.Controllers
                 betAmount_r = betAmount,
                 betTime_r = DateTime.Now,
                 isWin_r = isWin,
-                result_r = rouletteResult // Added result_r property
+                result_r = rouletteResult
             };
 
             _context.Roulette.Add(bet);
@@ -84,8 +86,8 @@ namespace ScamBet.Controllers
             ViewBag.IsWin = isWin;
             ViewBag.Winnings = winnings;
             ViewBag.Balance = account.acc_balance;
-            ViewBag.BetValue = betValue;
-            ViewBag.BetAmount = betAmount; // Add bet amount to ViewBag
+        //    ViewBag.BetValue = betValue;
+            ViewBag.BetAmount = betAmount;
 
             var recentResults = await _context.Roulette
                                            .OrderByDescending(b => b.betTime_r)

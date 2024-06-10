@@ -46,6 +46,7 @@ namespace ScamBet.Controllers
                 return BadRequest("Invalid bet amount or insufficient balance.");
             }
 
+            ViewBag.BetAmount = betAmount;
 
             double winnings = 0;
             bool isWin = false;
@@ -108,7 +109,6 @@ namespace ScamBet.Controllers
             ViewBag.Winnings = winnings;
             ViewBag.Balance = account.acc_balance;
             ViewBag.BetValue = choice;
-            ViewBag.BetAmount = betAmount;
             ViewBag.ResultImage = resultImage;
 
             var recentBets = await _context.Coinflip
