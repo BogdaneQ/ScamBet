@@ -26,7 +26,7 @@ namespace ScamBet.Controllers
             return await _context.Teams.ToListAsync();
         }
 
-        // GET: api/Teams/5
+        // GET: api/Teams
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
@@ -40,7 +40,7 @@ namespace ScamBet.Controllers
             return team;
         }
 
-        // PUT: api/Teams/5
+        // PUT: api/Teams
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTeam(int id, Team team)
         {
@@ -80,7 +80,7 @@ namespace ScamBet.Controllers
             return CreatedAtAction(nameof(GetTeam), new { id = team.team_ID }, team);
         }
 
-        // DELETE: api/Teams/5
+        // DELETE: api/Teams
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTeam(int id)
         {

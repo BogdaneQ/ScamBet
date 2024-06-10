@@ -21,13 +21,11 @@ namespace ScamBet.Controllers
         }
 
         // GET: Roulette/Index
-        
             public async Task<IActionResult> Index()
             {
                 return View();
             }
         
-
         // GET: Roulette/Play
         public async Task<IActionResult> Play()
         {
@@ -39,7 +37,7 @@ namespace ScamBet.Controllers
             return View();
         }
 
-        //POST
+        // POST: Roulette/PlaceBet
         public async Task<IActionResult> PlaceBet(string betType, string betValue, double betAmount)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -86,7 +84,6 @@ namespace ScamBet.Controllers
             ViewBag.IsWin = isWin;
             ViewBag.Winnings = winnings;
             ViewBag.Balance = account.acc_balance;
-        //    ViewBag.BetValue = betValue;
             ViewBag.BetAmount = betAmount;
 
             var recentResults = await _context.Roulette
@@ -98,7 +95,7 @@ namespace ScamBet.Controllers
             return View("Play");
         }
 
-
+        // POST:Roulette/RepeatBet
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RepeatBet()
@@ -123,7 +120,6 @@ namespace ScamBet.Controllers
             int number = random.Next(0, 37);
             string color = "";
 
-            // Przypisz kolor na podstawie numeru
             switch (number)
             {
                 case 0:

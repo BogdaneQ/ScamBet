@@ -27,7 +27,7 @@ namespace ScamBet.Controllers
             return View(matches);
         }
 
-        // GET: Match/Details/5
+        // GET: Match/Details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -170,7 +170,7 @@ namespace ScamBet.Controllers
             }
             else
             {
-                match.winner_ID = 0; // 0 represents a draw or no winner
+                match.winner_ID = 0;
             }
         }
     }

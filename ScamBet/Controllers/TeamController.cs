@@ -27,7 +27,7 @@ namespace ScamBet.Controllers
             return View(await _context.Teams.ToListAsync());
         }
 
-        // GET: Team/Details/5
+        // GET: Team/Details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -66,7 +66,7 @@ namespace ScamBet.Controllers
             return View(team);
         }
 
-        // GET: Team/Edit/5
+        // GET: Team/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,7 +82,7 @@ namespace ScamBet.Controllers
             return View(team);
         }
 
-        // POST: Team/Edit/5
+        // POST: Team/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("team_ID,name,wins,draws,loses")] Team team)
@@ -117,7 +117,7 @@ namespace ScamBet.Controllers
             return View(team);
         }
 
-        // GET: Team/Delete/5
+        // GET: Team/Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,7 +135,7 @@ namespace ScamBet.Controllers
             return View(team);
         }
 
-        // POST: Team/Delete/5
+        // POST: Team/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

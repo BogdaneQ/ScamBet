@@ -15,7 +15,6 @@ using ScamBet.Models;
 namespace ScamBet.Controllers
 {
     [Authorize]
-    
     public class AccountController : Controller
     {
         private readonly BookmacherDBContext _context;
@@ -40,8 +39,7 @@ namespace ScamBet.Controllers
             return View(await accounts.ToListAsync());
         }
 
-
-        // GET: Account/MyAccount/5
+        // GET: Account/MyAccount
         [Authorize(Roles = "User")]
         public async Task<IActionResult> MyAccount()
         {
@@ -63,9 +61,7 @@ namespace ScamBet.Controllers
             return View(account);
         }
 
-
-
-        // GET: Account/Details/5
+        // GET: Account/Details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -84,14 +80,12 @@ namespace ScamBet.Controllers
         }
 
         // GET: Account/Create
-        
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Account/Create
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("user_ID,username,name,surname,password,email,phone_number")] Account account)
@@ -112,7 +106,7 @@ namespace ScamBet.Controllers
             return View(account);
         }
 
-        // GET: Account/Edit/5
+        // GET: Account/Edit
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -137,7 +131,7 @@ namespace ScamBet.Controllers
             return View(account);
         }
 
-        // POST: Account/Edit/5
+        // POST: Account/Edit
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
@@ -163,7 +157,6 @@ namespace ScamBet.Controllers
                         account.AvatarPath = existingAccount.AvatarPath;
                     }
 
-                    // Preserve the existing password if no new password is provided
                     if (string.IsNullOrEmpty(account.password))
                     {
                         account.password = existingAccount.password;
@@ -202,7 +195,6 @@ namespace ScamBet.Controllers
 
             return View(account);
         }
-
 
         // GET: Account/EditProfile
         [Authorize(Roles = "User")]
@@ -239,12 +231,11 @@ namespace ScamBet.Controllers
                         return NotFound();
                     }
 
-                    // Jeśli żadne zdjęcie nie zostało przekazane w żądaniu, zachowaj istniejącą ścieżkę AvatarPath
                     if (avatar == null || avatar.Length == 0)
                     {
                         account.AvatarPath = existingAccount.AvatarPath;
                     }
-                    else // Jeśli przekazano nowe zdjęcie, zaktualizuj ścieżkę AvatarPath
+                    else
                     {
                         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(avatar.FileName)}";
                         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
@@ -261,8 +252,6 @@ namespace ScamBet.Controllers
                     account.TotalWinnings = existingAccount.TotalWinnings;
                     account.role_ID = existingAccount.role_ID;
 
-
-                    // Preserve the existing password if no new password is provided
                     if (string.IsNullOrEmpty(account.password))
                     {
                         account.password = existingAccount.password;
@@ -295,7 +284,7 @@ namespace ScamBet.Controllers
         }
 
 
-        // GET: Account/Delete/5
+        // GET: Account/Delete
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -312,7 +301,6 @@ namespace ScamBet.Controllers
 
             return View(account);
         }
-
         
         // POST: Accounts/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -358,22 +346,21 @@ namespace ScamBet.Controllers
         // GET: Account/TotalWinnings
         public async Task<IActionResult> TotalWinnings(string searchString)
         {
-            // Fetch accounts with required calculations
             var query = _context.Accounts
-                .Where(a => a.role_ID != 2) // Assuming role_ID == 2 is Admin
+                .Where(a => a.role_ID != 2)
                 .Select(a => new AccountViewModel
                 {
                     user_ID = a.user_ID,
                     username = a.username,
                     acc_balance = a.acc_balance,
-                    TotalWinnings = a.TotalWinnings, // Directly from Account model
+                    TotalWinnings = a.TotalWinnings,
                     TotalDeposits = _context.Transactions
                         .Where(t => t.AccountId == a.user_ID && t.Type == TransactionType.Deposit)
                         .Sum(t => t.Amount),
                     TotalWithdrawals = _context.Transactions
                         .Where(t => t.AccountId == a.user_ID && t.Type == TransactionType.Withdrawal)
                         .Sum(t => t.Amount),
-                    Balance = a.acc_balance // Placeholder for initial balance
+                    Balance = a.acc_balance
                 });
 
             if (!string.IsNullOrEmpty(searchString))
@@ -383,7 +370,6 @@ namespace ScamBet.Controllers
 
             var accountsWithWinnings = await query.OrderByDescending(a => a.TotalWinnings).ToListAsync();
 
-            // Calculate final balance
             accountsWithWinnings.ForEach(a =>
             {
                 a.Balance = a.acc_balance + a.TotalWithdrawals - a.TotalDeposits;
@@ -391,8 +377,6 @@ namespace ScamBet.Controllers
 
             return View(accountsWithWinnings);
         }
-
-
 
         private bool AccountExists(int id)
         {

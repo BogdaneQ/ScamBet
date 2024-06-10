@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-    <audio autoplay>
-        <source src="/audio/backgroundmusic.mp3" type="audio/mpeg">Play this for better efficiency</audio>
-
 </head>
 <body>
 
@@ -120,7 +117,24 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    
+    <audio id="backgroundMusic" loop>
+        <source src="/audio/backgroundmusic.mp3" type="audio/mpeg">
+        Play this for better efficiency
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var audio = document.getElementById('backgroundMusic');
+            var playPosition = sessionStorage.getItem('audioPosition') || 0;
+
+            audio.currentTime = playPosition;
+            audio.play();
+
+            audio.addEventListener('timeupdate', function () {
+                sessionStorage.setItem('audioPosition', audio.currentTime);
+            });
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

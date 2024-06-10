@@ -29,6 +29,6 @@ namespace ScamBet.Entities
         public bool isWin_r { get; set; }
 
         [Required]
-        public string result_r { get; set; } // Store the result of the roulette spin in format "number:color"
+        public string result_r { get; set; }
     }
 }

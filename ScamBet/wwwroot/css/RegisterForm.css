@@ -1,34 +1,33 @@
-﻿/* Styl formularza rejestracyjnego */
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #333;
-    color: white;
-    font-family: Arial, sans-serif;
-}
+﻿    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #333;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
 
-h1 {
-    text-align: center;
-    font-size: 55px;
-    margin-bottom: 20px;
-}
+    h1 {
+        text-align: center;
+        font-size: 55px;
+        margin-bottom: 20px;
+    }
 
-.container {
-    text-align: center;
-}
+    .container {
+        text-align: center;
+    }
 
-.register-form {
-    background-color: #eb0003; /* Light red background */
-    padding: 20px;
-    border-radius: 30px;
-    border: 3px solid black;
-    margin: 0 auto; /* Center the form horizontally */
-    width: 400px; /* Set a maximum width for responsiveness */
-    text-align: left; /* Align text to the left inside the form */
-}
+    .register-form {
+        background-color: #eb0003;
+        padding: 20px;
+        border-radius: 30px;
+        border: 3px solid black;
+        margin: 0 auto;
+        width: 400px;
+        text-align: left;
+    }
 
     .register-form h2 {
         margin-bottom: 30px;
@@ -38,38 +37,38 @@ h1 {
         color: white;
     }
 
-.form-group {
-    margin-bottom: 15px; /* Add some spacing between form groups */
-}
+    .form-group {
+        margin-bottom: 15px;
+    }
 
     .form-group label {
-        color: white; /* White text for labels */
+        color: white;
     }
 
     .form-group input {
-        border: 2px solid black; /* Red border for input fields */
+        border: 2px solid black;
         padding: 10px;
-        border-radius: 5px; /* Rounded corners for individual fields */
-        width: calc(100% - 26px); /* Full width minus padding and border */
-        box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+        border-radius: 5px;
+        width: calc(100% - 26px);
+        box-sizing: border-box;
     }
 
-.btn-primary {
-    background-color: #5f33ff; /* Button background color */
-    border: 2px solid black; /* Button border color */
-    margin-top: 15px; /* Top margin for the button */
-    padding: 10px 20px; /* Padding inside the button */
-    color: white; /* Button text color */
-    display: block; /* Make the button a block element */
-    margin: 15px auto; /* Center the button */
-    text-align: center;
-}
+    .btn-primary {
+        background-color: #5f33ff;
+        border: 2px solid black;
+        margin-top: 15px;
+        padding: 10px 20px;
+        color: white;
+        display: block;
+        margin: 15px auto;
+        text-align: center;
+    }
 
-.register-link {
-    text-align: center;
-}
+    .register-link {
+        text-align: center;
+    }
 
     .register-link a {
-        color: #ffffff; /* Link color */
-        text-decoration: none; /* Remove underline from the link */
+        color: #ffffff;
+        text-decoration: none;
     }
